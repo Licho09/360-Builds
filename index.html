@@ -20,15 +20,11 @@
       box-shadow: 0 4px 8px rgba(0,0,0,0.1);
       border-radius: 10px;
     }
-    h1 {
+    h1, h2 {
       text-align: center;
-      color: #0077cc;
     }
-    h2 {
-      text-align: center;
-      margin-top: 40px;
-      color: #444;
-    }
+    h1 { color: #0077cc; }
+    h2 { color: #444; margin-top: 40px; }
     p {
       text-align: center;
       font-size: 1.1rem;
@@ -42,7 +38,7 @@
     }
     .button-container {
       text-align: center;
-      margin-top: 20px;
+      margin-top: 10px;
     }
     .tour-button {
       background-color: #0077cc;
@@ -56,6 +52,42 @@
     }
     .tour-button:hover {
       background-color: #005fa3;
+    }
+
+    /* Modal overlay styles */
+    .modal {
+      display: none; /* hidden by default */
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0,0,0,0.9);
+      z-index: 1000;
+      justify-content: center;
+      align-items: center;
+    }
+    .modal-content {
+      position: relative;
+      width: 100%;
+      height: 100%;
+    }
+    .modal iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+    .close-btn {
+      position: absolute;
+      top: 15px;
+      right: 20px;
+      font-size: 24px;
+      color: #fff;
+      cursor: pointer;
+      z-index: 1001;
+      background: rgba(0,0,0,0.5);
+      padding: 5px 10px;
+      border-radius: 5px;
     }
   </style>
 </head>
@@ -71,27 +103,43 @@
     </iframe>
 
     <div class="button-container">
-      <a class="tour-button"
-         href="https://panorama.homestyler.com/v2/index.html?sid=hFChazzapQuok4CeaRiDsP&locale=en_US"
-         target="_blank">
-        Open Full 360° Tour
-      </a>
+      <button class="tour-button" onclick="openModal('https://panorama.homestyler.com/v2/index.html?sid=hFChazzapQuok4CeaRiDsP&locale=en_US')">Full Screen</button>
     </div>
 
-    <!-- TOUR 2 (YOUR LINK) -->
+    <!-- TOUR 2 -->
     <h2>360° Tour – Option 2</h2>
     <iframe class="tour-iframe"
       src="https://panorama.homestyler.com/v2?m=np&id=tLnmnBGrUrgW7fDC6Zbde&locale=en_US">
     </iframe>
 
     <div class="button-container">
-      <a class="tour-button"
-         href="https://panorama.homestyler.com/v2?m=np&id=tLnmnBGrUrgW7fDC6Zbde&locale=en_US"
-         target="_blank">
-        Open Full 360° Tour
-      </a>
+      <button class="tour-button" onclick="openModal('https://panorama.homestyler.com/v2?m=np&id=tLnmnBGrUrgW7fDC6Zbde&locale=en_US')">Full Screen</button>
     </div>
-
   </div>
+
+  <!-- Modal -->
+  <div id="modal" class="modal">
+    <div class="modal-content">
+      <span class="close-btn" onclick="closeModal()">×</span>
+      <iframe id="modal-iframe" src=""></iframe>
+    </div>
+  </div>
+
+  <script>
+    function openModal(url) {
+      document.getElementById('modal').style.display = 'flex';
+      document.getElementById('modal-iframe').src = url;
+    }
+
+    function closeModal() {
+      document.getElementById('modal').style.display = 'none';
+      document.getElementById('modal-iframe').src = ''; // stop loading
+    }
+
+    // Optional: close modal on ESC key
+    document.addEventListener('keydown', function(event) {
+      if (event.key === "Escape") closeModal();
+    });
+  </script>
 </body>
 </html>

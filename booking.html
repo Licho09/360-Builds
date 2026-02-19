@@ -20,14 +20,14 @@
     fbq('track', 'PageView');
     fbq('track', 'Lead');
     </script>
-    <noscript>
-        <img height="1" width="1" style="display:none"
-        src="https://www.facebook.com/tr?id=854197977632425&ev=PageView&noscript=1"/>
-    </noscript>
     <!-- End Meta Pixel Code -->
 
 </head>
 <body>
+    <noscript>
+        <img height="1" width="1" style="display:none"
+        src="https://www.facebook.com/tr?id=854197977632425&ev=PageView&noscript=1"/>
+    </noscript>
     <div class="app-container">
         <header class="simple-header">
             <div class="logo-text"><a href="index.html" style="text-decoration: none; color: inherit;">360° Builds</a></div>
@@ -36,10 +36,10 @@
         <main class="booking-container">
             <div class="booking-split-wrapper">
                 <!-- Left Side: Form -->
-                <div class="booking-form-side">
+                <div class="booking-form-side booking-step-mobile" id="bookingStepForm">
                     <h1 class="step-title">Your Details</h1>
                     <p class="step-subtitle">Enter your info to secure your spot.</p>
-                    
+
                     <form id="bookingForm">
                         <div class="form-group">
                             <label for="userName" class="field-label">Full Name</label>
@@ -62,24 +62,37 @@
 
                 <!-- Right Side: Calendar -->
                 <div class="booking-calendar-side">
-                    <div class="calendar-header">
-                        <h2 id="currentMonthYear">February 2026</h2>
-                    </div>
-                    
-                    <div class="calendar-widget">
-                        <div class="calendar-days-header">
-                            <span>Sun</span><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span>
+                    <!-- Step 1: Calendar -->
+                    <div class="booking-step-mobile active" id="bookingStepCalendar">
+                        <div class="calendar-header">
+                            <h2 id="currentMonthYear">February 2026</h2>
                         </div>
-                        <div class="calendar-grid" id="calendarGrid">
-                            <!-- Days will be injected here -->
+
+                        <div class="calendar-widget">
+                            <div class="calendar-days-header">
+                                <span>Sun</span><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span>
+                            </div>
+                            <div class="calendar-grid" id="calendarGrid">
+                                <!-- Days will be injected here -->
+                            </div>
                         </div>
                     </div>
 
-                    <div class="time-slots-container">
-                        <h3 class="field-label">Available Times</h3>
-                        <div class="time-grid" id="timeGrid">
-                            <p class="empty-msg">Select a date to see times</p>
+                    <!-- Step 2: Time Slots -->
+                    <div class="booking-step-mobile" id="bookingStepTime">
+                        <div class="time-slots-container">
+                            <h3 class="field-label">Available Times</h3>
+                            <div class="time-grid" id="timeGrid">
+                                <p class="empty-msg">Select a date to see times</p>
+                            </div>
                         </div>
+                    </div>
+
+                    <!-- Step 3: Continue Button -->
+                    <div class="booking-step-mobile" id="bookingStepContinue">
+                        <button type="button" class="btn btn-primary btn-block" id="continueToFormBtn">
+                            Continue
+                        </button>
                     </div>
                 </div>
             </div>

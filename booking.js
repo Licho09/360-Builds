@@ -5,8 +5,56 @@ document.addEventListener('DOMContentLoaded', function () {
     const timeGrid = document.getElementById('timeGrid');
     const currentMonthYear = document.getElementById('currentMonthYear');
     const displayDateTime = document.getElementById('displayDateTime');
+    const continueToFormBtn = document.getElementById('continueToFormBtn');
 
     const GOOGLE_SHEET_URL = 'https://script.google.com/macros/s/AKfycbyQn65Ow5YEMMY4kNN2PNK5FzdysBV3igm5a69EAN-QeZgBgFJz2khkIhkrl3ljDYX6/exec';
+
+    // ------------------ MOBILE STEP MANAGEMENT ------------------
+    let mobileCurrentStep = 1;
+
+    function isMobile() {
+        return window.innerWidth <= 768;
+    }
+
+    function showMobileStep(step) {
+        if (!isMobile()) return;
+
+        // Hide all mobile steps
+        document.querySelectorAll('.booking-step-mobile').forEach(el => {
+            el.classList.remove('active');
+        });
+
+        // Show appropriate step
+        if (step === 1) {
+            document.getElementById('bookingStepCalendar').classList.add('active');
+        } else if (step === 2) {
+            document.getElementById('bookingStepTime').classList.add('active');
+        } else if (step === 3) {
+            document.getElementById('bookingStepContinue').classList.add('active');
+        } else if (step === 4) {
+            document.getElementById('bookingStepForm').classList.add('active');
+        }
+
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // Initialize mobile view
+    if (isMobile()) {
+        showMobileStep(1);
+    }
+
+    // Handle window resize
+    window.addEventListener('resize', function() {
+        if (!isMobile()) {
+            // Show all steps on desktop
+            document.querySelectorAll('.booking-step-mobile').forEach(el => {
+                el.classList.add('active');
+            });
+        } else {
+            // Restore mobile step view
+            showMobileStep(mobileCurrentStep);
+        }
+    });
 
     // ------------------ CALENDAR & TIME ------------------
     if (calendarGrid && timeGrid && currentMonthYear && displayDateTime) {
@@ -45,6 +93,12 @@ document.addEventListener('DOMContentLoaded', function () {
                         selectedDate = new Date(currentYear, currentMonth, day);
                         updateDisplay();
                         generateTimeSlots();
+
+                        // On mobile, move to time selection step
+                        if (isMobile()) {
+                            mobileCurrentStep = 2;
+                            showMobileStep(2);
+                        }
                     });
                 }
                 calendarGrid.appendChild(dayEl);
@@ -63,6 +117,12 @@ document.addEventListener('DOMContentLoaded', function () {
                     timeBtn.classList.add('active');
                     selectedTime = time;
                     updateDisplay();
+
+                    // On mobile, show continue button
+                    if (isMobile()) {
+                        mobileCurrentStep = 3;
+                        showMobileStep(3);
+                    }
                 });
                 timeGrid.appendChild(timeBtn);
             });
@@ -76,11 +136,21 @@ document.addEventListener('DOMContentLoaded', function () {
                 const options = { weekday:'short', month:'short', day:'numeric' };
                 displayDateTime.textContent = `${selectedDate.toLocaleDateString(undefined, options)} (Select a time)`;
             } else {
-                displayDateTime.textContent = '';
+                displayDateTime.textContent = 'Please select a date and time';
             }
         }
 
         initCalendar();
+    }
+
+    // Continue button handler (mobile only)
+    if (continueToFormBtn) {
+        continueToFormBtn.addEventListener('click', function() {
+            if (isMobile()) {
+                mobileCurrentStep = 4;
+                showMobileStep(4);
+            }
+        });
     }
 
     // ------------------ FORM SUBMIT ------------------
@@ -97,7 +167,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 alert('Please enter your name and phone.');
                 return;
             }
-            if (!selectedDate) {
+            if (!selectedDate || selectedDate === 'Please select a date and time') {
                 alert('Please select a date and time.');
                 return;
             }
@@ -138,67 +208,5 @@ document.addEventListener('DOMContentLoaded', function () {
                 console.error(error);
             });
         });
-    }
-
-    // ------------------ MULTI-STEP SURVEY LOGIC ------------------
-    const steps = document.querySelectorAll('.form-step');
-    if (steps.length) {
-        const nextBtns = document.querySelectorAll('.next-btn');
-        const prevBtns = document.querySelectorAll('.prev-btn');
-        const progressBar = document.getElementById('progressBar');
-        const currentStepText = document.getElementById('currentStep');
-        const totalStepsText = document.getElementById('totalSteps');
-        const bookCallBtn = document.getElementById('bookCallBtn');
-
-        let currentStep = 1;
-        const totalSteps = steps.length;
-
-        function showStep(step) {
-            steps.forEach((s, index) => s.classList.toggle('active', index === step - 1));
-            updateProgress();
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-
-        function updateProgress() {
-            const progress = ((currentStep - 1) / (totalSteps - 1)) * 100;
-            if (progressBar) progressBar.style.width = `${progress}%`;
-            if (currentStepText) currentStepText.textContent = currentStep;
-            if (totalStepsText) totalStepsText.textContent = totalSteps;
-        }
-
-        function validateStep(step) {
-            const stepEl = document.getElementById(`step${step}`);
-            const inputs = stepEl?.querySelectorAll('input[required]') || [];
-            let isValid = true;
-            inputs.forEach(input => {
-                const checked = stepEl.querySelectorAll(`input[name="${input.name}"]:checked`);
-                if (!checked.length) isValid = false;
-            });
-            if (!isValid) alert('Please select an option to continue.');
-            return isValid;
-        }
-
-        nextBtns.forEach(btn => btn.addEventListener('click', () => {
-            if (validateStep(currentStep)) {
-                currentStep++;
-                showStep(currentStep);
-            }
-        }));
-
-        prevBtns.forEach(btn => btn.addEventListener('click', () => {
-            currentStep--;
-            showStep(currentStep);
-        }));
-
-        if (bookCallBtn) {
-            bookCallBtn.addEventListener('click', () => {
-                const homesPerYear = document.querySelector('input[name="homesPerYear"]:checked')?.value;
-                const currentTours = document.querySelector('input[name="currentTours"]:checked')?.value;
-                localStorage.setItem('surveyData', JSON.stringify({ homesPerYear, currentTours }));
-                window.location.href = 'booking.html';
-            });
-        }
-
-        showStep(currentStep);
     }
 });

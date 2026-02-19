@@ -360,16 +360,55 @@ body {
     color: var(--text-muted);
 }
 
-@media (max-width: 900px) {
+/* --- DESKTOP: Show all steps on desktop (>768px) --- */
+@media (min-width: 769px) {
+    .booking-step-mobile {
+        display: block !important;
+    }
+}
+
+/* --- MOBILE: Step-by-step flow for booking (<=768px) --- */
+@media (max-width: 768px) {
+    /* Mobile booking flow: hide steps by default */
+    .booking-step-mobile {
+        display: none;
+    }
+
+    /* Show active step */
+    .booking-step-mobile.active {
+        display: block;
+        animation: fadeIn 0.3s ease-out;
+    }
+
+    /* Single column layout on mobile */
     .booking-split-wrapper {
         grid-template-columns: 1fr;
         padding: 2rem;
     }
+
     .booking-form-side {
         border-right: none;
-        border-bottom: 1px solid var(--border-color);
+        border-bottom: none;
         padding-right: 0;
-        padding-bottom: 2rem;
+        padding-bottom: 0;
+    }
+
+    /* Ensure calendar and buttons are large enough for mobile taps */
+    .radio-card,
+    .calendar-day.available,
+    .time-btn {
+        min-height: 60px;
+        font-size: 1.1rem;
+    }
+
+    .calendar-day {
+        font-size: 1.1rem;
+        padding: 15px 0;
+    }
+
+    /* Add spacing at bottom for better UX */
+    .booking-container {
+        padding-bottom: 3rem;
     }
 }
 
@@ -377,16 +416,6 @@ body {
 
 /* Larger Tap Targets for Mobile */
 @media (max-width: 768px) {
-    .radio-card, .calendar-day.available, .time-btn {
-        min-height: 60px; /* Ensures easy thumb tapping */
-        font-size: 1.1rem;
-    }
-    
-    .calendar-day {
-        font-size: 1.1rem;
-        padding: 15px 0;
-    }
-
     /* Sticky Button Container for Mobile */
     .mobile-sticky-footer {
         position: fixed;
@@ -404,15 +433,11 @@ body {
 
     /* Add padding to bottom of main content so it's not hidden by sticky footer */
     .question-container, .booking-container {
-        padding-bottom: 100px; 
+        padding-bottom: 100px;
     }
 
     /* Hide the original buttons within the form steps on mobile if we use sticky */
     .form-step .btn-block, .form-buttons {
-        display: none; 
-    }
-    
-    .booking-form-side .btn-block {
         display: none;
     }
 }

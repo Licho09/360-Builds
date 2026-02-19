@@ -1,209 +1,131 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>360° Builds - House Tours</title>
-  <style>
-    /* Overall body style */
-    body {
-      font-family: 'Arial', sans-serif;
-      margin: 0;
-      padding: 0;
-      background: linear-gradient(to bottom, #e0f2ff, #ffffff);
-      color: #333;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>360° Builds - Get Started</title>
+    <link rel="stylesheet" href="styles.css">
 
-    /* Container for the entire content */
-    .container {
-      max-width: 1200px;
-      margin: 40px auto;
-      padding: 20px;
-    }
+    <!-- Meta Pixel Code -->
+    <script>
+    !function(f,b,e,v,n,t,s)
+    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+    n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];
+    s.parentNode.insertBefore(t,s)}(window, document,'script',
+    'https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', '854197977632425');
+    fbq('track', 'PageView');
+    </script>
+    <noscript>
+        <img height="1" width="1" style="display:none"
+        src="https://www.facebook.com/tr?id=854197977632425&ev=PageView&noscript=1"/>
+    </noscript>
+    <!-- End Meta Pixel Code -->
 
-    /* Header */
-    header {
-      text-align: center;
-      margin-bottom: 40px;
-    }
-    header h1 {
-      font-size: 3rem;
-      color: #0077cc;
-      margin: 0;
-    }
-    header p {
-      font-size: 1.2rem;
-      color: #555;
-      margin-top: 10px;
-    }
-
-    /* Tour cards */
-    .tour-card {
-      background: #fff;
-      border-radius: 15px;
-      box-shadow: 0 6px 15px rgba(0,0,0,0.1);
-      padding: 20px;
-      margin-bottom: 40px;
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-    }
-    .tour-card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 10px 20px rgba(0,0,0,0.15);
-    }
-
-    .tour-card h2 {
-      text-align: center;
-      color: #005fa3;
-      margin-bottom: 15px;
-    }
-
-    .tour-card p {
-      text-align: center;
-      font-size: 1rem;
-      color: #666;
-      margin-bottom: 20px;
-    }
-
-    /* Tour iframe */
-    .tour-iframe {
-      width: 100%;
-      height: 600px;
-      border: none;
-      border-radius: 10px;
-      margin-bottom: 20px;
-    }
-
-    /* Button styles */
-    .button-container {
-      text-align: center;
-    }
-    .tour-button {
-      background-color: #0077cc;
-      color: #fff;
-      padding: 12px 30px;
-      border: none;
-      border-radius: 8px;
-      font-size: 1rem;
-      cursor: pointer;
-      text-decoration: none;
-      transition: background 0.3s ease;
-    }
-    .tour-button:hover {
-      background-color: #005fa3;
-    }
-
-    /* Modal overlay styles */
-    .modal {
-      display: none; /* hidden by default */
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-color: rgba(0,0,0,0.95);
-      z-index: 1000;
-      justify-content: center;
-      align-items: center;
-    }
-    .modal-content {
-      position: relative;
-      width: 100%;
-      height: 100%;
-    }
-    .modal iframe {
-      width: 100%;
-      height: 100%;
-      border: none;
-      border-radius: 0;
-    }
-    .close-btn {
-      position: absolute;
-      top: 15px;
-      right: 20px;
-      font-size: 28px;
-      color: #fff;
-      cursor: pointer;
-      z-index: 1001;
-      background: rgba(0,0,0,0.5);
-      padding: 5px 12px;
-      border-radius: 5px;
-    }
-
-    /* Responsive */
-    @media(max-width: 768px){
-      .tour-iframe {
-        height: 400px;
-      }
-      header h1 {
-        font-size: 2rem;
-      }
-      header p {
-        font-size: 1rem;
-      }
-    }
-  </style>
 </head>
 <body>
-  <div class="container">
-    <header>
-      <h1>360° Builds</h1>
-      <p>Walk through homes in full 360° before they’re built!</p>
-    </header>
+    <div class="app-container">
+        <!-- Header -->
+        <header class="simple-header">
+            <div class="logo-text">360° Builds</div>
+        </header>
 
-    <!-- TOUR 1 -->
-    <div class="tour-card">
-      <h2>360° Tour – Option 1</h2>
-      <p>Explore the living spaces, kitchen, and bedrooms.</p>
-      <iframe class="tour-iframe"
-        src="https://panorama.homestyler.com/v2/index.html?sid=hFChazzapQuok4CeaRiDsP&locale=en_US">
-      </iframe>
-      <div class="button-container">
-        <button class="tour-button" 
-                onclick="openModal('https://panorama.homestyler.com/v2/index.html?sid=hFChazzapQuok4CeaRiDsP&locale=en_US')">
-          View
-        </button>
-      </div>
+        <!-- Main Form Section -->
+        <main class="question-container">
+            <div class="form-wrapper">
+
+                <!-- Progress Bar -->
+                <div class="progress-container">
+                    <div class="progress-bar-bg">
+                        <div class="progress-bar" id="progressBar"></div>
+                    </div>
+                    <p class="progress-text">
+                        Step <span id="currentStep">1</span> of 
+                        <span id="totalSteps">2</span>
+                    </p>
+                </div>
+
+                <form id="applicationForm" class="multi-step-form">
+
+                    <!-- Step 1 -->
+                    <div class="form-step active" id="step1">
+                        <h1 class="step-title">How many homes do you build per year?</h1>
+
+                        <div class="form-group">
+                            <div class="radio-group">
+                                <label class="radio-card">
+                                    <input type="radio" name="homesPerYear" value="1-5" required>
+                                    <span class="radio-label">1-5</span>
+                                </label>
+                                <label class="radio-card">
+                                    <input type="radio" name="homesPerYear" value="6-10" required>
+                                    <span class="radio-label">6-10</span>
+                                </label>
+                                <label class="radio-card">
+                                    <input type="radio" name="homesPerYear" value="11-20" required>
+                                    <span class="radio-label">11-20</span>
+                                </label>
+                                <label class="radio-card">
+                                    <input type="radio" name="homesPerYear" value="21+" required>
+                                    <span class="radio-label">21+</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <button type="button" class="btn btn-primary btn-block next-btn">
+                            Next Question
+                        </button>
+                    </div>
+
+                    <!-- Step 2 -->
+                    <div class="form-step" id="step2">
+                        <h1 class="step-title">
+                            Do you currently use virtual tours or 3D walkthroughs for your listings?
+                        </h1>
+
+                        <div class="form-group">
+                            <div class="radio-group">
+                                <label class="radio-card">
+                                    <input type="radio" name="currentTours" value="Yes" required>
+                                    <span class="radio-label">Yes, we already do</span>
+                                </label>
+                                <label class="radio-card">
+                                    <input type="radio" name="currentTours" value="No-Interested" required>
+                                    <span class="radio-label">No, but interested</span>
+                                </label>
+                                <label class="radio-card">
+                                    <input type="radio" name="currentTours" value="No-Not-Interested" required>
+                                    <span class="radio-label">No, not interested</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="form-buttons">
+                            <button type="button" class="btn btn-secondary prev-btn">
+                                Back
+                            </button>
+
+                            <!-- Now redirects directly -->
+                            <button type="button"
+                                class="btn btn-primary"
+                                onclick="window.location.href='booking.html'">
+                                Continue
+                            </button>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+        </main>
+
+        <footer class="simple-footer">
+            <p>&copy; 2026 360° Builds. All rights reserved.</p>
+        </footer>
     </div>
 
-    <!-- TOUR 2 -->
-    <div class="tour-card">
-      <h2>360° Tour – Option 2</h2>
-      <p>Explore another layout or feature of the home.</p>
-      <iframe class="tour-iframe"
-        src="https://panorama.homestyler.com/v2?m=np&id=tLnmnBGrUrgW7fDC6Zbde&locale=en_US">
-      </iframe>
-      <div class="button-container">
-        <button class="tour-button" 
-                onclick="openModal('https://panorama.homestyler.com/v2?m=np&id=tLnmnBGrUrgW7fDC6Zbde&locale=en_US')">
-          View
-        </button>
-      </div>
-    </div>
-  </div>
-
-  <!-- Modal -->
-  <div id="modal" class="modal">
-    <div class="modal-content">
-      <span class="close-btn" onclick="closeModal()">×</span>
-      <iframe id="modal-iframe" src=""></iframe>
-    </div>
-  </div>
-
-  <script>
-    function openModal(url) {
-      document.getElementById('modal').style.display = 'flex';
-      document.getElementById('modal-iframe').src = url;
-    }
-
-    function closeModal() {
-      document.getElementById('modal').style.display = 'none';
-      document.getElementById('modal-iframe').src = ''; // stop loading
-    }
-
-    // Close modal on ESC key
-    document.addEventListener('keydown', function(event) {
-      if (event.key === "Escape") closeModal();
-    });
-  </script>
+    <script src="script.js"></script>
 </body>
 </html>

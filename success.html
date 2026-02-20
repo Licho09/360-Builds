@@ -22,25 +22,31 @@
     fbq('track', 'PageView');
     fbq('track', 'Schedule');
     </script>
-    <noscript>
-        <img height="1" width="1" style="display:none"
-        src="https://www.facebook.com/tr?id=854197977632425&ev=PageView&noscript=1"/>
-    </noscript>
     <!-- End Meta Pixel Code -->
 
 </head>
 <body>
+    <noscript>
+        <img height="1" width="1" style="display:none"
+        src="https://www.facebook.com/tr?id=854197977632425&ev=PageView&noscript=1"/>
+    </noscript>
     <div class="app-container">
         <header class="simple-header">
-            <div class="logo-text"><a href="index.html" style="text-decoration: none; color: inherit;">360° Builds</a></div>
+            <div class="logo-text">
+                <a href="index.html">
+                    <span class="logo-number">360</span><span class="logo-degree">&deg;</span>
+                    <span class="logo-divider"></span>
+                    <span class="logo-word">Builds</span>
+                </a>
+            </div>
         </header>
 
         <main class="question-container">
             <div class="form-wrapper" style="text-align: center;">
-                <div style="font-size: 4rem; margin-bottom: 1rem;">✅</div>
+                <div style="font-size: 4rem; margin-bottom: 1rem;">&#9989;</div>
                 <h1 class="step-title">Thank You!</h1>
                 <p class="step-subtitle">Your booking has been confirmed.</p>
-                
+
                 <div class="selected-info" style="text-align: left; margin-top: 2rem;">
                     <p><strong>Name:</strong> <span id="confName">---</span></p>
                     <p><strong>Phone:</strong> <span id="confPhone">---</span></p>
@@ -48,20 +54,20 @@
                 </div>
 
                 <p style="margin-top: 2rem; color: var(--text-muted);">We have received your information and will contact you shortly to prepare for our call.</p>
-                
+
                 <a href="index.html" class="btn btn-primary btn-block" style="margin-top: 2rem; text-decoration: none;">Return Home</a>
             </div>
         </main>
 
         <footer class="simple-footer">
-            <p>&copy; 2026 360° Builds. All rights reserved.</p>
+            <p>&copy; 2026 360&deg; Builds. All rights reserved.</p>
         </footer>
     </div>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             // Retrieve data from localStorage for display
-            const lastBooking = JSON.parse(localStorage.getItem('lastBooking') || '{}');
+            var lastBooking = JSON.parse(localStorage.getItem('lastBooking') || '{}');
             if (lastBooking.name) {
                 document.getElementById('confName').textContent = lastBooking.name;
                 document.getElementById('confPhone').textContent = lastBooking.phone;
@@ -80,28 +86,11 @@
               }));
             }
 
-            fire(0.25, {
-              spread: 26,
-              startVelocity: 55,
-            });
-            fire(0.2, {
-              spread: 60,
-            });
-            fire(0.35, {
-              spread: 100,
-              decay: 0.91,
-              scalar: 0.8
-            });
-            fire(0.1, {
-              spread: 120,
-              startVelocity: 25,
-              decay: 0.92,
-              scalar: 1.2
-            });
-            fire(0.1, {
-              spread: 120,
-              startVelocity: 45,
-            });
+            fire(0.25, { spread: 26, startVelocity: 55 });
+            fire(0.2, { spread: 60 });
+            fire(0.35, { spread: 100, decay: 0.91, scalar: 0.8 });
+            fire(0.1, { spread: 120, startVelocity: 25, decay: 0.92, scalar: 1.2 });
+            fire(0.1, { spread: 120, startVelocity: 45 });
         });
     </script>
 </body>

@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const progressBar = document.getElementById('progressBar');
     const currentStepText = document.getElementById('currentStep');
     const totalStepsText = document.getElementById('totalSteps');
-    const form = document.getElementById('applicationForm');
+    const bookCallBtn = document.getElementById('bookCallBtn');
 
     let currentStep = 1;
     const totalSteps = steps.length;
@@ -26,11 +26,11 @@ document.addEventListener('DOMContentLoaded', function() {
         stickyFooter.style.display = 'flex';
 
         if (currentStep > 1) {
-            const backBtn = document.createElement('button');
+            var backBtn = document.createElement('button');
             backBtn.className = 'btn btn-secondary';
             backBtn.textContent = 'Back';
             backBtn.style.flex = '1';
-            backBtn.onclick = () => {
+            backBtn.onclick = function() {
                 currentStep--;
                 showStep(currentStep);
                 updateProgress();
@@ -38,13 +38,13 @@ document.addEventListener('DOMContentLoaded', function() {
             stickyFooter.appendChild(backBtn);
         }
 
-        const actionBtn = document.createElement('button');
+        var actionBtn = document.createElement('button');
         actionBtn.className = 'btn btn-primary';
         actionBtn.style.flex = '2';
 
         if (currentStep === 1) {
             actionBtn.textContent = 'Next Question';
-            actionBtn.onclick = () => {
+            actionBtn.onclick = function() {
                 if (validateStep(currentStep)) {
                     currentStep++;
                     showStep(currentStep);
@@ -64,8 +64,8 @@ document.addEventListener('DOMContentLoaded', function() {
     updateProgress();
     updateStickyButtons();
 
-    nextBtns.forEach(btn => {
-        btn.addEventListener('click', () => {
+    nextBtns.forEach(function(btn) {
+        btn.addEventListener('click', function() {
             if (validateStep(currentStep)) {
                 currentStep++;
                 showStep(currentStep);
@@ -74,31 +74,39 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    prevBtns.forEach(btn => {
-        btn.addEventListener('click', () => {
+    prevBtns.forEach(function(btn) {
+        btn.addEventListener('click', function() {
             currentStep--;
             showStep(currentStep);
             updateProgress();
         });
     });
 
+    if (bookCallBtn) {
+        bookCallBtn.addEventListener('click', handleBookingRedirect);
+    }
+
     function handleBookingRedirect() {
         if (!validateStep(currentStep)) return;
 
-        const homesPerYear = document.querySelector('input[name="homesPerYear"]:checked')?.value;
-        const currentTours = document.querySelector('input[name="currentTours"]:checked')?.value;
+        var homesPerYear = document.querySelector('input[name="homesPerYear"]:checked');
+        var currentTours = document.querySelector('input[name="currentTours"]:checked');
 
         localStorage.setItem('surveyData', JSON.stringify({
-            homesPerYear: homesPerYear,
-            currentTours: currentTours
+            homesPerYear: homesPerYear ? homesPerYear.value : '',
+            currentTours: currentTours ? currentTours.value : ''
         }));
 
         window.location.href = 'booking.html';
     }
 
     function showStep(step) {
-        steps.forEach((s, index) => {
-            s.classList.toggle('active', index === step - 1);
+        steps.forEach(function(s, index) {
+            if (index === step - 1) {
+                s.classList.add('active');
+            } else {
+                s.classList.remove('active');
+            }
         });
 
         updateStickyButtons();
@@ -106,19 +114,19 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function updateProgress() {
-        const progress = ((currentStep - 1) / (totalSteps - 1)) * 100;
-        progressBar.style.width = `${progress}%`;
+        var progress = ((currentStep - 1) / (totalSteps - 1)) * 100;
+        progressBar.style.width = progress + '%';
         currentStepText.textContent = currentStep;
         totalStepsText.textContent = totalSteps;
     }
 
     function validateStep(step) {
-        const currentStepEl = document.getElementById(`step${step}`);
-        const inputs = currentStepEl.querySelectorAll('input[required]');
-        let isValid = true;
+        var currentStepEl = document.getElementById('step' + step);
+        var inputs = currentStepEl.querySelectorAll('input[required]');
+        var isValid = true;
 
-        inputs.forEach(input => {
-            const group = currentStepEl.querySelectorAll(`input[name="${input.name}"]:checked`);
+        inputs.forEach(function(input) {
+            var group = currentStepEl.querySelectorAll('input[name="' + input.name + '"]:checked');
             if (group.length === 0) isValid = false;
         });
 

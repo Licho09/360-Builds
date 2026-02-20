@@ -308,6 +308,11 @@ body {
     text-align: center;
 }
 
+.calendar-widget {
+    width: 100%;
+    overflow: hidden;
+}
+
 .calendar-days-header {
     display: grid;
     grid-template-columns: repeat(7, 1fr);
@@ -315,12 +320,14 @@ body {
     font-weight: 700;
     color: var(--text-muted);
     margin-bottom: 10px;
+    font-size: 0.8rem;
 }
 
 .calendar-grid {
     display: grid;
     grid-template-columns: repeat(7, 1fr);
     gap: 5px;
+    width: 100%;
 }
 
 .calendar-day {
@@ -330,9 +337,11 @@ body {
     justify-content: center;
     border-radius: 8px;
     font-weight: 600;
+    font-size: 0.9rem;
     color: #cbd5e1;
     cursor: not-allowed;
     border: 1px solid transparent;
+    min-width: 0;
 }
 
 .calendar-day.available {
@@ -436,8 +445,13 @@ body {
    MOBILE BOOKING STEP FLOW
    =========================== */
 
-/* Mobile step indicators */
+/* Mobile step indicators -- hidden on desktop */
 .mobile-step-indicator {
+    display: none;
+}
+
+/* Calendar section title hidden on desktop */
+.calendar-section-title {
     display: none;
 }
 
@@ -555,25 +569,50 @@ body {
     }
 
     /* Calendar tweaks */
+    .calendar-widget {
+        width: 100%;
+        overflow: hidden;
+    }
+
+    .calendar-days-header {
+        font-size: 0.7rem;
+    }
+
     .calendar-days-header span {
-        font-size: 0.75rem;
+        font-size: 0.7rem;
     }
 
     .calendar-day {
-        font-size: 0.95rem;
-        border-radius: 8px;
+        font-size: 0.85rem;
+        border-radius: 6px;
+        aspect-ratio: 1;
+        min-width: 0;
     }
 
     .calendar-day.available {
-        min-height: 44px;
+        min-height: unset;
     }
 
     .calendar-grid {
-        gap: 4px;
+        gap: 3px;
+        width: 100%;
     }
 
     .calendar-header h2 {
-        font-size: 1.15rem;
+        font-size: 1.05rem;
+    }
+
+    .booking-calendar-side {
+        width: 100%;
+        overflow: hidden;
+    }
+
+    .calendar-section-title {
+        display: block;
+        font-size: 1.2rem;
+        font-weight: 700;
+        margin-bottom: 1rem;
+        color: var(--text-main);
     }
 
     /* Time slots */
@@ -659,6 +698,8 @@ body {
         gap: 0;
         border-radius: 14px;
         box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+        max-width: 100%;
+        overflow: hidden;
     }
 
     /* Hide the form side by default on mobile */
@@ -811,44 +852,3 @@ body {
         padding: 0.85rem 1rem;
     }
 
-    .radio-label {
-        font-size: 0.95rem;
-    }
-
-    .calendar-day {
-        font-size: 0.85rem;
-    }
-
-    .time-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 8px;
-    }
-
-    .time-btn {
-        padding: 0.75rem 0.25rem;
-        font-size: 0.85rem;
-        min-height: 44px;
-    }
-
-    .logo-number {
-        font-size: 1.3rem;
-    }
-    .logo-word {
-        font-size: 0.8rem;
-    }
-
-    .booking-split-wrapper {
-        padding: 1rem;
-    }
-}
-
-/* Confetti Styles for Success Page */
-.confetti-canvas {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    pointer-events: none;
-    z-index: 999;
-}

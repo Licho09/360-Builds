@@ -31,7 +31,7 @@
     <div class="app-container">
         <header class="simple-header">
             <div class="logo-text">
-                <a href="index.html">
+                <a href="index.html" style="text-decoration: none; color: inherit;">
                     <span class="logo-number">360</span><span class="logo-degree">&deg;</span>
                     <span class="logo-divider"></span>
                     <span class="logo-word">Builds</span>
@@ -39,20 +39,17 @@
             </div>
         </header>
 
+        <!-- Hero Text -->
+        <section class="hero-text">
+            <p class="hero-eyebrow">One Last Step</p>
+            <h1 class="hero-headline">Pick a Time &mdash;<br>We&rsquo;ll Do the Rest</h1>
+        </section>
+
         <main class="booking-container">
-
-            <!-- Mobile Step Indicator (hidden on desktop via CSS) -->
-            <div class="mobile-step-indicator" id="mobileStepIndicator">
-                <div class="mobile-step-dot active" id="dot1"></div>
-                <div class="mobile-step-dot" id="dot2"></div>
-                <div class="mobile-step-dot" id="dot3"></div>
-                <span class="mobile-step-label" id="mobileStepLabel">Select a Date</span>
-            </div>
-
             <div class="booking-split-wrapper">
                 <!-- Left Side: Form -->
-                <div class="booking-form-side" id="bookingFormSide">
-                    <h1 class="step-title">Your Details</h1>
+                <div class="booking-form-side">
+                    <h2 class="step-title">Your Details</h2>
                     <p class="step-subtitle">Enter your info to secure your spot.</p>
                     
                     <form id="bookingForm">
@@ -71,13 +68,13 @@
                         </div>
 
                         <button type="submit" class="btn btn-primary btn-block">Confirm Booking</button>
-                        <a href="index.html" class="back-link">&larr; Back to questions</a>
+                        <a href="index.html" class="back-link">← Back to questions</a>
                     </form>
                 </div>
 
                 <!-- Right Side: Calendar -->
-                <div class="booking-calendar-side" id="bookingCalendarSide">
-                    <h2 class="calendar-section-title">Select a Date</h2>
+                <div class="booking-calendar-side">
+                    <div class="calendar-section-title">Pick a Date</div>
                     <div class="calendar-header">
                         <h2 id="currentMonthYear">February 2026</h2>
                     </div>
@@ -91,7 +88,7 @@
                         </div>
                     </div>
 
-                    <div class="time-slots-container" id="timeSlotsContainer">
+                    <div class="time-slots-container">
                         <h3 class="field-label">Available Times</h3>
                         <div class="time-grid" id="timeGrid">
                             <p class="empty-msg">Select a date to see times</p>
@@ -101,17 +98,43 @@
             </div>
         </main>
 
-        <!-- Mobile Sticky Footer for Booking (hidden on desktop, managed by JS) -->
-        <div class="mobile-booking-sticky" id="mobileBookingStickyFooter" style="display: none;">
-            <button class="btn btn-secondary" id="mobileBackBtn" style="display: none;">Back</button>
-            <button class="btn btn-primary" id="mobileContinueBtn" style="display: none;">Continue</button>
-        </div>
-
         <footer class="simple-footer">
             <p>&copy; 2026 360&deg; Builds. All rights reserved.</p>
         </footer>
     </div>
-
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const isMobile = window.innerWidth <= 768;
+            if (!isMobile) return;
+        
+            // Add mobile flow class and inject sticky footer
+            document.body.classList.add('mobile-booking-flow', 'mobile-booking-step-calendar');
+        
+            const sticky = document.createElement('div');
+            sticky.className = 'mobile-booking-sticky';
+            sticky.innerHTML = '<button class="btn btn-primary" id="mobileContinueBtn">Continue</button>';
+            document.body.appendChild(sticky);
+        
+            const continueBtn = document.getElementById('mobileContinueBtn');
+            let mobileStep = 1;
+        
+            continueBtn.addEventListener('click', function () {
+                if (mobileStep === 1) {
+                    // Move from calendar to time slots
+                    document.body.classList.remove('mobile-booking-step-calendar');
+                    document.body.classList.add('mobile-booking-step-time');
+                    mobileStep = 2;
+                } else if (mobileStep === 2) {
+                    // Move from time slots to form
+                    document.body.classList.remove('mobile-booking-step-time');
+                    document.body.classList.add('mobile-booking-step-form');
+                    continueBtn.style.display = 'none'; // form has its own submit button
+                    mobileStep = 3;
+                }
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+        });
+        </script>
     <script src="booking.js"></script>
 </body>
 </html>

@@ -2,7 +2,7 @@
    360° BUILDS - CLEAN LIGHT THEME
    =========================== */
 
-   :root {
+:root {
     --bg-color: #f8fafc;
     --card-bg: #ffffff;
     --primary-color: #0062fe;
@@ -91,6 +91,30 @@ body {
     color: var(--text-main);
     letter-spacing: 0.12em;
     text-transform: uppercase;
+}
+
+/* Hero Text */
+.hero-text {
+    text-align: center;
+    padding: 8px 24px 28px;
+}
+
+.hero-eyebrow {
+    display: inline-block;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--primary-color);
+    margin-bottom: 10px;
+}
+
+.hero-headline {
+    font-size: clamp(28px, 5vw, 42px);
+    font-weight: 800;
+    line-height: 1.15;
+    color: var(--text-main);
+    letter-spacing: -0.02em;
 }
 
 /* Main Content Area */
@@ -445,22 +469,18 @@ body {
    MOBILE BOOKING STEP FLOW
    =========================== */
 
-/* Mobile step indicators -- hidden on desktop */
 .mobile-step-indicator {
     display: none;
 }
 
-/* Calendar section title hidden on desktop */
 .calendar-section-title {
     display: none;
 }
 
-/* Mobile continue button (hidden by default, shown via JS on mobile) */
 .mobile-continue-btn {
     display: none;
 }
 
-/* Sticky footer for mobile */
 .mobile-sticky-footer {
     display: none;
 }
@@ -478,10 +498,8 @@ body {
     }
 }
 
-/* --- MOBILE-FIRST POLISH --- */
 @media (max-width: 768px) {
 
-    /* === GLOBAL MOBILE REFINEMENTS === */
     body {
         font-size: 15px;
         -webkit-text-size-adjust: 100%;
@@ -505,6 +523,33 @@ body {
     .logo-word {
         font-size: 0.9rem;
         letter-spacing: 0.1em;
+    }
+
+    /* Hero text mobile */
+    .hero-text {
+        padding: 0px 20px 24px;
+    }
+
+    .hero-eyebrow {
+        display: inline-block;
+        font-size: 11px;
+        font-weight: 600;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: var(--primary-color) !important;
+        background: var(--accent-bg);
+        border: 1px solid rgba(0, 98, 254, 0.25);
+        padding: 6px 14px;
+        border-radius: 100px;
+        margin-bottom: 12px;
+    }
+
+    .hero-headline {
+        font-size: 28px;
+        font-weight: 800;
+        line-height: 1.2;
+        letter-spacing: -0.02em;
+        color: var(--text-main);
     }
 
     /* Survey card */
@@ -538,7 +583,6 @@ body {
         font-size: 0.8rem;
     }
 
-    /* Better tap targets for radio cards */
     .radio-card {
         padding: 1rem 1.1rem;
         border-radius: 10px;
@@ -554,21 +598,18 @@ body {
         margin-bottom: 1.5rem;
     }
 
-    /* Buttons */
     .btn {
         padding: 0.85rem 1.5rem;
         font-size: 1rem;
         border-radius: 10px;
     }
 
-    /* Urgency box */
     .urgency-box {
         padding: 1rem;
         margin-bottom: 1.5rem;
         font-size: 0.9rem;
     }
 
-    /* Calendar tweaks */
     .calendar-widget {
         width: 100%;
         overflow: hidden;
@@ -615,7 +656,6 @@ body {
         color: var(--text-main);
     }
 
-    /* Time slots */
     .time-grid {
         grid-template-columns: repeat(2, 1fr);
         gap: 10px;
@@ -628,7 +668,6 @@ body {
         border-radius: 10px;
     }
 
-    /* Form inputs */
     .text-input {
         padding: 0.85rem 1rem;
         font-size: 1rem;
@@ -658,7 +697,6 @@ body {
         font-size: 0.8rem;
     }
 
-    /* Sticky footer for survey pages */
     .mobile-sticky-footer {
         position: fixed;
         bottom: 0;
@@ -674,23 +712,18 @@ body {
         gap: 10px;
     }
 
-    /* Bottom padding so content isn't hidden by sticky footer */
     .question-container, .booking-container {
         padding-bottom: 100px;
     }
 
-    /* Hide desktop buttons on mobile for survey */
     .form-step .btn-block, .form-buttons {
         display: none;
     }
 
-    /* === BOOKING PAGE MOBILE STEP FLOW === */
-    
     .booking-container {
         padding: 0.75rem;
     }
 
-    /* Re-layout booking to single column */
     .booking-split-wrapper {
         display: flex;
         flex-direction: column;
@@ -702,17 +735,15 @@ body {
         overflow: hidden;
     }
 
-    /* Hide the form side by default on mobile */
     .booking-split-wrapper .booking-form-side {
         border-bottom: none;
         padding-bottom: 0;
     }
-    
-    /* When mobile step flow is active */
+
     body.mobile-booking-flow .booking-form-side {
         display: none;
     }
-    
+
     body.mobile-booking-flow .time-slots-container {
         display: none;
     }
@@ -721,7 +752,6 @@ body {
         display: block;
     }
 
-    /* Step 1: Calendar visible (default) */
     body.mobile-booking-step-calendar .booking-calendar-side {
         display: block;
     }
@@ -732,7 +762,6 @@ body {
         display: none;
     }
 
-    /* Step 2: Time slots visible */
     body.mobile-booking-step-time .booking-calendar-side .calendar-widget,
     body.mobile-booking-step-time .booking-calendar-side .calendar-header {
         display: none;
@@ -744,7 +773,6 @@ body {
         display: none;
     }
 
-    /* Step 3: Form visible */
     body.mobile-booking-step-form .booking-calendar-side {
         display: none;
     }
@@ -757,7 +785,6 @@ body {
         display: block;
     }
 
-    /* Mobile step indicator */
     .mobile-step-indicator {
         display: flex;
         align-items: center;
@@ -792,7 +819,6 @@ body {
         margin-left: 8px;
     }
 
-    /* Mobile continue button in sticky footer */
     .mobile-booking-sticky {
         position: fixed;
         bottom: 0;
@@ -812,13 +838,11 @@ body {
         flex: 1;
     }
 
-    /* Hide desktop "Confirm Booking" and back link on mobile during steps */
     body.mobile-booking-flow .booking-form-side .btn-block,
     body.mobile-booking-flow .back-link {
         display: none;
     }
 
-    /* Show them on form step */
     body.mobile-booking-step-form .booking-form-side .btn-block {
         display: block !important;
     }
@@ -826,7 +850,6 @@ body {
         display: none;
     }
 
-    /* Selected date/time summary card for mobile */
     .mobile-selection-summary {
         background: var(--accent-bg);
         border-left: 4px solid var(--primary-color);
@@ -838,7 +861,7 @@ body {
     }
 }
 
-/* --- EXTRA SMALL SCREENS (iPhone SE, etc) --- */
+/* Extra small screens */
 @media (max-width: 374px) {
     .form-wrapper {
         padding: 1.25rem 1rem;
@@ -891,7 +914,7 @@ body {
     }
 }
 
-/* Confetti Styles for Success Page */
+/* Confetti */
 .confetti-canvas {
     position: fixed;
     top: 0;
@@ -900,55 +923,4 @@ body {
     height: 100%;
     pointer-events: none;
     z-index: 999;
-}
-.hero-text {
-    text-align: center;
-    padding: 8px 24px 28px;
-}
-
-.hero-eyebrow {
-    font-size: 12px;
-    font-weight: 600;
-    letter-spacing: 0.16em;
-    text-transform: uppercase;
-    color: var(--primary-color);
-    margin-bottom: 10px;
-}
-
-.hero-headline {
-    font-size: clamp(28px, 5vw, 42px);
-    font-weight: 800;
-    line-height: 1.15;
-    color: var(--text-main);
-    letter-spacing: -0.02em;
-}
-/* ===========================
-   HERO TEXT - MOBILE
-   =========================== */
-@media (max-width: 768px) {
-    .hero-text {
-        padding: 0px 20px 24px;
-    }
-
-    .hero-eyebrow {
-        display: inline-block;
-        font-size: 11px;
-        font-weight: 600;
-        letter-spacing: 0.16em;
-        text-transform: uppercase;
-        color: var(--primary-color) !important;
-        background: var(--accent-bg);
-        border: 1px solid rgba(0, 98, 254, 0.25);
-        padding: 6px 14px;
-        border-radius: 100px;
-        margin-bottom: 12px;
-    }
-
-    .hero-headline {
-        font-size: 28px;
-        font-weight: 800;
-        line-height: 1.2;
-        letter-spacing: -0.02em;
-        color: var(--text-main);
-    }
 }

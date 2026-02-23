@@ -23,6 +23,55 @@
         <img height="1" width="1" style="display:none"
         src="https://www.facebook.com/tr?id=854197977632425&ev=PageView&noscript=1"/>
     </noscript>
+
+    <style>
+        /* Panorama embed styles */
+        .panorama-preview {
+            width: 100%;
+            border-radius: 12px;
+            overflow: hidden;
+            margin-bottom: 20px;
+            border: 1px solid var(--border-color);
+            position: relative;
+        }
+
+        .panorama-preview iframe {
+            width: 100%;
+            height: 280px;
+            border: none;
+            display: block;
+        }
+
+        .panorama-label {
+            font-size: 10px;
+            font-weight: 800;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: var(--primary-color);
+            margin-bottom: 8px;
+            text-align: left;
+        }
+
+        .panorama-caption {
+            font-size: 12px;
+            color: var(--text-muted);
+            text-align: center;
+            padding: 8px 12px;
+            background: var(--accent-bg);
+            border-top: 1px solid var(--border-color);
+        }
+
+        /* Hide qualify header on results screen */
+        .hide-qualify-header .form-qualify-header {
+            display: none;
+        }
+
+        @media (max-width: 768px) {
+            .panorama-preview iframe {
+                height: 220px;
+            }
+        }
+    </style>
 </head>
 <body>
     <div class="app-container">
@@ -42,9 +91,9 @@
         </section>
 
         <main class="question-container">
-            <div class="form-wrapper">
+            <div class="form-wrapper" id="formWrapper">
 
-                <div class="form-qualify-header">
+                <div class="form-qualify-header" id="qualifyHeader">
                     <p class="form-qualify-title">See If You Qualify</p>
                     <p class="form-qualify-sub">We only work with builders who are a strong fit. Takes 90 seconds.</p>
                 </div>
@@ -193,6 +242,18 @@
                             <div class="booking-result-icon">🎯</div>
                             <h2 class="booking-result-title">You Qualify. Here&rsquo;s What Happens Next.</h2>
                             <p class="booking-result-sub">Based on your answers, 360&deg; virtual walkthroughs could dramatically reduce your days-on-market and help you pre-sell before completion. Let&rsquo;s build your strategy.</p>
+
+                            <!-- Live 360° Demo -->
+                            <p class="panorama-label">👇 See What Your Buyers Would Experience</p>
+                            <div class="panorama-preview">
+                                <iframe
+                                    src="https://panorama.homestyler.com/v2?m=np&id=tLnmnBGrUrgW7fDC6Zbde&locale=en_US"
+                                    allowfullscreen
+                                    loading="lazy">
+                                </iframe>
+                                <div class="panorama-caption">Live 360° walkthrough demo — this is what buyers see before your home is finished</div>
+                            </div>
+
                             <div class="booking-summary" id="bookingSummary">
                                 <p class="booking-summary-label">Your Profile</p>
                             </div>

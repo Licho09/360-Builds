@@ -827,7 +827,7 @@ body {
     body.mobile-booking-step-time .booking-form-side { display: none; }
     body.mobile-booking-step-form .booking-calendar-side { display: none; }
     body.mobile-booking-step-form .booking-form-side { display: block !important; border-bottom: none; padding-bottom: 0; }
-    body.mobile-booking-step-form .booking-form-side .btn-block { display: block; }
+    body.mobile-booking-step-form .booking-form-side .btn-block { display: block !important; }
     body.mobile-booking-flow .booking-form-side .btn-block { display: none; }
     body.mobile-booking-flow .back-link { display: none; }
     body.mobile-booking-step-form .back-link { display: block !important; }

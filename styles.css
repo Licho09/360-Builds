@@ -830,7 +830,7 @@ body {
     body.mobile-booking-step-form .booking-form-side .btn-block { display: block; }
     body.mobile-booking-flow .booking-form-side .btn-block { display: none; }
     body.mobile-booking-flow .back-link { display: none; }
-    body.mobile-booking-step-form .back-link { display: none; }
+    body.mobile-booking-step-form .back-link { display: block !important; }
 
     .mobile-booking-sticky { display: flex; }
 

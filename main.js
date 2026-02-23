@@ -78,8 +78,20 @@ function showStep(n) {
     if (n !== 'booking') {
         currentStep = n;
         onResultsScreen = false;
+        // Show qualify header again if going back
+        const qualifyHeader = document.getElementById('qualifyHeader');
+        if (qualifyHeader) qualifyHeader.style.display = '';
+        // Reset progress container margin
+        const progressContainer = document.querySelector('.progress-container');
+        if (progressContainer) progressContainer.style.marginTop = '';
     } else {
         onResultsScreen = true;
+        // Hide the "See If You Qualify" header on results screen
+        const qualifyHeader = document.getElementById('qualifyHeader');
+        if (qualifyHeader) qualifyHeader.style.display = 'none';
+        // Remove top spacing since header is gone
+        const progressContainer = document.querySelector('.progress-container');
+        if (progressContainer) progressContainer.style.marginTop = '0';
     }
 
     updateProgress(n);

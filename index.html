@@ -24,7 +24,6 @@
         src="https://www.facebook.com/tr?id=854197977632425&ev=PageView&noscript=1"/>
     </noscript>
     <!-- End Meta Pixel Code -->
-
 </head>
 <body>
     <div class="app-container">
@@ -71,101 +70,93 @@
                     <!-- Step 1 -->
                     <div class="form-step active" id="step1">
                         <h2 class="step-title">How many homes do you build per year?</h2>
-
                         <div class="form-group">
                             <div class="radio-group">
                                 <label class="radio-card">
-                                    <input type="radio" name="homesPerYear" value="1-5" required>
-                                    <span class="radio-label">1-5</span>
+                                    <input type="radio" name="homesPerYear" value="1-5">
+                                    <span class="radio-label">1–5</span>
                                 </label>
                                 <label class="radio-card">
-                                    <input type="radio" name="homesPerYear" value="6-10" required>
-                                    <span class="radio-label">6-10</span>
+                                    <input type="radio" name="homesPerYear" value="6-10">
+                                    <span class="radio-label">6–10</span>
                                 </label>
                                 <label class="radio-card">
-                                    <input type="radio" name="homesPerYear" value="11-20" required>
-                                    <span class="radio-label">11-20</span>
+                                    <input type="radio" name="homesPerYear" value="11-20">
+                                    <span class="radio-label">11–20</span>
                                 </label>
                                 <label class="radio-card">
-                                    <input type="radio" name="homesPerYear" value="21+" required>
+                                    <input type="radio" name="homesPerYear" value="21+">
                                     <span class="radio-label">21+</span>
                                 </label>
                             </div>
                         </div>
-
-                        <button type="button" class="btn btn-primary btn-block next-btn">
+                        <button type="button" class="btn btn-primary btn-block" onclick="nextStep(1)">
                             Next Question
                         </button>
                     </div>
 
                     <!-- Step 2 -->
                     <div class="form-step" id="step2">
-                        <h2 class="step-title">
-                            Do you currently use virtual tours or 3D walkthroughs for your listings?
-                        </h2>
-
+                        <h2 class="step-title">Do you currently use virtual tours or 3D walkthroughs for your listings?</h2>
                         <div class="form-group">
                             <div class="radio-group">
                                 <label class="radio-card">
-                                    <input type="radio" name="currentTours" value="Yes" required>
+                                    <input type="radio" name="currentTours" value="Yes">
                                     <span class="radio-label">Yes, we already do</span>
                                 </label>
                                 <label class="radio-card">
-                                    <input type="radio" name="currentTours" value="No-Interested" required>
+                                    <input type="radio" name="currentTours" value="No-Interested">
                                     <span class="radio-label">No, but interested</span>
                                 </label>
                                 <label class="radio-card">
-                                    <input type="radio" name="currentTours" value="No-Not-Interested" required>
+                                    <input type="radio" name="currentTours" value="No-Not-Interested">
                                     <span class="radio-label">No, not interested</span>
                                 </label>
                             </div>
                         </div>
-
                         <div class="form-buttons">
-                            <button type="button" class="btn btn-secondary prev-btn">Back</button>
-                            <button type="button" class="btn btn-primary next-btn">Next Question</button>
+                            <button type="button" class="btn btn-secondary" onclick="goBack(2)">Back</button>
+                            <button type="button" class="btn btn-primary" onclick="nextStep(2)">Next Question</button>
                         </div>
                     </div>
 
                     <!-- Step 3 -->
                     <div class="form-step" id="step3">
                         <h2 class="step-title">When do you typically start marketing a spec home?</h2>
-
                         <div class="form-group">
                             <div class="radio-group">
                                 <label class="radio-card radio-card-desc">
-                                    <input type="radio" name="marketingStart" value="at-framing" required>
+                                    <input type="radio" name="marketingStart" value="at-framing">
                                     <span class="radio-text-block">
                                         <span class="radio-label">At or before framing</span>
                                         <span class="radio-desc">You're already pre-selling aggressively</span>
                                     </span>
                                 </label>
                                 <label class="radio-card radio-card-desc">
-                                    <input type="radio" name="marketingStart" value="sheetrock" required>
+                                    <input type="radio" name="marketingStart" value="sheetrock">
                                     <span class="radio-text-block">
                                         <span class="radio-label">Once sheetrock is up</span>
                                         <span class="radio-desc">Mid-construction, some finishes selected</span>
                                     </span>
                                 </label>
                                 <label class="radio-card radio-card-desc">
-                                    <input type="radio" name="marketingStart" value="after-completion" required>
+                                    <input type="radio" name="marketingStart" value="after-completion">
                                     <span class="radio-text-block">
                                         <span class="radio-label">After completion</span>
                                         <span class="radio-desc">Fully finished before any marketing</span>
                                     </span>
                                 </label>
                                 <label class="radio-card radio-card-desc">
-                                    <input type="radio" name="marketingStart" value="varies" required>
+                                    <input type="radio" name="marketingStart" value="varies">
                                     <span class="radio-text-block">
                                         <span class="radio-label">It varies by project</span>
                                     </span>
                                 </label>
                             </div>
                         </div>
-
                         <div class="form-buttons">
-                            <button type="button" class="btn btn-secondary prev-btn">Back</button>
-                            <button type="button" class="btn btn-primary next-btn">Next Question</button>
+                            <button type="button" class="btn btn-secondary" onclick="goBack(3)">Back</button>
+                            <button type="button" class="btn btn-primary" onclick="nextStep(3)">Next Question</button>
                         </div>
                     </div>
 
@@ -173,7 +164,6 @@
                     <div class="form-step" id="step4">
                         <h2 class="step-title">How are you currently marketing your spec homes?</h2>
                         <p class="step-subtitle">Select all that apply to your current process.</p>
-
                         <div class="form-group">
                             <div class="radio-group">
                                 <label class="radio-card checkbox-card">
@@ -202,29 +192,24 @@
                                 </label>
                             </div>
                         </div>
-
                         <div class="form-buttons">
-                            <button type="button" class="btn btn-secondary prev-btn">Back</button>
-                            <button type="button" class="btn btn-primary" id="bookCallBtn" onclick="showBooking()">See My Results &rarr;</button>
+                            <button type="button" class="btn btn-secondary" onclick="goBack(4)">Back</button>
+                            <button type="button" class="btn btn-primary" onclick="showBooking()">See My Results &rarr;</button>
                         </div>
                     </div>
 
-                    <!-- Booking / Results Step -->
+                    <!-- Results Step -->
                     <div class="form-step" id="stepBooking">
                         <div class="booking-result">
                             <div class="booking-result-icon">🎯</div>
                             <h2 class="booking-result-title">You Qualify. Here&rsquo;s What Happens Next.</h2>
                             <p class="booking-result-sub">Based on your answers, 360&deg; virtual walkthroughs could dramatically reduce your days-on-market and help you pre-sell before completion. Let&rsquo;s build your strategy.</p>
-
                             <div class="booking-summary" id="bookingSummary">
                                 <p class="booking-summary-label">Your Profile</p>
-                                <!-- populated by JS -->
                             </div>
-
                             <button type="button" class="btn btn-primary btn-block" onclick="window.location.href='booking.html'">
                                 Book My Free Strategy Call &rarr;
                             </button>
-
                             <div class="booking-trust">
                                 <span class="booking-trust-item">No sales pressure</span>
                                 <span class="booking-trust-item">30-min call</span>
@@ -237,12 +222,13 @@
             </div>
         </main>
 
+        <!-- Mobile Sticky Footer -->
+        <div class="mobile-sticky-footer" id="mobileStickyFooter"></div>
+
         <!-- Value Section -->
         <section class="value-section">
             <div class="value-inner">
-
                 <div class="section-label">Why 360&deg; Changes the Game</div>
-
                 <div class="value-cards">
                     <div class="value-card">
                         <span class="value-card-icon">🏗️</span>
@@ -265,7 +251,6 @@
                         <p class="value-card-text">Most builders in your market still rely on flat photos and floor plan PDFs. An immersive 360&deg; experience signals quality before a buyer ever visits the lot.</p>
                     </div>
                 </div>
-
             </div>
         </section>
 
@@ -274,106 +259,165 @@
         </footer>
     </div>
 
-    <script src="script.js"></script>
+    <!-- NO script.js here — booking page only -->
     <script>
-        // Step logic
-        const steps = document.querySelectorAll('.form-step');
-        const progressBar = document.getElementById('progressBar');
-        const currentStepEl = document.getElementById('currentStep');
-        const totalStepsEl = document.getElementById('totalSteps');
-        const TOTAL = 4;
-        let current = 1;
+    const TOTAL_STEPS = 4;
+    let currentStep = 1;
 
-        function showStep(n) {
-            steps.forEach(s => s.classList.remove('active'));
-            const el = n === 'booking' ? document.getElementById('stepBooking') : document.getElementById('step' + n);
-            if (el) el.classList.add('active');
-            if (n !== 'booking') {
-                current = n;
-                const pct = ((n - 1) / TOTAL) * 100;
-                progressBar.style.width = pct + '%';
-                currentStepEl.textContent = n;
-                totalStepsEl.textContent = TOTAL;
-            } else {
-                progressBar.style.width = '100%';
-                currentStepEl.textContent = TOTAL;
+    function updateProgress(step) {
+        const pct = step === 'booking' ? 100 : ((step - 1) / TOTAL_STEPS) * 100;
+        document.getElementById('progressBar').style.width = pct + '%';
+        document.getElementById('currentStep').textContent = step === 'booking' ? TOTAL_STEPS : step;
+        document.getElementById('totalSteps').textContent = TOTAL_STEPS;
+    }
+
+    function showStep(n) {
+        document.querySelectorAll('.form-step').forEach(s => s.classList.remove('active'));
+        const el = n === 'booking'
+            ? document.getElementById('stepBooking')
+            : document.getElementById('step' + n);
+        if (el) el.classList.add('active');
+        if (n !== 'booking') currentStep = n;
+        updateProgress(n);
+        updateMobileFooter();
+        const container = document.querySelector('.question-container');
+        if (container) window.scrollTo({ top: container.offsetTop - 16, behavior: 'smooth' });
+    }
+
+    function validateStep(step) {
+        if (step === 4) return true; // checkboxes optional
+        const stepEl = document.getElementById('step' + step);
+        const radios = stepEl.querySelectorAll('input[type="radio"]');
+        const names = new Set([...radios].map(r => r.name));
+        for (let name of names) {
+            if (!stepEl.querySelector(`input[name="${name}"]:checked`)) {
+                alert('Please select an option to continue.');
+                return false;
             }
-            window.scrollTo({ top: document.querySelector('.question-container').offsetTop - 16, behavior: 'smooth' });
+        }
+        return true;
+    }
+
+    function nextStep(from) {
+        if (!validateStep(from)) return;
+        showStep(from + 1);
+    }
+
+    function goBack(from) {
+        showStep(from - 1);
+    }
+
+    function showBooking() {
+        buildSummary();
+        showStep('booking');
+        if (typeof fbq !== 'undefined') fbq('track', 'Lead');
+    }
+
+    function buildSummary() {
+        const homesPerYear = document.querySelector('input[name="homesPerYear"]:checked')?.value || '';
+        const currentTours = document.querySelector('input[name="currentTours"]:checked')?.value || '';
+        const marketingStart = document.querySelector('input[name="marketingStart"]:checked')?.value || '';
+        const channels = [...document.querySelectorAll('input[name="marketingChannels"]:checked')].map(c => c.value);
+
+        const startMap = {
+            'at-framing': 'At or before framing',
+            'sheetrock': 'Once sheetrock is up',
+            'after-completion': 'After completion',
+            'varies': 'Varies by project'
+        };
+        const toursMap = {
+            'Yes': 'Yes, already using',
+            'No-Interested': 'No, but interested',
+            'No-Not-Interested': 'Not currently interested'
+        };
+        const channelMap = {
+            'mls': 'MLS / Realtor Network',
+            'social-ads': 'Social Media / Paid Ads',
+            'photos-video': 'Professional Photos / Video',
+            'referrals': 'Referrals / Word of Mouth',
+            'signage': 'Signage / Drive-By',
+            'none': 'No formal system'
+        };
+
+        const rows = [];
+        if (homesPerYear) rows.push({ label: 'Homes per year', val: homesPerYear });
+        if (currentTours) rows.push({ label: 'Virtual tours', val: toursMap[currentTours] || currentTours });
+        if (marketingStart) rows.push({ label: 'Marketing start', val: startMap[marketingStart] || marketingStart });
+        if (channels.length) rows.push({ label: 'Current marketing', val: channels.map(c => channelMap[c] || c).join(', ') });
+
+        localStorage.setItem('surveyData', JSON.stringify({ homesPerYear, currentTours, marketingStart, channels }));
+
+        const box = document.getElementById('bookingSummary');
+        box.innerHTML = '<p class="booking-summary-label">Your Profile</p>';
+        rows.forEach(r => {
+            box.innerHTML += `<div class="booking-summary-row">
+                <span class="booking-summary-check">✓</span>
+                <span class="booking-summary-key">${r.label}:</span>
+                <span class="booking-summary-val">${r.val}</span>
+            </div>`;
+        });
+    }
+
+    // Checkbox toggle
+    document.querySelectorAll('.checkbox-card').forEach(card => {
+        card.addEventListener('click', function(e) {
+            if (e.target.tagName === 'INPUT') {
+                this.classList.toggle('checked', this.querySelector('input').checked);
+                return;
+            }
+            const cb = this.querySelector('input[type="checkbox"]');
+            cb.checked = !cb.checked;
+            this.classList.toggle('checked', cb.checked);
+        });
+    });
+
+    // Mobile sticky footer
+    function updateMobileFooter() {
+        const footer = document.getElementById('mobileStickyFooter');
+        if (!footer) return;
+
+        if (window.innerWidth > 768) {
+            footer.style.display = 'none';
+            return;
         }
 
-        // Next buttons
-        document.querySelectorAll('.next-btn').forEach(btn => {
-            btn.addEventListener('click', function () {
-                const step = this.closest('.form-step');
-                const required = step.querySelectorAll('input[required]');
-                let valid = true;
-                const names = new Set();
-                required.forEach(inp => names.add(inp.name));
-                names.forEach(name => {
-                    const checked = step.querySelectorAll(`input[name="${name}"]:checked`);
-                    if (!checked.length) valid = false;
-                });
-                if (!valid) { alert('Please select an option to continue.'); return; }
-                showStep(current + 1);
-            });
-        });
-
-        // Back buttons
-        document.querySelectorAll('.prev-btn').forEach(btn => {
-            btn.addEventListener('click', function () {
-                showStep(current - 1);
-            });
-        });
-
-        // Checkbox cards toggle
-        document.querySelectorAll('.checkbox-card').forEach(card => {
-            card.addEventListener('click', function (e) {
-                if (e.target.tagName === 'INPUT') return;
-                const cb = this.querySelector('input[type="checkbox"]');
-                cb.checked = !cb.checked;
-                this.classList.toggle('checked', cb.checked);
-            });
-        });
-
-        // Show booking result
-        function showBooking() {
-            buildSummary();
-            showStep('booking');
-            if (typeof fbq !== 'undefined') { fbq('track', 'Lead'); }
+        // Hide on results screen
+        if (currentStep > TOTAL_STEPS) {
+            footer.style.display = 'none';
+            return;
         }
 
-        function buildSummary() {
-            const homesPerYear = document.querySelector('input[name="homesPerYear"]:checked')?.value || '';
-            const currentTours = document.querySelector('input[name="currentTours"]:checked')?.value || '';
-            const marketingStart = document.querySelector('input[name="marketingStart"]:checked')?.value || '';
+        footer.style.display = 'flex';
+        footer.innerHTML = '';
 
-            const startMap = {
-                'at-framing': 'At or before framing',
-                'sheetrock': 'Once sheetrock is up',
-                'after-completion': 'After completion',
-                'varies': 'Varies by project'
-            };
-
-            const toursMap = {
-                'Yes': 'Yes, already using',
-                'No-Interested': 'No, but interested',
-                'No-Not-Interested': 'Not currently interested'
-            };
-
-            const rows = [];
-            if (homesPerYear) rows.push({ label: 'Homes per year', val: homesPerYear });
-            if (currentTours) rows.push({ label: 'Virtual tours', val: toursMap[currentTours] || currentTours });
-            if (marketingStart) rows.push({ label: 'Marketing start', val: startMap[marketingStart] || marketingStart });
-
-            const box = document.getElementById('bookingSummary');
-            box.innerHTML = '<p class="booking-summary-label">Your Profile</p>';
-            rows.forEach(r => {
-                box.innerHTML += `<div class="booking-summary-row"><span class="booking-summary-check">✓</span><span class="booking-summary-key">${r.label}:</span><span class="booking-summary-val">${r.val}</span></div>`;
-            });
+        if (currentStep > 1) {
+            const back = document.createElement('button');
+            back.className = 'btn btn-secondary';
+            back.style.flex = '1';
+            back.textContent = 'Back';
+            back.onclick = () => goBack(currentStep);
+            footer.appendChild(back);
         }
 
-        // Init
-        showStep(1);
+        const action = document.createElement('button');
+        action.className = 'btn btn-primary';
+        action.style.flex = '2';
+
+        if (currentStep < TOTAL_STEPS) {
+            action.textContent = 'Next Question';
+            action.onclick = () => nextStep(currentStep);
+        } else {
+            action.textContent = 'See My Results →';
+            action.onclick = () => showBooking();
+        }
+
+        footer.appendChild(action);
+    }
+
+    window.addEventListener('resize', updateMobileFooter);
+
+    // Init
+    showStep(1);
     </script>
 </body>
 </html>

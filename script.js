@@ -1,6 +1,5 @@
 document.addEventListener('DOMContentLoaded', function () {
 
-    // Only run on booking page
     const calendarGrid = document.getElementById('calendarGrid');
     const timeGrid = document.getElementById('timeGrid');
     const currentMonthYear = document.getElementById('currentMonthYear');
@@ -9,14 +8,108 @@ document.addEventListener('DOMContentLoaded', function () {
 
     const GOOGLE_SHEET_URL = 'https://script.google.com/macros/s/AKfycbyQn65Ow5YEMMY4kNN2PNK5FzdysBV3igm5a69EAN-QeZgBgFJz2khkIhkrl3ljDYX6/exec';
 
-    // ------------------ CALENDAR & TIME ------------------
-    if (calendarGrid && timeGrid && currentMonthYear && displayDateTime) {
-        let selectedDate = null;
-        let selectedTime = null;
+    let selectedDate = null;
+    let selectedTime = null;
+
+    // ─── MOBILE SETUP ───────────────────────────────────────
+    const isMobile = () => window.innerWidth <= 768;
+    let mobileStep = 'calendar'; // 'calendar' | 'time' | 'form'
+
+    // Inject mobile sticky footer
+    let stickyFooter = null;
+    let mobileBackBtn = null;
+    let mobileContinueBtn = null;
+
+    function buildMobileFooter() {
+        if (stickyFooter) return;
+        stickyFooter = document.createElement('div');
+        stickyFooter.className = 'mobile-booking-sticky';
+        stickyFooter.style.display = 'none';
+
+        mobileBackBtn = document.createElement('button');
+        mobileBackBtn.className = 'btn btn-secondary';
+        mobileBackBtn.style.flex = '1';
+        mobileBackBtn.textContent = 'Back';
+        mobileBackBtn.style.display = 'none';
+
+        mobileContinueBtn = document.createElement('button');
+        mobileContinueBtn.className = 'btn btn-primary';
+        mobileContinueBtn.style.flex = '2';
+        mobileContinueBtn.textContent = 'Continue';
+
+        mobileBackBtn.addEventListener('click', function () {
+            if (mobileStep === 'time') goToStep('calendar');
+            else if (mobileStep === 'form') goToStep('time');
+        });
+
+        mobileContinueBtn.addEventListener('click', function () {
+            if (mobileContinueBtn.disabled) return;
+            if (mobileStep === 'calendar' && selectedDate) goToStep('time');
+            else if (mobileStep === 'time' && selectedTime) goToStep('form');
+        });
+
+        stickyFooter.appendChild(mobileBackBtn);
+        stickyFooter.appendChild(mobileContinueBtn);
+        document.body.appendChild(stickyFooter);
+    }
+
+    function goToStep(step) {
+        mobileStep = step;
+
+        document.body.classList.remove(
+            'mobile-booking-step-calendar',
+            'mobile-booking-step-time',
+            'mobile-booking-step-form'
+        );
+        document.body.classList.add('mobile-booking-step-' + step);
+
+        updateMobileFooter();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function updateMobileFooter() {
+        if (!isMobile() || !stickyFooter) return;
+
+        if (mobileStep === 'form') {
+            // Hide sticky footer — form has its own Confirm Booking button
+            stickyFooter.style.display = 'none';
+            return;
+        }
+
+        stickyFooter.style.display = 'flex';
+
+        // Back button — only show on time step
+        mobileBackBtn.style.display = mobileStep === 'time' ? 'block' : 'none';
+
+        // Continue button state
+        const canContinue = (mobileStep === 'calendar' && selectedDate) ||
+                            (mobileStep === 'time' && selectedTime);
+
+        mobileContinueBtn.disabled = !canContinue;
+        mobileContinueBtn.style.opacity = canContinue ? '1' : '0.4';
+        mobileContinueBtn.style.cursor = canContinue ? 'pointer' : 'not-allowed';
+
+        if (mobileStep === 'calendar') {
+            mobileContinueBtn.textContent = 'Next: Pick a Time →';
+        } else if (mobileStep === 'time') {
+            mobileContinueBtn.textContent = 'Next: Your Details →';
+        }
+    }
+
+    function initMobileFlow() {
+        if (!isMobile()) return;
+        buildMobileFooter();
+        document.body.classList.add('mobile-booking-flow');
+        goToStep('calendar');
+    }
+
+    // ─── CALENDAR ───────────────────────────────────────────
+    if (calendarGrid && currentMonthYear) {
         const now = new Date();
         const currentYear = now.getFullYear();
         const currentMonth = now.getMonth();
-        const months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+        const months = ['January','February','March','April','May','June',
+                        'July','August','September','October','November','December'];
 
         function initCalendar() {
             currentMonthYear.textContent = `${months[currentMonth]} ${currentYear}`;
@@ -31,14 +124,16 @@ document.addEventListener('DOMContentLoaded', function () {
             }
 
             const today = now.getDate();
-            const maxSelectableDay = today + 14;
+            // Tomorrow = today+1, available for next 3 days (tomorrow, day+2, day+3)
+            const firstAvailable = today + 1;
+            const lastAvailable = today + 3;
 
             for (let day = 1; day <= daysInMonth; day++) {
                 const dayEl = document.createElement('div');
                 dayEl.className = 'calendar-day';
                 dayEl.textContent = day;
 
-                if (day >= today && day <= maxSelectableDay) {
+                if (day >= firstAvailable && day <= lastAvailable) {
                     dayEl.classList.add('available');
                     dayEl.addEventListener('click', () => {
                         document.querySelectorAll('.calendar-day').forEach(d => d.classList.remove('selected'));
@@ -47,164 +142,69 @@ document.addEventListener('DOMContentLoaded', function () {
                         updateDisplay();
                         generateTimeSlots();
 
-                        // Mobile: auto-advance to time step
-                        if (window.innerWidth <= 768) {
-                            document.body.classList.remove('mobile-booking-step-calendar');
-                            document.body.classList.add('mobile-booking-step-time');
-                            updateMobileBookingFooter();
+                        if (isMobile()) {
+                            updateMobileFooter();
                         }
                     });
                 }
+
                 calendarGrid.appendChild(dayEl);
             }
         }
 
-        function generateTimeSlots() {
-            timeGrid.innerHTML = '';
-            const times = ['9:00 AM','10:00 AM','11:00 AM','1:00 PM','2:00 PM','3:00 PM','4:00 PM','5:00 PM'];
-            times.forEach(time => {
-                const timeBtn = document.createElement('div');
-                timeBtn.className = 'time-btn';
-                timeBtn.textContent = time;
-                timeBtn.addEventListener('click', () => {
-                    document.querySelectorAll('.time-btn').forEach(btn => btn.classList.remove('active'));
-                    timeBtn.classList.add('active');
-                    selectedTime = time;
-                    updateDisplay();
-
-                    // Mobile: auto-advance to form step
-                    if (window.innerWidth <= 768) {
-                        document.body.classList.remove('mobile-booking-step-time');
-                        document.body.classList.add('mobile-booking-step-form');
-                        updateMobileBookingFooter();
-                    }
-                });
-                timeGrid.appendChild(timeBtn);
-            });
-        }
-
-        function updateDisplay() {
-            if (selectedDate && selectedTime) {
-                const options = { weekday: 'short', month: 'short', day: 'numeric' };
-                displayDateTime.textContent = `${selectedDate.toLocaleDateString(undefined, options)} at ${selectedTime}`;
-            } else if (selectedDate) {
-                const options = { weekday: 'short', month: 'short', day: 'numeric' };
-                displayDateTime.textContent = `${selectedDate.toLocaleDateString(undefined, options)} — select a time`;
-            } else {
-                displayDateTime.textContent = 'Please select a date and time';
-            }
-        }
-
         initCalendar();
-
-        // Mobile booking step flow
-        function initMobileBookingFlow() {
-            if (window.innerWidth > 768) return;
-            document.body.classList.add('mobile-booking-flow', 'mobile-booking-step-calendar');
-            updateMobileBookingFooter();
-        }
-
-        function updateMobileBookingFooter() {
-            let footer = document.getElementById('mobileBookingFooter');
-            if (!footer) {
-                footer = document.createElement('div');
-                footer.id = 'mobileBookingFooter';
-                footer.className = 'mobile-booking-sticky';
-                document.body.appendChild(footer);
-            }
-
-            if (window.innerWidth > 768) {
-                footer.style.display = 'none';
-                return;
-            }
-
-            footer.style.display = 'flex';
-            footer.innerHTML = '';
-
-            const isCalStep = document.body.classList.contains('mobile-booking-step-calendar');
-            const isTimeStep = document.body.classList.contains('mobile-booking-step-time');
-            const isFormStep = document.body.classList.contains('mobile-booking-step-form');
-
-            if (isCalStep) {
-                const btn = document.createElement('button');
-                btn.className = 'btn btn-primary';
-                btn.style.flex = '1';
-                btn.textContent = selectedDate ? 'Choose a Time →' : 'Select a Date First';
-                btn.disabled = !selectedDate;
-                btn.onclick = () => {
-                    document.body.classList.remove('mobile-booking-step-calendar');
-                    document.body.classList.add('mobile-booking-step-time');
-                    generateTimeSlots();
-                    updateMobileBookingFooter();
-                    window.scrollTo({ top: 0, behavior: 'smooth' });
-                };
-                footer.appendChild(btn);
-            } else if (isTimeStep) {
-                const back = document.createElement('button');
-                back.className = 'btn btn-secondary';
-                back.style.flex = '1';
-                back.textContent = 'Back';
-                back.onclick = () => {
-                    document.body.classList.remove('mobile-booking-step-time');
-                    document.body.classList.add('mobile-booking-step-calendar');
-                    updateMobileBookingFooter();
-                    window.scrollTo({ top: 0, behavior: 'smooth' });
-                };
-                footer.appendChild(back);
-
-                const btn = document.createElement('button');
-                btn.className = 'btn btn-primary';
-                btn.style.flex = '2';
-                btn.textContent = selectedTime ? 'Enter Your Info →' : 'Select a Time First';
-                btn.disabled = !selectedTime;
-                btn.onclick = () => {
-                    document.body.classList.remove('mobile-booking-step-time');
-                    document.body.classList.add('mobile-booking-step-form');
-                    updateMobileBookingFooter();
-                    window.scrollTo({ top: 0, behavior: 'smooth' });
-                };
-                footer.appendChild(btn);
-            } else if (isFormStep) {
-                const back = document.createElement('button');
-                back.className = 'btn btn-secondary';
-                back.style.flex = '1';
-                back.textContent = 'Back';
-                back.onclick = () => {
-                    document.body.classList.remove('mobile-booking-step-form');
-                    document.body.classList.add('mobile-booking-step-time');
-                    updateMobileBookingFooter();
-                    window.scrollTo({ top: 0, behavior: 'smooth' });
-                };
-                footer.appendChild(back);
-                // Form step uses its own submit button
-            }
-        }
-
-        window.addEventListener('resize', () => {
-            if (window.innerWidth > 768) {
-                const footer = document.getElementById('mobileBookingFooter');
-                if (footer) footer.style.display = 'none';
-                document.body.classList.remove('mobile-booking-flow','mobile-booking-step-calendar','mobile-booking-step-time','mobile-booking-step-form');
-            }
-        });
-
-        initMobileBookingFlow();
     }
 
-    // ------------------ FORM SUBMIT ------------------
+    // ─── TIME SLOTS ─────────────────────────────────────────
+    function generateTimeSlots() {
+        if (!timeGrid) return;
+        timeGrid.innerHTML = '';
+        const times = ['9:00 AM','10:00 AM','11:00 AM','1:00 PM','2:00 PM','3:00 PM','4:00 PM','5:00 PM'];
+        times.forEach(time => {
+            const timeBtn = document.createElement('div');
+            timeBtn.className = 'time-btn';
+            timeBtn.textContent = time;
+            timeBtn.addEventListener('click', () => {
+                document.querySelectorAll('.time-btn').forEach(b => b.classList.remove('active'));
+                timeBtn.classList.add('active');
+                selectedTime = time;
+                updateDisplay();
+
+                if (isMobile()) {
+                    updateMobileFooter();
+                }
+            });
+            timeGrid.appendChild(timeBtn);
+        });
+    }
+
+    function updateDisplay() {
+        if (!displayDateTime) return;
+        if (selectedDate && selectedTime) {
+            const options = { weekday: 'short', month: 'short', day: 'numeric' };
+            displayDateTime.textContent = `${selectedDate.toLocaleDateString(undefined, options)} at ${selectedTime}`;
+        } else if (selectedDate) {
+            const options = { weekday: 'short', month: 'short', day: 'numeric' };
+            displayDateTime.textContent = `${selectedDate.toLocaleDateString(undefined, options)} — select a time`;
+        } else {
+            displayDateTime.textContent = 'Please select a date and time';
+        }
+    }
+
+    // ─── FORM SUBMIT ────────────────────────────────────────
     if (bookingForm) {
         bookingForm.addEventListener('submit', function (e) {
             e.preventDefault();
 
-            const selectedDateTimeText = document.getElementById('displayDateTime')?.textContent;
             const name = document.getElementById('userName')?.value?.trim();
             const phone = document.getElementById('userPhone')?.value?.trim();
+            const selectedDateTimeText = displayDateTime?.textContent;
 
             if (!name || !phone) {
                 alert('Please enter your name and phone number.');
                 return;
             }
-            if (!selectedDateTimeText || selectedDateTimeText === 'Please select a date and time') {
+            if (!selectedDate || !selectedTime) {
                 alert('Please select a date and time.');
                 return;
             }
@@ -236,4 +236,20 @@ document.addEventListener('DOMContentLoaded', function () {
                 });
         });
     }
+
+    // ─── RESIZE ─────────────────────────────────────────────
+    window.addEventListener('resize', () => {
+        if (!isMobile()) {
+            if (stickyFooter) stickyFooter.style.display = 'none';
+            document.body.classList.remove(
+                'mobile-booking-flow',
+                'mobile-booking-step-calendar',
+                'mobile-booking-step-time',
+                'mobile-booking-step-form'
+            );
+        }
+    });
+
+    // ─── INIT ────────────────────────────────────────────────
+    initMobileFlow();
 });

@@ -1,0 +1,209 @@
+// =====================
+// CONFETTI
+// =====================
+function launchConfetti() {
+    const canvas = document.getElementById('confettiCanvas');
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    const colors = ['#0062fe','#22c55e','#f59e0b','#ef4444','#8b5cf6','#06b6d4'];
+    const pieces = [];
+
+    for (let i = 0; i < 160; i++) {
+        pieces.push({
+            x: Math.random() * canvas.width,
+            y: Math.random() * canvas.height - canvas.height,
+            w: Math.random() * 10 + 6,
+            h: Math.random() * 6 + 4,
+            color: colors[Math.floor(Math.random() * colors.length)],
+            rotation: Math.random() * 360,
+            speed: Math.random() * 4 + 2,
+            rotSpeed: (Math.random() - 0.5) * 4
+        });
+    }
+
+    let frame;
+    function draw() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        let allDone = true;
+        pieces.forEach(p => {
+            p.y += p.speed;
+            p.rotation += p.rotSpeed;
+            if (p.y < canvas.height + 20) allDone = false;
+            ctx.save();
+            ctx.translate(p.x + p.w / 2, p.y + p.h / 2);
+            ctx.rotate(p.rotation * Math.PI / 180);
+            ctx.fillStyle = p.color;
+            ctx.fillRect(-p.w / 2, -p.h / 2, p.w, p.h);
+            ctx.restore();
+        });
+        if (!allDone) {
+            frame = requestAnimationFrame(draw);
+        } else {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+        }
+    }
+
+    if (frame) cancelAnimationFrame(frame);
+    draw();
+    setTimeout(() => {
+        cancelAnimationFrame(frame);
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+    }, 3500);
+}
+
+// =====================
+// FORM LOGIC
+// =====================
+const TOTAL_STEPS = 4;
+let currentStep = 1;
+let onResultsScreen = false;
+
+function updateProgress(step) {
+    const pct = step === 'booking' ? 100 : ((step - 1) / TOTAL_STEPS) * 100;
+    document.getElementById('progressBar').style.width = pct + '%';
+    document.getElementById('currentStep').textContent = step === 'booking' ? TOTAL_STEPS : step;
+    document.getElementById('totalSteps').textContent = TOTAL_STEPS;
+}
+
+function showStep(n) {
+    document.querySelectorAll('.form-step').forEach(s => s.classList.remove('active'));
+    const el = n === 'booking'
+        ? document.getElementById('stepBooking')
+        : document.getElementById('step' + n);
+    if (el) el.classList.add('active');
+
+    if (n !== 'booking') {
+        currentStep = n;
+        onResultsScreen = false;
+    } else {
+        onResultsScreen = true;
+    }
+
+    updateProgress(n);
+    updateMobileFooter();
+    const container = document.querySelector('.question-container');
+    if (container) window.scrollTo({ top: container.offsetTop - 16, behavior: 'smooth' });
+}
+
+function validateStep(step) {
+    if (step === 4) return true; // checkboxes are optional
+    const stepEl = document.getElementById('step' + step);
+    const radios = stepEl.querySelectorAll('input[type="radio"]');
+    const names = new Set([...radios].map(r => r.name));
+    for (let name of names) {
+        if (!stepEl.querySelector(`input[name="${name}"]:checked`)) {
+            alert('Please select an option to continue.');
+            return false;
+        }
+    }
+    return true;
+}
+
+function nextStep(from) {
+    if (!validateStep(from)) return;
+    showStep(from + 1);
+}
+
+function goBack(from) {
+    showStep(from - 1);
+}
+
+function showBooking() {
+    buildSummary();
+    showStep('booking');
+    launchConfetti();
+    if (typeof fbq !== 'undefined') fbq('track', 'Lead');
+}
+
+function buildSummary() {
+    const homesPerYear = document.querySelector('input[name="homesPerYear"]:checked')?.value || '';
+    const currentTours = document.querySelector('input[name="currentTours"]:checked')?.value || '';
+    const marketingStart = document.querySelector('input[name="marketingStart"]:checked')?.value || '';
+    const channels = [...document.querySelectorAll('input[name="marketingChannels"]:checked')].map(c => c.value);
+
+    const startMap = {
+        'at-framing': 'At or before framing',
+        'sheetrock': 'Once sheetrock is up',
+        'after-completion': 'After completion',
+        'varies': 'Varies by project'
+    };
+    const toursMap = {
+        'Yes': 'Yes, already using',
+        'No-Interested': 'No, but interested',
+        'No-Not-Interested': 'Not currently interested'
+    };
+    const channelMap = {
+        'mls': 'MLS / Realtor Network',
+        'social-ads': 'Social Media / Paid Ads',
+        'photos-video': 'Professional Photos / Video',
+        'referrals': 'Referrals / Word of Mouth',
+        'signage': 'Signage / Drive-By',
+        'none': 'No formal system'
+    };
+
+    const rows = [];
+    if (homesPerYear) rows.push({ label: 'Homes per year', val: homesPerYear });
+    if (currentTours) rows.push({ label: 'Virtual tours', val: toursMap[currentTours] || currentTours });
+    if (marketingStart) rows.push({ label: 'Marketing start', val: startMap[marketingStart] || marketingStart });
+    if (channels.length) rows.push({ label: 'Current marketing', val: channels.map(c => channelMap[c] || c).join(', ') });
+
+    try { localStorage.setItem('surveyData', JSON.stringify({ homesPerYear, currentTours, marketingStart, channels })); } catch(e) {}
+
+    const box = document.getElementById('bookingSummary');
+    box.innerHTML = '<p class="booking-summary-label">Your Profile</p>';
+    rows.forEach(r => {
+        box.innerHTML += `<div class="booking-summary-row">
+            <span class="booking-summary-check">✓</span>
+            <span class="booking-summary-key">${r.label}:</span>
+            <span class="booking-summary-val">${r.val}</span>
+        </div>`;
+    });
+}
+
+// =====================
+// MOBILE STICKY FOOTER
+// =====================
+function updateMobileFooter() {
+    const footer = document.getElementById('mobileStickyFooter');
+    if (!footer) return;
+
+    // Hide on desktop OR on results screen
+    if (window.innerWidth > 768 || onResultsScreen) {
+        footer.style.display = 'none';
+        return;
+    }
+
+    footer.style.display = 'flex';
+    footer.innerHTML = '';
+
+    if (currentStep > 1) {
+        const back = document.createElement('button');
+        back.className = 'btn btn-secondary';
+        back.style.flex = '1';
+        back.textContent = 'Back';
+        back.onclick = () => goBack(currentStep);
+        footer.appendChild(back);
+    }
+
+    const action = document.createElement('button');
+    action.className = 'btn btn-primary';
+    action.style.flex = '2';
+
+    if (currentStep < TOTAL_STEPS) {
+        action.textContent = 'Next Question';
+        action.onclick = () => nextStep(currentStep);
+    } else {
+        action.textContent = 'See My Results →';
+        action.onclick = () => showBooking();
+    }
+
+    footer.appendChild(action);
+}
+
+window.addEventListener('resize', updateMobileFooter);
+
+// Init
+showStep(1);

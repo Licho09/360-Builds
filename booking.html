@@ -24,14 +24,12 @@
         <img height="1" width="1" style="display:none"
         src="https://www.facebook.com/tr?id=854197977632425&ev=PageView&noscript=1"/>
     </noscript>
-    <!-- End Meta Pixel Code -->
-
 </head>
 <body>
     <div class="app-container">
         <header class="simple-header">
             <div class="logo-text">
-                <a href="index.html" style="text-decoration: none; color: inherit;">
+                <a href="index.html" style="text-decoration:none;color:inherit;">
                     <span class="logo-number">360</span><span class="logo-degree">&deg;</span>
                     <span class="logo-divider"></span>
                     <span class="logo-word">Builds</span>
@@ -39,7 +37,6 @@
             </div>
         </header>
 
-        <!-- Hero Text -->
         <section class="hero-text">
             <p class="hero-eyebrow">One Last Step</p>
             <h1 class="hero-headline">Pick a Time &mdash;<br>We&rsquo;ll Do the Rest</h1>
@@ -47,54 +44,48 @@
 
         <main class="booking-container">
             <div class="booking-split-wrapper">
-                <!-- Left Side: Form -->
+
+                <!-- Left: Form -->
                 <div class="booking-form-side">
                     <h2 class="step-title">Your Details</h2>
                     <p class="step-subtitle">Enter your info to secure your spot.</p>
-                    
                     <form id="bookingForm">
                         <div class="form-group">
                             <label for="userName" class="field-label">Full Name</label>
                             <input type="text" id="userName" name="userName" placeholder="Your Name" required class="text-input">
                         </div>
-
                         <div class="form-group">
                             <label for="userPhone" class="field-label">Phone Number</label>
                             <input type="tel" id="userPhone" name="userPhone" placeholder="(555) 000-0000" required class="text-input">
                         </div>
-
                         <div class="selected-info" id="selectedInfo">
                             <p><strong>Selected:</strong> <span id="displayDateTime">Please select a date and time</span></p>
                         </div>
-
                         <button type="submit" class="btn btn-primary btn-block">Confirm Booking</button>
                         <a href="index.html" class="back-link">← Back to questions</a>
                     </form>
                 </div>
 
-                <!-- Right Side: Calendar -->
+                <!-- Right: Calendar -->
                 <div class="booking-calendar-side">
                     <div class="calendar-section-title">Pick a Date</div>
                     <div class="calendar-header">
-                        <h2 id="currentMonthYear">February 2026</h2>
+                        <h2 id="currentMonthYear"></h2>
                     </div>
-                    
                     <div class="calendar-widget">
                         <div class="calendar-days-header">
                             <span>Sun</span><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span>
                         </div>
-                        <div class="calendar-grid" id="calendarGrid">
-                            <!-- Days will be injected here -->
-                        </div>
+                        <div class="calendar-grid" id="calendarGrid"></div>
                     </div>
-
-                    <div class="time-slots-container">
+                    <div class="time-slots-container" id="timeSlotsContainer">
                         <h3 class="field-label">Available Times</h3>
                         <div class="time-grid" id="timeGrid">
                             <p class="empty-msg">Select a date to see times</p>
                         </div>
                     </div>
                 </div>
+
             </div>
         </main>
 
@@ -102,39 +93,7 @@
             <p>&copy; 2026 360&deg; Builds. All rights reserved.</p>
         </footer>
     </div>
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const isMobile = window.innerWidth <= 768;
-            if (!isMobile) return;
-        
-            // Add mobile flow class and inject sticky footer
-            document.body.classList.add('mobile-booking-flow', 'mobile-booking-step-calendar');
-        
-            const sticky = document.createElement('div');
-            sticky.className = 'mobile-booking-sticky';
-            sticky.innerHTML = '<button class="btn btn-primary" id="mobileContinueBtn">Continue</button>';
-            document.body.appendChild(sticky);
-        
-            const continueBtn = document.getElementById('mobileContinueBtn');
-            let mobileStep = 1;
-        
-            continueBtn.addEventListener('click', function () {
-                if (mobileStep === 1) {
-                    // Move from calendar to time slots
-                    document.body.classList.remove('mobile-booking-step-calendar');
-                    document.body.classList.add('mobile-booking-step-time');
-                    mobileStep = 2;
-                } else if (mobileStep === 2) {
-                    // Move from time slots to form
-                    document.body.classList.remove('mobile-booking-step-time');
-                    document.body.classList.add('mobile-booking-step-form');
-                    continueBtn.style.display = 'none'; // form has its own submit button
-                    mobileStep = 3;
-                }
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-            });
-        });
-        </script>
-    <script src="booking.js"></script>
+
+    <script src="script.js"></script>
 </body>
 </html>

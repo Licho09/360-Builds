@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // ─── MOBILE SETUP ───────────────────────────────────────
     const isMobile = () => window.innerWidth <= 768;
-    let mobileStep = 'calendar'; // 'calendar' | 'time' | 'form'
+    let mobileStep = 'calendar';
 
     let stickyFooter = null;
     let mobileBackBtn = null;
@@ -61,14 +61,12 @@ document.addEventListener('DOMContentLoaded', function () {
 
     function goToStep(step) {
         mobileStep = step;
-
         document.body.classList.remove(
             'mobile-booking-step-calendar',
             'mobile-booking-step-time',
             'mobile-booking-step-form'
         );
         document.body.classList.add('mobile-booking-step-' + step);
-
         updateMobileFooter();
         window.scrollTo({ top: 0, behavior: 'smooth' });
     }
@@ -82,7 +80,6 @@ document.addEventListener('DOMContentLoaded', function () {
         }
 
         stickyFooter.style.display = 'flex';
-
         mobileBackBtn.style.display = mobileStep === 'time' ? 'block' : 'none';
 
         const canContinue = (mobileStep === 'calendar' && selectedDate) ||
@@ -143,7 +140,6 @@ document.addEventListener('DOMContentLoaded', function () {
                         selectedDate = new Date(currentYear, currentMonth, day);
                         updateDisplay();
                         generateTimeSlots();
-
                         if (isMobile()) updateMobileFooter();
                     });
                 }
@@ -169,7 +165,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 timeBtn.classList.add('active');
                 selectedTime = time;
                 updateDisplay();
-
                 if (isMobile()) updateMobileFooter();
             });
             timeGrid.appendChild(timeBtn);
@@ -228,7 +223,18 @@ document.addEventListener('DOMContentLoaded', function () {
                 submitBtn.textContent = 'Processing...';
             }
 
-            const finalData = { name, phone, dateTime: selectedDateTimeText, ...surveyData };
+            // Send type: "booking" so Apps Script updates the existing row
+            const channels = Array.isArray(surveyData.channels) ? surveyData.channels : (surveyData.channels ? [surveyData.channels] : []);
+            const finalData = {
+                type: "booking",
+                name,
+                phone,
+                dateTime: selectedDateTimeText,
+                homesPerYear: surveyData.homesPerYear || "",
+                currentTours: surveyData.currentTours || "",
+                marketingStart: surveyData.marketingStart || "",
+                channels: channels
+            };
 
             const formData = new FormData();
             formData.append('data', JSON.stringify(finalData));

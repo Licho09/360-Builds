@@ -11,11 +11,17 @@ document.addEventListener('DOMContentLoaded', function () {
     let selectedDate = null;
     let selectedTime = null;
 
+    // ─── PRE-FILL FROM SURVEY DATA ───────────────────────────
+    const surveyData = JSON.parse(localStorage.getItem('surveyData') || '{}');
+    const userNameInput = document.getElementById('userName');
+    const userPhoneInput = document.getElementById('userPhone');
+    if (userNameInput && surveyData.userName) userNameInput.value = surveyData.userName;
+    if (userPhoneInput && surveyData.userPhone) userPhoneInput.value = surveyData.userPhone;
+
     // ─── MOBILE SETUP ───────────────────────────────────────
     const isMobile = () => window.innerWidth <= 768;
     let mobileStep = 'calendar'; // 'calendar' | 'time' | 'form'
 
-    // Inject mobile sticky footer
     let stickyFooter = null;
     let mobileBackBtn = null;
     let mobileContinueBtn = null;
@@ -71,17 +77,14 @@ document.addEventListener('DOMContentLoaded', function () {
         if (!isMobile() || !stickyFooter) return;
 
         if (mobileStep === 'form') {
-            // Hide sticky footer — form has its own Confirm Booking button
             stickyFooter.style.display = 'none';
             return;
         }
 
         stickyFooter.style.display = 'flex';
 
-        // Back button — only show on time step
         mobileBackBtn.style.display = mobileStep === 'time' ? 'block' : 'none';
 
-        // Continue button state
         const canContinue = (mobileStep === 'calendar' && selectedDate) ||
             (mobileStep === 'time' && selectedTime);
 
@@ -141,9 +144,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         updateDisplay();
                         generateTimeSlots();
 
-                        if (isMobile()) {
-                            updateMobileFooter();
-                        }
+                        if (isMobile()) updateMobileFooter();
                     });
                 }
 
@@ -169,9 +170,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 selectedTime = time;
                 updateDisplay();
 
-                if (isMobile()) {
-                    updateMobileFooter();
-                }
+                if (isMobile()) updateMobileFooter();
             });
             timeGrid.appendChild(timeBtn);
         });
@@ -229,7 +228,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 submitBtn.textContent = 'Processing...';
             }
 
-            const surveyData = JSON.parse(localStorage.getItem('surveyData') || '{}');
             const finalData = { name, phone, dateTime: selectedDateTimeText, ...surveyData };
 
             const formData = new FormData();
@@ -266,6 +264,6 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     // ─── INIT ────────────────────────────────────────────────
-    updateDisplay(); // Set initial disabled state on page load
+    updateDisplay();
     initMobileFlow();
 });

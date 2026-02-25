@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,23 +9,27 @@
 
     <!-- Meta Pixel Code -->
     <script>
-    !function(f,b,e,v,n,t,s)
-    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-    n.queue=[];t=b.createElement(e);t.async=!0;
-    t.src=v;s=b.getElementsByTagName(e)[0];
-    s.parentNode.insertBefore(t,s)}(window, document,'script',
-    'https://connect.facebook.net/en_US/fbevents.js');
-    fbq('init', '854197977632425');
-    fbq('track', 'PageView');
-    fbq('track', 'Lead');
+        !function (f, b, e, v, n, t, s) {
+            if (f.fbq) return; n = f.fbq = function () {
+                n.callMethod ?
+                n.callMethod.apply(n, arguments) : n.queue.push(arguments)
+            };
+            if (!f._fbq) f._fbq = n; n.push = n; n.loaded = !0; n.version = '2.0';
+            n.queue = []; t = b.createElement(e); t.async = !0;
+            t.src = v; s = b.getElementsByTagName(e)[0];
+            s.parentNode.insertBefore(t, s)
+        }(window, document, 'script',
+            'https://connect.facebook.net/en_US/fbevents.js');
+        fbq('init', '854197977632425');
+        fbq('track', 'PageView');
+        fbq('track', 'Lead');
     </script>
     <noscript>
         <img height="1" width="1" style="display:none"
-        src="https://www.facebook.com/tr?id=854197977632425&ev=PageView&noscript=1"/>
+            src="https://www.facebook.com/tr?id=854197977632425&ev=PageView&noscript=1" />
     </noscript>
 </head>
+
 <body>
     <div class="app-container">
         <header class="simple-header">
@@ -40,7 +45,8 @@
         <section class="hero-text">
             <p class="hero-eyebrow">One Last Step</p>
             <h1 class="hero-headline">Book Your Free<br>Strategy Call</h1>
-            <p class="hero-subtext">See how Texas builders are pre-selling spec homes before construction is complete &mdash; pick a time and we&rsquo;ll walk you through a live 360&deg; demo.</p>
+            <p class="hero-subtext">See how Texas builders are pre-selling spec homes before construction is complete
+                &mdash; pick a time and we&rsquo;ll walk you through a live 360&deg; demo.</p>
         </section>
 
         <main class="booking-container">
@@ -49,18 +55,22 @@
                 <!-- Left: Form -->
                 <div class="booking-form-side">
                     <h2 class="step-title">Your Details</h2>
-                    <p class="step-subtitle">Enter your info to secure your spot. No contracts, no pressure &mdash; just a free 15-min call.</p>
+                    <p class="step-subtitle">Enter your info to secure your spot. No contracts, no pressure &mdash; just
+                        a free 15-min call.</p>
                     <form id="bookingForm">
                         <div class="form-group">
                             <label for="userName" class="field-label">Full Name</label>
-                            <input type="text" id="userName" name="userName" placeholder="Your Name" required class="text-input">
+                            <input type="text" id="userName" name="userName" placeholder="Your Name" required
+                                class="text-input">
                         </div>
                         <div class="form-group">
                             <label for="userPhone" class="field-label">Phone Number</label>
-                            <input type="tel" id="userPhone" name="userPhone" placeholder="(555) 000-0000" required class="text-input">
+                            <input type="tel" id="userPhone" name="userPhone" placeholder="(555) 000-0000" required
+                                class="text-input">
                         </div>
                         <div class="selected-info" id="selectedInfo">
-                            <p><strong>Selected:</strong> <span id="displayDateTime">Please select a date and time</span></p>
+                            <p><strong>Selected:</strong> <span id="displayDateTime">Please select a date and
+                                    time</span></p>
                         </div>
                         <button type="submit" class="btn btn-primary btn-block">Confirm My Free Call</button>
                         <a href="index.html" class="back-link">← Back to questions</a>
@@ -97,4 +107,5 @@
 
     <script src="script.js"></script>
 </body>
+
 </html>

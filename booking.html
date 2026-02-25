@@ -100,29 +100,35 @@
             line-height: 1;
         }
 
-        @media (max-width: 480px) {
+        @media (max-width: 768px) {
             .journey-steps {
                 padding: 0 8px 20px;
+                gap: 4px;
             }
 
             .journey-step {
-                padding: 6px 8px;
-                gap: 5px;
+                padding: 6px 10px;
+                gap: 6px;
             }
 
             .journey-label {
-                font-size: 10.5px;
+                display: none;
+            }
+
+            .journey-step.active .journey-label {
+                display: block;
+                font-size: 12px;
             }
 
             .journey-num {
-                width: 20px;
-                height: 20px;
-                font-size: 10px;
+                width: 22px;
+                height: 22px;
+                font-size: 11px;
             }
 
             .journey-arrow {
                 font-size: 11px;
-                margin: 0;
+                margin: 0 2px;
             }
         }
 
@@ -130,10 +136,6 @@
             .journey-step {
                 padding: 5px 6px;
                 gap: 4px;
-            }
-
-            .journey-label {
-                font-size: 9.5px;
             }
 
             .journey-num {

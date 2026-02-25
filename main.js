@@ -66,6 +66,39 @@ const TOTAL_STEPS = 5;
 let currentStep = 1;
 let onResultsScreen = false;
 
+// ── JOURNEY INDICATOR ──────────────────────────────────
+function updateJourneyIndicator(step) {
+  const j1 = document.getElementById('jStep1');
+  const j2 = document.getElementById('jStep2');
+  const j3 = document.getElementById('jStep3');
+  if (!j1 || !j2 || !j3) return;
+
+  // Reset all
+  [j1, j2, j3].forEach(el => {
+    el.classList.remove('active', 'done');
+  });
+
+  if (step === 'booking') {
+    // Results screen — step 2 active, step 1 done
+    j1.classList.add('done');
+    j2.classList.add('active');
+  } else if (step >= 1 && step <= 5) {
+    // Answering questions — step 1 active
+    j1.classList.add('active');
+  }
+}
+
+// ── BOOKING PAGE — step 3 active (called from booking.html if needed)
+function setJourneyBooking() {
+  const j1 = document.getElementById('jStep1');
+  const j2 = document.getElementById('jStep2');
+  const j3 = document.getElementById('jStep3');
+  if (!j1 || !j2 || !j3) return;
+  j1.classList.add('done');
+  j2.classList.add('done');
+  j3.classList.add('active');
+}
+
 function updateProgress(step) {
   const pct = step === 'booking' ? 100 : ((step - 1) / TOTAL_STEPS) * 100;
   document.getElementById('progressBar').style.width = pct + '%';
@@ -96,6 +129,7 @@ function showStep(n) {
   }
 
   updateProgress(n);
+  updateJourneyIndicator(n);
   updateMobileFooter();
   const container = document.querySelector('.question-container');
   if (container) window.scrollTo({ top: container.offsetTop - 16, behavior: 'smooth' });

@@ -123,48 +123,41 @@
             line-height: 1;
         }
 
-        /* Mobile journey */
-        @media (max-width: 480px) {
+        /* Mobile journey — show only active label, rest show number only */
+        @media (max-width: 768px) {
             .journey-steps {
                 padding: 0 8px 20px;
-                gap: 0;
+                gap: 4px;
             }
 
             .journey-step {
-                padding: 6px 8px;
-                gap: 5px;
+                padding: 6px 10px;
+                gap: 6px;
             }
 
             .journey-label {
-                font-size: 10.5px;
+                display: none;
+            }
+
+            .journey-step.active .journey-label {
+                display: block;
+                font-size: 12px;
             }
 
             .journey-num {
-                width: 20px;
-                height: 20px;
-                font-size: 10px;
+                width: 22px;
+                height: 22px;
+                font-size: 11px;
             }
 
             .journey-arrow {
                 font-size: 11px;
-                margin: 0;
-            }
-        }
-
-        @media (max-width: 360px) {
-            .journey-step {
-                padding: 5px 6px;
-                gap: 4px;
+                margin: 0 2px;
             }
 
-            .journey-label {
-                font-size: 9.5px;
-            }
-
-            .journey-num {
-                width: 18px;
-                height: 18px;
-                font-size: 9px;
+            /* Fix: make sure sticky footer doesn't cover form buttons */
+            .question-container {
+                padding-bottom: 120px !important;
             }
         }
 

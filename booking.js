@@ -5,13 +5,25 @@ document.addEventListener('DOMContentLoaded', function () {
     var timeGrid = document.getElementById('timeGrid');
     var currentMonthYear = document.getElementById('currentMonthYear');
     var displayDateTime = document.getElementById('displayDateTime');
+    var displayName = document.getElementById('displayName');
+    var displayPhone = document.getElementById('displayPhone');
     var timeSlotsContainer = document.getElementById('timeSlotsContainer');
+    var confirmBtn = document.getElementById('confirmBtn');
 
     var GOOGLE_SHEET_URL = 'https://script.google.com/macros/s/AKfycbyQn65Ow5YEMMY4kNN2PNK5FzdysBV3igm5a69EAN-QeZgBgFJz2khkIhkrl3ljDYX6/exec';
 
     // State
     var selectedDate = null;
     var selectedTime = null;
+
+    // Load survey data (name + phone collected in survey)
+    var surveyData = JSON.parse(localStorage.getItem('surveyData') || '{}');
+    var userName = surveyData.userName || '';
+    var userPhone = surveyData.userPhone || '';
+
+    // Display name and phone from survey
+    if (displayName) displayName.textContent = userName || '---';
+    if (displayPhone) displayPhone.textContent = userPhone || '---';
 
     // Mobile step flow state
     var isMobile = window.innerWidth <= 768;
@@ -84,7 +96,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 dot1.classList.add('done');
                 dot2.classList.add('done');
                 dot3.classList.add('active');
-                if (mobileStepLabel) mobileStepLabel.textContent = 'Your Details';
+                if (mobileStepLabel) mobileStepLabel.textContent = 'Confirm';
             }
         }
 
@@ -99,7 +111,6 @@ document.addEventListener('DOMContentLoaded', function () {
         if (!mobileStickyFooter || !isMobile) return;
 
         if (mobileStep === 'calendar') {
-            // No buttons until a date is selected
             mobileBackBtn.style.display = 'none';
             mobileContinueBtn.style.display = selectedDate ? 'block' : 'none';
             mobileContinueBtn.textContent = 'Next: Pick a Time';
@@ -108,7 +119,7 @@ document.addEventListener('DOMContentLoaded', function () {
             mobileBackBtn.style.display = 'block';
             mobileBackBtn.style.flex = '1';
             mobileContinueBtn.style.display = selectedTime ? 'block' : 'none';
-            mobileContinueBtn.textContent = 'Next: Your Details';
+            mobileContinueBtn.textContent = 'Next: Confirm';
             mobileContinueBtn.style.flex = '2';
         } else if (mobileStep === 'form') {
             // Hide sticky footer on form step - the form has its own submit button
@@ -180,7 +191,6 @@ document.addEventListener('DOMContentLoaded', function () {
                             updateDisplay();
                             generateTimeSlots();
 
-                            // On mobile, auto-advance to time step after selecting date
                             if (isMobile) {
                                 updateMobileStickyButtons();
                             }
@@ -207,7 +217,6 @@ document.addEventListener('DOMContentLoaded', function () {
                     selectedTime = time;
                     updateDisplay();
 
-                    // On mobile, show the continue button
                     if (isMobile) {
                         updateMobileStickyButtons();
                     }
@@ -226,6 +235,15 @@ document.addEventListener('DOMContentLoaded', function () {
             } else {
                 displayDateTime.textContent = 'Please select a date and time';
             }
+
+            // Enable/disable confirm button on desktop
+            if (confirmBtn) {
+                if (selectedDate && selectedTime) {
+                    confirmBtn.disabled = false;
+                } else {
+                    confirmBtn.disabled = true;
+                }
+            }
         }
 
         initCalendar();
@@ -237,11 +255,9 @@ document.addEventListener('DOMContentLoaded', function () {
             e.preventDefault();
 
             var selectedDateTimeText = displayDateTime ? displayDateTime.textContent : '';
-            var name = document.getElementById('userName') ? document.getElementById('userName').value : '';
-            var phone = document.getElementById('userPhone') ? document.getElementById('userPhone').value : '';
 
-            if (!name || !phone) {
-                alert('Please enter your name and phone.');
+            if (!userName || !userPhone) {
+                alert('Contact info is missing. Please go back and fill in your details.');
                 return;
             }
             if (!selectedDate || !selectedTime) {
@@ -255,11 +271,9 @@ document.addEventListener('DOMContentLoaded', function () {
                 submitBtn.textContent = 'Processing...';
             }
 
-            // Get survey data stored in localStorage
-            var surveyData = JSON.parse(localStorage.getItem('surveyData') || '{}');
             var finalData = {
-                name: name,
-                phone: phone,
+                name: userName,
+                phone: userPhone,
                 dateTime: selectedDateTimeText,
                 homesPerYear: surveyData.homesPerYear || '',
                 currentTours: surveyData.currentTours || ''
@@ -280,7 +294,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 alert('There was an error submitting the form.');
                 if (submitBtn) {
                     submitBtn.disabled = false;
-                    submitBtn.textContent = 'Confirm Booking';
+                    submitBtn.textContent = 'Confirm My Free Call';
                 }
                 console.error(error);
             });

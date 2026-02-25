@@ -157,7 +157,7 @@
 
             /* Fix: make sure sticky footer doesn't cover form buttons */
             .question-container {
-                padding-bottom: 120px !important;
+                padding-bottom: calc(160px + env(safe-area-inset-bottom, 0px)) !important;
             }
         }
 
@@ -435,9 +435,6 @@
                 </form>
             </div>
         </main>
-
-        <!-- Mobile Sticky Footer -->
-        <div class="mobile-sticky-footer" id="mobileStickyFooter"></div>
 
         <!-- Confetti Canvas -->
         <canvas id="confettiCanvas" class="confetti-canvas"></canvas>

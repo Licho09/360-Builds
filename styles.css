@@ -943,7 +943,8 @@ body {
     .question-container {
         padding: 0.75rem;
         align-items: flex-start;
-        padding-bottom: 100px;
+        /* ↓ THE FIX: enough room above the sticky footer */
+        padding-bottom: calc(80px + env(safe-area-inset-bottom, 0px));
     }
 
     .form-wrapper {
@@ -1174,7 +1175,7 @@ body {
 
     .booking-container {
         padding: 0.75rem;
-        padding-bottom: 100px;
+        padding-bottom: calc(80px + env(safe-area-inset-bottom, 0px));
     }
 
     .booking-split-wrapper {

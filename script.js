@@ -124,7 +124,6 @@ document.addEventListener('DOMContentLoaded', function () {
             }
 
             const today = now.getDate();
-            // Tomorrow = today+1, available for next 3 days (tomorrow, day+2, day+3)
             const firstAvailable = today + 1;
             const lastAvailable = today + 3;
 
@@ -180,14 +179,29 @@ document.addEventListener('DOMContentLoaded', function () {
 
     function updateDisplay() {
         if (!displayDateTime) return;
+
+        const submitBtn = bookingForm?.querySelector('button[type="submit"]');
+
         if (selectedDate && selectedTime) {
             const options = { weekday: 'short', month: 'short', day: 'numeric' };
             displayDateTime.textContent = `${selectedDate.toLocaleDateString(undefined, options)} at ${selectedTime}`;
+            if (submitBtn) {
+                submitBtn.disabled = false;
+                submitBtn.classList.remove('btn-disabled');
+            }
         } else if (selectedDate) {
             const options = { weekday: 'short', month: 'short', day: 'numeric' };
             displayDateTime.textContent = `${selectedDate.toLocaleDateString(undefined, options)} — select a time`;
+            if (submitBtn) {
+                submitBtn.disabled = true;
+                submitBtn.classList.add('btn-disabled');
+            }
         } else {
             displayDateTime.textContent = 'Please select a date and time';
+            if (submitBtn) {
+                submitBtn.disabled = true;
+                submitBtn.classList.add('btn-disabled');
+            }
         }
     }
 
@@ -230,7 +244,8 @@ document.addEventListener('DOMContentLoaded', function () {
                     alert('There was an error submitting. Please try again.');
                     if (submitBtn) {
                         submitBtn.disabled = false;
-                        submitBtn.textContent = 'Confirm Booking';
+                        submitBtn.classList.remove('btn-disabled');
+                        submitBtn.textContent = 'Confirm My Free Call';
                     }
                     console.error(error);
                 });
@@ -251,5 +266,6 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     // ─── INIT ────────────────────────────────────────────────
+    updateDisplay(); // Set initial disabled state on page load
     initMobileFlow();
 });

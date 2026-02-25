@@ -55,6 +55,11 @@ function launchConfetti() {
 }
 
 // =====================
+// GOOGLE SHEET URL
+// =====================
+const GOOGLE_SHEET_URL = 'https://script.google.com/macros/s/AKfycbyQn65Ow5YEMMY4kNN2PNK5FzdysBV3igm5a69EAN-QeZgBgFJz2khkIhkrl3ljDYX6/exec';
+
+// =====================
 // FORM LOGIC
 // =====================
 const TOTAL_STEPS = 5;
@@ -78,18 +83,14 @@ function showStep(n) {
   if (n !== 'booking') {
     currentStep = n;
     onResultsScreen = false;
-    // Show qualify header again if going back
     const qualifyHeader = document.getElementById('qualifyHeader');
     if (qualifyHeader) qualifyHeader.style.display = '';
-    // Reset progress container margin
     const progressContainer = document.querySelector('.progress-container');
     if (progressContainer) progressContainer.style.marginTop = '';
   } else {
     onResultsScreen = true;
-    // Hide the "See If You Qualify" header on results screen
     const qualifyHeader = document.getElementById('qualifyHeader');
     if (qualifyHeader) qualifyHeader.style.display = 'none';
-    // Remove top spacing since header is gone
     const progressContainer = document.querySelector('.progress-container');
     if (progressContainer) progressContainer.style.marginTop = '0';
   }
@@ -101,7 +102,7 @@ function showStep(n) {
 }
 
 function validateStep(step) {
-  if (step === 4) return true; // checkboxes are optional
+  if (step === 4) return true;
   if (step === 5) {
     const nameInput = document.getElementById('userName');
     const phoneInput = document.getElementById('userPhone');
@@ -138,6 +139,26 @@ function showBooking() {
   showStep('booking');
   launchConfetti();
   if (typeof fbq !== 'undefined') fbq('track', 'Lead');
+
+  // ─── SAVE SURVEY TO GOOGLE SHEETS ───────────────────────
+  const surveyData = JSON.parse(localStorage.getItem('surveyData') || '{}');
+  const channels = Array.isArray(surveyData.channels) ? surveyData.channels : (surveyData.channels ? [surveyData.channels] : []);
+
+  const payload = {
+    type: "survey",
+    name: surveyData.userName || "",
+    phone: surveyData.userPhone || "",
+    homesPerYear: surveyData.homesPerYear || "",
+    currentTours: surveyData.currentTours || "",
+    marketingStart: surveyData.marketingStart || "",
+    channels: channels
+  };
+
+  const formData = new FormData();
+  formData.append('data', JSON.stringify(payload));
+
+  fetch(GOOGLE_SHEET_URL, { method: 'POST', body: formData })
+    .catch(err => console.error('Survey save failed:', err));
 }
 
 function buildSummary() {
@@ -152,11 +173,7 @@ function buildSummary() {
     'after-completion': 'After completion',
     'varies': 'It varies'
   };
-  const toursMap = {
-    'Yes': 'Yes',
-    'Interested': 'Interested',
-    'No': 'No'
-  };
+  const toursMap = { 'Yes': 'Yes', 'Interested': 'Interested', 'No': 'No' };
   const channelMap = {
     'mls': 'MLS',
     'social-media': 'Social media',
@@ -175,16 +192,20 @@ function buildSummary() {
   const userName = document.getElementById('userName') ? document.getElementById('userName').value.trim() : '';
   const userPhone = document.getElementById('userPhone') ? document.getElementById('userPhone').value.trim() : '';
 
-  try { localStorage.setItem('surveyData', JSON.stringify({ homesPerYear, currentTours, marketingStart, channels, userName, userPhone })); } catch (e) { }
+  try {
+    localStorage.setItem('surveyData', JSON.stringify({
+      homesPerYear, currentTours, marketingStart, channels, userName, userPhone
+    }));
+  } catch (e) {}
 
   const box = document.getElementById('bookingSummary');
   box.innerHTML = '<p class="booking-summary-label">Your Profile</p>';
   rows.forEach(r => {
     box.innerHTML += `<div class="booking-summary-row">
-            <span class="booking-summary-check">✓</span>
-            <span class="booking-summary-key">${r.label}:</span>
-            <span class="booking-summary-val">${r.val}</span>
-        </div>`;
+      <span class="booking-summary-check">✓</span>
+      <span class="booking-summary-key">${r.label}:</span>
+      <span class="booking-summary-val">${r.val}</span>
+    </div>`;
   });
 }
 
@@ -195,7 +216,6 @@ function updateMobileFooter() {
   const footer = document.getElementById('mobileStickyFooter');
   if (!footer) return;
 
-  // Hide on desktop OR on results screen
   if (window.innerWidth > 768 || onResultsScreen) {
     footer.style.display = 'none';
     return;

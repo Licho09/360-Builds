@@ -1,28 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>360° Builds - Get Started</title>
     <link rel="stylesheet" href="styles.css">
-    <meta name="description" content="Texas spec home builders: pre-sell homes before completion using 360° virtual walkthroughs. See if you qualify.">
+    <meta name="description"
+        content="Texas spec home builders: pre-sell homes before completion using 360° virtual walkthroughs. See if you qualify.">
 
     <!-- Meta Pixel Code -->
     <script>
-    !function(f,b,e,v,n,t,s)
-    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-    n.queue=[];t=b.createElement(e);t.async=!0;
-    t.src=v;s=b.getElementsByTagName(e)[0];
-    s.parentNode.insertBefore(t,s)}(window, document,'script',
-    'https://connect.facebook.net/en_US/fbevents.js');
-    fbq('init', '854197977632425');
-    fbq('track', 'PageView');
+        !function (f, b, e, v, n, t, s) {
+            if (f.fbq) return; n = f.fbq = function () {
+                n.callMethod ?
+                    n.callMethod.apply(n, arguments) : n.queue.push(arguments)
+            };
+            if (!f._fbq) f._fbq = n; n.push = n; n.loaded = !0; n.version = '2.0';
+            n.queue = []; t = b.createElement(e); t.async = !0;
+            t.src = v; s = b.getElementsByTagName(e)[0];
+            s.parentNode.insertBefore(t, s)
+        }(window, document, 'script',
+            'https://connect.facebook.net/en_US/fbevents.js');
+        fbq('init', '854197977632425');
+        fbq('track', 'PageView');
     </script>
     <noscript>
         <img height="1" width="1" style="display:none"
-        src="https://www.facebook.com/tr?id=854197977632425&ev=PageView&noscript=1"/>
+            src="https://www.facebook.com/tr?id=854197977632425&ev=PageView&noscript=1" />
     </noscript>
 
     <style>
@@ -74,6 +79,7 @@
         }
     </style>
 </head>
+
 <body>
     <div class="app-container">
 
@@ -104,7 +110,7 @@
                         <div class="progress-bar" id="progressBar"></div>
                     </div>
                     <p class="progress-text">
-                        Step <span id="currentStep">1</span> of <span id="totalSteps">4</span>
+                        Step <span id="currentStep">1</span> of <span id="totalSteps">5</span>
                     </p>
                 </div>
 
@@ -131,24 +137,25 @@
                                 <span class="radio-label">21+</span>
                             </label>
                         </div>
-                        <button type="button" class="btn btn-primary btn-block" onclick="nextStep(1)">Next Question</button>
+                        <button type="button" class="btn btn-primary btn-block" onclick="nextStep(1)">Next
+                            Question</button>
                     </div>
 
                     <!-- Step 2 -->
                     <div class="form-step" id="step2">
-                        <h2 class="step-title">Do you currently use virtual tours or 3D walkthroughs for your listings?</h2>
+                        <h2 class="step-title">Do you offer virtual tours?</h2>
                         <div class="radio-group">
                             <label class="radio-card">
                                 <input type="radio" name="currentTours" value="Yes">
-                                <span class="radio-label">Yes, we already do</span>
+                                <span class="radio-label">Yes</span>
                             </label>
                             <label class="radio-card">
-                                <input type="radio" name="currentTours" value="No-Interested">
-                                <span class="radio-label">No, but interested</span>
+                                <input type="radio" name="currentTours" value="Interested">
+                                <span class="radio-label">Interested</span>
                             </label>
                             <label class="radio-card">
-                                <input type="radio" name="currentTours" value="No-Not-Interested">
-                                <span class="radio-label">No, not interested</span>
+                                <input type="radio" name="currentTours" value="No">
+                                <span class="radio-label">No</span>
                             </label>
                         </div>
                         <div class="form-buttons">
@@ -159,34 +166,23 @@
 
                     <!-- Step 3 -->
                     <div class="form-step" id="step3">
-                        <h2 class="step-title">When do you typically start marketing a spec home?</h2>
+                        <h2 class="step-title">When do you start marketing a spec home?</h2>
                         <div class="radio-group">
-                            <label class="radio-card radio-card-desc">
-                                <input type="radio" name="marketingStart" value="at-framing">
-                                <span class="radio-text-block">
-                                    <span class="radio-label">At or before framing</span>
-                                    <span class="radio-desc">You're already pre-selling aggressively</span>
-                                </span>
+                            <label class="radio-card">
+                                <input type="radio" name="marketingStart" value="early-construction">
+                                <span class="radio-label">Early construction</span>
                             </label>
-                            <label class="radio-card radio-card-desc">
-                                <input type="radio" name="marketingStart" value="sheetrock">
-                                <span class="radio-text-block">
-                                    <span class="radio-label">Once sheetrock is up</span>
-                                    <span class="radio-desc">Mid-construction, some finishes selected</span>
-                                </span>
+                            <label class="radio-card">
+                                <input type="radio" name="marketingStart" value="mid-construction">
+                                <span class="radio-label">Mid construction</span>
                             </label>
-                            <label class="radio-card radio-card-desc">
+                            <label class="radio-card">
                                 <input type="radio" name="marketingStart" value="after-completion">
-                                <span class="radio-text-block">
-                                    <span class="radio-label">After completion</span>
-                                    <span class="radio-desc">Fully finished before any marketing</span>
-                                </span>
+                                <span class="radio-label">After completion</span>
                             </label>
-                            <label class="radio-card radio-card-desc">
+                            <label class="radio-card">
                                 <input type="radio" name="marketingStart" value="varies">
-                                <span class="radio-text-block">
-                                    <span class="radio-label">It varies by project</span>
-                                </span>
+                                <span class="radio-label">It varies</span>
                             </label>
                         </div>
                         <div class="form-buttons">
@@ -197,42 +193,62 @@
 
                     <!-- Step 4 -->
                     <div class="form-step" id="step4">
-                        <h2 class="step-title">How are you currently marketing your spec homes?</h2>
-                        <p class="step-subtitle">Select all that apply to your current process.</p>
+                        <h2 class="step-title">How do you market your spec homes?</h2>
+                        <p class="step-subtitle">Select all that apply.</p>
                         <div class="checkbox-group">
                             <label class="checkbox-card-item">
                                 <input type="checkbox" name="marketingChannels" value="mls">
                                 <span class="checkbox-box"></span>
-                                <span class="checkbox-label">MLS / Realtor Network</span>
+                                <span class="checkbox-label">MLS</span>
                             </label>
                             <label class="checkbox-card-item">
-                                <input type="checkbox" name="marketingChannels" value="social-ads">
+                                <input type="checkbox" name="marketingChannels" value="social-media">
                                 <span class="checkbox-box"></span>
-                                <span class="checkbox-label">Social Media / Paid Ads</span>
+                                <span class="checkbox-label">Social media</span>
                             </label>
                             <label class="checkbox-card-item">
                                 <input type="checkbox" name="marketingChannels" value="photos-video">
                                 <span class="checkbox-box"></span>
-                                <span class="checkbox-label">Professional Photos / Video</span>
+                                <span class="checkbox-label">Photos or video</span>
                             </label>
                             <label class="checkbox-card-item">
                                 <input type="checkbox" name="marketingChannels" value="referrals">
                                 <span class="checkbox-box"></span>
-                                <span class="checkbox-label">Referrals / Word of Mouth</span>
+                                <span class="checkbox-label">Referrals</span>
                             </label>
                             <label class="checkbox-card-item">
-                                <input type="checkbox" name="marketingChannels" value="signage">
+                                <input type="checkbox" name="marketingChannels" value="yard-signs">
                                 <span class="checkbox-box"></span>
-                                <span class="checkbox-label">Signage / Drive-By Traffic</span>
+                                <span class="checkbox-label">Yard signs</span>
                             </label>
                             <label class="checkbox-card-item">
                                 <input type="checkbox" name="marketingChannels" value="none">
                                 <span class="checkbox-box"></span>
-                                <span class="checkbox-label">No formal marketing system</span>
+                                <span class="checkbox-label">No real marketing system</span>
                             </label>
                         </div>
                         <div class="form-buttons">
                             <button type="button" class="btn btn-secondary" onclick="goBack(4)">Back</button>
+                            <button type="button" class="btn btn-primary" onclick="nextStep(4)">Next Question</button>
+                        </div>
+                    </div>
+
+                    <!-- Step 5: Contact Details -->
+                    <div class="form-step" id="step5">
+                        <h2 class="step-title">Almost there! Enter your details.</h2>
+
+                        <div class="form-group">
+                            <label for="userName" class="field-label">Full Name</label>
+                            <input type="text" id="userName" name="userName" placeholder="Your Name" required class="text-input">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="userPhone" class="field-label">Phone Number</label>
+                            <input type="tel" id="userPhone" name="userPhone" placeholder="(555) 000-0000" required class="text-input">
+                        </div>
+
+                        <div class="form-buttons">
+                            <button type="button" class="btn btn-secondary" onclick="goBack(5)">Back</button>
                             <button type="button" class="btn btn-primary" onclick="showBooking()">See My Results &rarr;</button>
                         </div>
                     </div>
@@ -242,20 +258,23 @@
                         <div class="booking-result">
                             <div class="booking-result-icon">🎯</div>
                             <h2 class="booking-result-title">You Qualify. Here&rsquo;s What Happens Next.</h2>
-                            <p class="booking-result-sub">Based on your answers, 360&deg; virtual walkthroughs could dramatically reduce your days-on-market and help you pre-sell before completion. Let&rsquo;s build your strategy.</p>
+                            <p class="booking-result-sub">Based on your answers, 360&deg; virtual walkthroughs could
+                                dramatically reduce your days-on-market and help you pre-sell before completion.
+                                Let&rsquo;s build your strategy.</p>
 
                             <!-- Live 360° Demo -->
                             <p class="panorama-label">👇 See What Your Buyers Would Experience</p>
                             <div class="panorama-preview">
                                 <iframe
                                     src="https://panorama.homestyler.com/v2?m=p&id=ovZe3kZsZMKaK9yVzbCYyW&locale=en_US"
-                                    allowfullscreen
-                                    loading="lazy">
+                                    allowfullscreen loading="lazy">
                                 </iframe>
-                                <div class="panorama-caption">Live 360° walkthrough demo — this is what buyers see before your home is finished</div>
+                                <div class="panorama-caption">Live 360° walkthrough demo — this is what buyers see
+                                    before your home is finished</div>
                             </div>
 
-                            <button type="button" class="btn btn-primary btn-block" onclick="window.location.href='booking.html'">
+                            <button type="button" class="btn btn-primary btn-block"
+                                onclick="window.location.href='booking.html'">
                                 Book My Free Strategy Call &rarr;
                             </button>
                             <div class="booking-trust">
@@ -287,22 +306,30 @@
                     <div class="value-card">
                         <span class="value-card-icon">🏗️</span>
                         <div class="value-card-title">Sell at Framing, Not at Finish</div>
-                        <p class="value-card-text">A 360&deg; walkthrough lets buyers experience the flow and scale of a home before finishes are even selected. Contracts close earlier &mdash; carrying costs shrink.</p>
+                        <p class="value-card-text">A 360&deg; walkthrough lets buyers experience the flow and scale of a
+                            home before finishes are even selected. Contracts close earlier &mdash; carrying costs
+                            shrink.</p>
                     </div>
                     <div class="value-card">
                         <span class="value-card-icon">💰</span>
                         <div class="value-card-title">Hold Your Price</div>
-                        <p class="value-card-text">Sitting on inventory invites lowball offers. Buyers who&rsquo;ve already walked the home virtually show up emotionally invested &mdash; and they negotiate less.</p>
+                        <p class="value-card-text">Sitting on inventory invites lowball offers. Buyers who&rsquo;ve
+                            already walked the home virtually show up emotionally invested &mdash; and they negotiate
+                            less.</p>
                     </div>
                     <div class="value-card">
                         <span class="value-card-icon">📍</span>
                         <div class="value-card-title">Reach Out-of-Market Buyers</div>
-                        <p class="value-card-text">Texas is attracting relocating buyers from coast to coast. They can&rsquo;t drive to every job site. A 360&deg; tour is the next best thing to being there in person.</p>
+                        <p class="value-card-text">Texas is attracting relocating buyers from coast to coast. They
+                            can&rsquo;t drive to every job site. A 360&deg; tour is the next best thing to being there
+                            in person.</p>
                     </div>
                     <div class="value-card">
                         <span class="value-card-icon">📈</span>
                         <div class="value-card-title">Stand Out From the Competition</div>
-                        <p class="value-card-text">Most builders in your market still rely on flat photos and floor plan PDFs. An immersive 360&deg; experience signals quality before a buyer ever visits the lot.</p>
+                        <p class="value-card-text">Most builders in your market still rely on flat photos and floor plan
+                            PDFs. An immersive 360&deg; experience signals quality before a buyer ever visits the lot.
+                        </p>
                     </div>
                 </div>
             </div>
@@ -316,4 +343,5 @@
     <!-- index page script only — DO NOT load script.js here -->
     <script src="main.js"></script>
 </body>
+
 </html>

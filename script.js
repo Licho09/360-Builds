@@ -83,7 +83,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         // Continue button state
         const canContinue = (mobileStep === 'calendar' && selectedDate) ||
-                            (mobileStep === 'time' && selectedTime);
+            (mobileStep === 'time' && selectedTime);
 
         mobileContinueBtn.disabled = !canContinue;
         mobileContinueBtn.style.opacity = canContinue ? '1' : '0.4';
@@ -108,8 +108,8 @@ document.addEventListener('DOMContentLoaded', function () {
         const now = new Date();
         const currentYear = now.getFullYear();
         const currentMonth = now.getMonth();
-        const months = ['January','February','March','April','May','June',
-                        'July','August','September','October','November','December'];
+        const months = ['January', 'February', 'March', 'April', 'May', 'June',
+            'July', 'August', 'September', 'October', 'November', 'December'];
 
         function initCalendar() {
             currentMonthYear.textContent = `${months[currentMonth]} ${currentYear}`;
@@ -159,7 +159,7 @@ document.addEventListener('DOMContentLoaded', function () {
     function generateTimeSlots() {
         if (!timeGrid) return;
         timeGrid.innerHTML = '';
-        const times = ['9:00 AM','10:00 AM','11:00 AM','1:00 PM','2:00 PM','3:00 PM','4:00 PM','5:00 PM'];
+        const times = ['9:00 AM', '10:00 AM', '11:00 AM', '1:00 PM', '2:00 PM', '3:00 PM', '4:00 PM', '5:00 PM'];
         times.forEach(time => {
             const timeBtn = document.createElement('div');
             timeBtn.className = 'time-btn';

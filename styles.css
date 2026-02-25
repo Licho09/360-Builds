@@ -944,7 +944,7 @@ body {
         padding: 0.75rem;
         align-items: flex-start;
         /* ↓ THE FIX: enough room above the sticky footer */
-        padding-bottom: calc(80px + env(safe-area-inset-bottom, 0px));
+        padding-bottom: calc(140px + env(safe-area-inset-bottom, 0px));
     }
 
     .form-wrapper {
@@ -1175,7 +1175,7 @@ body {
 
     .booking-container {
         padding: 0.75rem;
-        padding-bottom: calc(80px + env(safe-area-inset-bottom, 0px));
+        padding-bottom: calc(140px + env(safe-area-inset-bottom, 0px));
     }
 
     .booking-split-wrapper {

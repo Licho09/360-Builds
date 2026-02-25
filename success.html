@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,25 +11,29 @@
 
     <!-- Meta Pixel Code -->
     <script>
-    !function(f,b,e,v,n,t,s)
-    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-    n.queue=[];t=b.createElement(e);t.async=!0;
-    t.src=v;s=b.getElementsByTagName(e)[0];
-    s.parentNode.insertBefore(t,s)}(window, document,'script',
-    'https://connect.facebook.net/en_US/fbevents.js');
-    fbq('init', '854197977632425');
-    fbq('track', 'PageView');
-    fbq('track', 'Schedule');
+        !function (f, b, e, v, n, t, s) {
+            if (f.fbq) return; n = f.fbq = function () {
+                n.callMethod ?
+                n.callMethod.apply(n, arguments) : n.queue.push(arguments)
+            };
+            if (!f._fbq) f._fbq = n; n.push = n; n.loaded = !0; n.version = '2.0';
+            n.queue = []; t = b.createElement(e); t.async = !0;
+            t.src = v; s = b.getElementsByTagName(e)[0];
+            s.parentNode.insertBefore(t, s)
+        }(window, document, 'script',
+            'https://connect.facebook.net/en_US/fbevents.js');
+        fbq('init', '854197977632425');
+        fbq('track', 'PageView');
+        fbq('track', 'Schedule');
     </script>
     <!-- End Meta Pixel Code -->
 
 </head>
+
 <body>
     <noscript>
         <img height="1" width="1" style="display:none"
-        src="https://www.facebook.com/tr?id=854197977632425&ev=PageView&noscript=1"/>
+            src="https://www.facebook.com/tr?id=854197977632425&ev=PageView&noscript=1" />
     </noscript>
     <div class="app-container">
         <header class="simple-header">
@@ -43,8 +48,12 @@
 
         <main class="question-container">
             <div class="form-wrapper" style="text-align: center;">
-                <div style="width: 64px; height: 64px; border-radius: 50%; background: var(--accent-bg); display: flex; align-items: center; justify-content: center; margin: 0 auto 1.25rem;">
-                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--primary-color)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                <div
+                    style="width: 64px; height: 64px; border-radius: 50%; background: var(--accent-bg); display: flex; align-items: center; justify-content: center; margin: 0 auto 1.25rem;">
+                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--primary-color)"
+                        stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="20 6 9 17 4 12"></polyline>
+                    </svg>
                 </div>
                 <h1 class="step-title">Thank You!</h1>
                 <p class="step-subtitle">Your booking has been confirmed.</p>
@@ -55,9 +64,11 @@
                     <p><strong>Appointment:</strong> <span id="confDateTime">---</span></p>
                 </div>
 
-                <p style="margin-top: 2rem; color: var(--text-muted);">We have received your information and will contact you shortly to prepare for our call.</p>
+                <p style="margin-top: 2rem; color: var(--text-muted);">We have received your information and will
+                    contact you shortly to prepare for our call.</p>
 
-                <a href="index.html" class="btn btn-primary btn-block" style="margin-top: 2rem; text-decoration: none;">Return Home</a>
+                <a href="index.html" class="btn btn-primary btn-block"
+                    style="margin-top: 2rem; text-decoration: none;">Return Home</a>
             </div>
         </main>
 
@@ -67,7 +78,7 @@
     </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             // Retrieve data from localStorage for display
             var lastBooking = JSON.parse(localStorage.getItem('lastBooking') || '{}');
             if (lastBooking.name) {
@@ -79,13 +90,13 @@
             // Confetti Blast
             var count = 200;
             var defaults = {
-              origin: { y: 0.7 }
+                origin: { y: 0.7 }
             };
 
             function fire(particleRatio, opts) {
-              confetti(Object.assign({}, defaults, opts, {
-                particleCount: Math.floor(count * particleRatio)
-              }));
+                confetti(Object.assign({}, defaults, opts, {
+                    particleCount: Math.floor(count * particleRatio)
+                }));
             }
 
             fire(0.25, { spread: 26, startVelocity: 55 });
@@ -96,4 +107,5 @@
         });
     </script>
 </body>
+
 </html>

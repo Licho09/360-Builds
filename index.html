@@ -161,7 +161,58 @@
             }
         }
 
-        /* Panorama embed styles */
+        /* ── DEMO TEASER (above quiz) ── */
+        .demo-teaser {
+            max-width: 550px;
+            margin: 0 auto 24px auto;
+            padding: 0 1rem;
+        }
+
+        .demo-teaser-label {
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        .demo-teaser-frame {
+            width: 100%;
+            border-radius: 14px;
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 4px 16px rgba(0, 98, 254, 0.08);
+        }
+
+        .demo-teaser-frame iframe {
+            width: 100%;
+            height: 260px;
+            border: none;
+            display: block;
+        }
+
+        .demo-teaser-caption {
+            font-size: 12px;
+            color: var(--text-muted);
+            text-align: center;
+            padding: 8px 12px;
+            background: var(--accent-bg);
+            border-top: 1px solid var(--border-color);
+        }
+
+        @media (max-width: 768px) {
+            .demo-teaser {
+                padding: 0 0.75rem;
+                margin-bottom: 16px;
+            }
+            .demo-teaser-frame iframe {
+                height: 210px;
+            }
+        }
+
+        /* Panorama embed styles (results screen) */
         .panorama-preview {
             width: 100%;
             border-radius: 12px;
@@ -226,7 +277,7 @@
         <div class="journey-steps" id="journeySteps">
             <div class="journey-step active" id="jStep1">
                 <div class="journey-num"><span>1</span></div>
-                <span class="journey-label">5 Quick Questions</span>
+                <span class="journey-label">3 Quick Questions</span>
             </div>
             <div class="journey-arrow">→</div>
             <div class="journey-step" id="jStep2">
@@ -240,12 +291,25 @@
             </div>
         </div>
 
+        <!-- 360° Demo Teaser (above quiz) -->
+        <div class="demo-teaser">
+            <p class="demo-teaser-label">👇 This is what your buyers experience before your home is finished</p>
+            <div class="demo-teaser-frame">
+                <iframe
+                    src="https://panorama.homestyler.com/v2?m=p&id=ovZe3kZsZMKaK9yVzbCYyW&locale=en_US"
+                    allowfullscreen
+                    loading="lazy">
+                </iframe>
+                <div class="demo-teaser-caption">Live 360° walkthrough demo — drag to explore</div>
+            </div>
+        </div>
+
         <main class="question-container">
             <div class="form-wrapper" id="formWrapper">
 
                 <div class="form-qualify-header" id="qualifyHeader">
                     <p class="form-qualify-title">See If You Qualify</p>
-                    <p class="form-qualify-sub">We only work with builders who are a strong fit. Takes 90 seconds.</p>
+                    <p class="form-qualify-sub">We only work with builders who are a strong fit. Takes 60 seconds.</p>
                 </div>
 
                 <div class="progress-container">
@@ -253,7 +317,7 @@
                         <div class="progress-bar" id="progressBar"></div>
                     </div>
                     <p class="progress-text">
-                        Step <span id="currentStep">1</span> of <span id="totalSteps">5</span>
+                        Step <span id="currentStep">1</span> of <span id="totalSteps">3</span>
                     </p>
                 </div>
 
@@ -286,56 +350,6 @@
 
                     <!-- Step 2 -->
                     <div class="form-step" id="step2">
-                        <h2 class="step-title">Do you offer virtual tours?</h2>
-                        <div class="radio-group">
-                            <label class="radio-card">
-                                <input type="radio" name="currentTours" value="Yes">
-                                <span class="radio-label">Yes</span>
-                            </label>
-                            <label class="radio-card">
-                                <input type="radio" name="currentTours" value="Interested">
-                                <span class="radio-label">Interested</span>
-                            </label>
-                            <label class="radio-card">
-                                <input type="radio" name="currentTours" value="No">
-                                <span class="radio-label">No</span>
-                            </label>
-                        </div>
-                        <div class="form-buttons">
-                            <button type="button" class="btn btn-secondary" onclick="goBack(2)">Back</button>
-                            <button type="button" class="btn btn-primary" onclick="nextStep(2)">Next Question</button>
-                        </div>
-                    </div>
-
-                    <!-- Step 3 -->
-                    <div class="form-step" id="step3">
-                        <h2 class="step-title">When do you start marketing a spec home?</h2>
-                        <div class="radio-group">
-                            <label class="radio-card">
-                                <input type="radio" name="marketingStart" value="early-construction">
-                                <span class="radio-label">Early construction</span>
-                            </label>
-                            <label class="radio-card">
-                                <input type="radio" name="marketingStart" value="mid-construction">
-                                <span class="radio-label">Mid construction</span>
-                            </label>
-                            <label class="radio-card">
-                                <input type="radio" name="marketingStart" value="after-completion">
-                                <span class="radio-label">After completion</span>
-                            </label>
-                            <label class="radio-card">
-                                <input type="radio" name="marketingStart" value="varies">
-                                <span class="radio-label">It varies</span>
-                            </label>
-                        </div>
-                        <div class="form-buttons">
-                            <button type="button" class="btn btn-secondary" onclick="goBack(3)">Back</button>
-                            <button type="button" class="btn btn-primary" onclick="nextStep(3)">Next Question</button>
-                        </div>
-                    </div>
-
-                    <!-- Step 4 -->
-                    <div class="form-step" id="step4">
                         <h2 class="step-title">How do you market your spec homes?</h2>
                         <p class="step-subtitle">Select all that apply.</p>
                         <div class="checkbox-group">
@@ -371,13 +385,13 @@
                             </label>
                         </div>
                         <div class="form-buttons">
-                            <button type="button" class="btn btn-secondary" onclick="goBack(4)">Back</button>
-                            <button type="button" class="btn btn-primary" onclick="nextStep(4)">Next Question</button>
+                            <button type="button" class="btn btn-secondary" onclick="goBack(2)">Back</button>
+                            <button type="button" class="btn btn-primary" onclick="nextStep(2)">Next Question</button>
                         </div>
                     </div>
 
-                    <!-- Step 5: Contact Details -->
-                    <div class="form-step" id="step5">
+                    <!-- Step 3: Contact Details -->
+                    <div class="form-step" id="step3">
                         <h2 class="step-title">Almost there! Enter your details.</h2>
 
                         <div class="form-group">
@@ -391,7 +405,7 @@
                         </div>
 
                         <div class="form-buttons">
-                            <button type="button" class="btn btn-secondary" onclick="goBack(5)">Back</button>
+                            <button type="button" class="btn btn-secondary" onclick="goBack(3)">Back</button>
                             <button type="button" class="btn btn-primary" onclick="showBooking()">See My Results &rarr;</button>
                         </div>
                     </div>
@@ -404,17 +418,6 @@
                             <p class="booking-result-sub">Based on your answers, 360&deg; virtual walkthroughs could
                                 dramatically reduce your days-on-market and help you pre-sell before completion.
                                 Let&rsquo;s build your strategy.</p>
-
-                            <!-- Live 360° Demo -->
-                            <p class="panorama-label">👇 See What Your Buyers Would Experience</p>
-                            <div class="panorama-preview">
-                                <iframe
-                                    src="https://panorama.homestyler.com/v2?m=p&id=ovZe3kZsZMKaK9yVzbCYyW&locale=en_US"
-                                    allowfullscreen loading="lazy">
-                                </iframe>
-                                <div class="panorama-caption">Live 360° walkthrough demo — this is what buyers see
-                                    before your home is finished</div>
-                            </div>
 
                             <button type="button" class="btn btn-primary btn-block"
                                 onclick="window.location.href='booking.html'">

@@ -9,6 +9,17 @@
     <!-- Confetti Library -->
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-JKLEK6QQDY"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-JKLEK6QQDY');
+        // Fire conversion event — this is your most valuable event
+        gtag('event', 'call_booked', { event_category: 'Conversion', event_label: 'Strategy Call Booked' });
+    </script>
+
     <!-- Meta Pixel Code -->
     <script>
         !function (f, b, e, v, n, t, s) {
@@ -26,15 +37,13 @@
         fbq('track', 'PageView');
         fbq('track', 'Schedule');
     </script>
-    <!-- End Meta Pixel Code -->
-
-</head>
-
-<body>
     <noscript>
         <img height="1" width="1" style="display:none"
             src="https://www.facebook.com/tr?id=854197977632425&ev=PageView&noscript=1" />
     </noscript>
+</head>
+
+<body>
     <div class="app-container">
         <header class="simple-header">
             <div class="logo-text">
@@ -55,8 +64,8 @@
                         <polyline points="20 6 9 17 4 12"></polyline>
                     </svg>
                 </div>
-                <h1 class="step-title">Thank You!</h1>
-                <p class="step-subtitle">Your booking has been confirmed.</p>
+                <h1 class="step-title">You're Booked!</h1>
+                <p class="step-subtitle">Your strategy call has been confirmed.</p>
 
                 <div class="selected-info" style="text-align: left; margin-top: 2rem;">
                     <p><strong>Name:</strong> <span id="confName">---</span></p>
@@ -64,8 +73,7 @@
                     <p><strong>Appointment:</strong> <span id="confDateTime">---</span></p>
                 </div>
 
-                <p style="margin-top: 2rem; color: var(--text-muted);">We have received your information and will
-                    contact you shortly to prepare for our call.</p>
+                <p style="margin-top: 2rem; color: var(--text-muted);">We'll reach out shortly to confirm and prepare for your call. Talk soon!</p>
 
                 <a href="index.html" class="btn btn-primary btn-block"
                     style="margin-top: 2rem; text-decoration: none;">Return Home</a>
@@ -79,7 +87,6 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            // Retrieve data from localStorage for display
             var lastBooking = JSON.parse(localStorage.getItem('lastBooking') || '{}');
             if (lastBooking.name) {
                 document.getElementById('confName').textContent = lastBooking.name;
@@ -89,9 +96,7 @@
 
             // Confetti Blast
             var count = 200;
-            var defaults = {
-                origin: { y: 0.7 }
-            };
+            var defaults = { origin: { y: 0.7 } };
 
             function fire(particleRatio, opts) {
                 confetti(Object.assign({}, defaults, opts, {

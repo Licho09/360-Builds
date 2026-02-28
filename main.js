@@ -62,7 +62,7 @@ const GOOGLE_SHEET_URL = 'https://script.google.com/macros/s/AKfycbyQn65Ow5YEMMY
 // =====================
 // FORM LOGIC
 // =====================
-const TOTAL_STEPS = 5;
+const TOTAL_STEPS = 3;
 let currentStep = 1;
 let onResultsScreen = false;
 
@@ -79,16 +79,13 @@ function updateJourneyIndicator(step) {
   });
 
   if (step === 'booking') {
-    // Results screen — step 2 active, step 1 done
     j1.classList.add('done');
     j2.classList.add('active');
-  } else if (step >= 1 && step <= 5) {
-    // Answering questions — step 1 active
+  } else if (step >= 1 && step <= 3) {
     j1.classList.add('active');
   }
 }
 
-// ── BOOKING PAGE — step 3 active (called from booking.html if needed)
 function setJourneyBooking() {
   const j1 = document.getElementById('jStep1');
   const j2 = document.getElementById('jStep2');
@@ -136,8 +133,8 @@ function showStep(n) {
 }
 
 function validateStep(step) {
-  if (step === 4) return true;
-  if (step === 5) {
+  if (step === 2) return true; // checkboxes optional
+  if (step === 3) {
     const nameInput = document.getElementById('userName');
     const phoneInput = document.getElementById('userPhone');
     if (!nameInput || !phoneInput || !nameInput.value.trim() || !phoneInput.value.trim()) {
@@ -168,7 +165,7 @@ function goBack(from) {
 }
 
 function showBooking() {
-  if (!validateStep(5)) return;
+  if (!validateStep(3)) return;
   buildSummary();
   showStep('booking');
   launchConfetti();
@@ -183,8 +180,6 @@ function showBooking() {
     name: surveyData.userName || "",
     phone: surveyData.userPhone || "",
     homesPerYear: surveyData.homesPerYear || "",
-    currentTours: surveyData.currentTours || "",
-    marketingStart: surveyData.marketingStart || "",
     channels: channels
   };
 
@@ -197,17 +192,8 @@ function showBooking() {
 
 function buildSummary() {
   const homesPerYear = document.querySelector('input[name="homesPerYear"]:checked')?.value || '';
-  const currentTours = document.querySelector('input[name="currentTours"]:checked')?.value || '';
-  const marketingStart = document.querySelector('input[name="marketingStart"]:checked')?.value || '';
   const channels = [...document.querySelectorAll('input[name="marketingChannels"]:checked')].map(c => c.value);
 
-  const startMap = {
-    'early-construction': 'Early construction',
-    'mid-construction': 'Mid construction',
-    'after-completion': 'After completion',
-    'varies': 'It varies'
-  };
-  const toursMap = { 'Yes': 'Yes', 'Interested': 'Interested', 'No': 'No' };
   const channelMap = {
     'mls': 'MLS',
     'social-media': 'Social media',
@@ -219,8 +205,6 @@ function buildSummary() {
 
   const rows = [];
   if (homesPerYear) rows.push({ label: 'Homes per year', val: homesPerYear });
-  if (currentTours) rows.push({ label: 'Virtual tours', val: toursMap[currentTours] || currentTours });
-  if (marketingStart) rows.push({ label: 'Marketing start', val: startMap[marketingStart] || marketingStart });
   if (channels.length) rows.push({ label: 'Current marketing', val: channels.map(c => channelMap[c] || c).join(', ') });
 
   const userName = document.getElementById('userName') ? document.getElementById('userName').value.trim() : '';
@@ -228,7 +212,7 @@ function buildSummary() {
 
   try {
     localStorage.setItem('surveyData', JSON.stringify({
-      homesPerYear, currentTours, marketingStart, channels, userName, userPhone
+      homesPerYear, channels, userName, userPhone
     }));
   } catch (e) {}
 

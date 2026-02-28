@@ -18,6 +18,11 @@ document.addEventListener('DOMContentLoaded', function () {
     if (userNameInput && surveyData.userName) userNameInput.value = surveyData.userName;
     if (userPhoneInput && surveyData.userPhone) userPhoneInput.value = surveyData.userPhone;
 
+    // ─── GA4 TRACKING ───────────────────────────────────────
+    if (typeof gtag !== 'undefined') {
+        gtag('event', 'booking_page_view', { event_category: 'Booking', event_label: 'Booking Page Loaded' });
+    }
+
     // ─── MOBILE SETUP ───────────────────────────────────────
     const isMobile = () => window.innerWidth <= 768;
     let mobileStep = 'calendar';
@@ -69,6 +74,12 @@ document.addEventListener('DOMContentLoaded', function () {
         document.body.classList.add('mobile-booking-step-' + step);
         updateMobileFooter();
         window.scrollTo({ top: 0, behavior: 'smooth' });
+
+        // GA4 tracking for booking steps
+        if (typeof gtag !== 'undefined') {
+            if (step === 'time') gtag('event', 'booking_date_selected', { event_category: 'Booking', event_label: 'Date Selected' });
+            if (step === 'form') gtag('event', 'booking_time_selected', { event_category: 'Booking', event_label: 'Time Selected' });
+        }
     }
 
     function updateMobileFooter() {
@@ -223,7 +234,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 submitBtn.textContent = 'Processing...';
             }
 
-            // Send type: "booking" so Apps Script updates the existing row
             const channels = Array.isArray(surveyData.channels) ? surveyData.channels : (surveyData.channels ? [surveyData.channels] : []);
             const finalData = {
                 type: "booking",
@@ -231,13 +241,16 @@ document.addEventListener('DOMContentLoaded', function () {
                 phone,
                 dateTime: selectedDateTimeText,
                 homesPerYear: surveyData.homesPerYear || "",
-                currentTours: surveyData.currentTours || "",
-                marketingStart: surveyData.marketingStart || "",
                 channels: channels
             };
 
             const formData = new FormData();
             formData.append('data', JSON.stringify(finalData));
+
+            // GA4 booking confirmed event
+            if (typeof gtag !== 'undefined') {
+                gtag('event', 'booking_confirmed', { event_category: 'Booking', event_label: 'Call Booked' });
+            }
 
             fetch(GOOGLE_SHEET_URL, { method: 'POST', body: formData })
                 .then(() => {

@@ -73,10 +73,7 @@ function updateJourneyIndicator(step) {
   const j3 = document.getElementById('jStep3');
   if (!j1 || !j2 || !j3) return;
 
-  // Reset all
-  [j1, j2, j3].forEach(el => {
-    el.classList.remove('active', 'done');
-  });
+  [j1, j2, j3].forEach(el => el.classList.remove('active', 'done'));
 
   if (step === 'booking') {
     j1.classList.add('done');
@@ -103,6 +100,38 @@ function updateProgress(step) {
   document.getElementById('totalSteps').textContent = TOTAL_STEPS;
 }
 
+// ── BUTTON STATE ──────────────────────────────────────
+function setNextButtonState(stepNum, enabled) {
+  const stepEl = document.getElementById('step' + stepNum);
+  if (stepEl) {
+    const btn = stepEl.querySelector('.btn-primary');
+    if (btn) {
+      btn.disabled = !enabled;
+      if (enabled) {
+        btn.classList.remove('btn-disabled');
+      } else {
+        btn.classList.add('btn-disabled');
+      }
+    }
+  }
+  updateMobileFooter();
+}
+
+function checkStepReady(stepNum) {
+  if (stepNum === 1) {
+    return !!document.querySelector('input[name="homesPerYear"]:checked');
+  }
+  if (stepNum === 2) {
+    return true; // checkboxes always optional
+  }
+  if (stepNum === 3) {
+    const name = document.getElementById('userName')?.value.trim();
+    const phone = document.getElementById('userPhone')?.value.trim();
+    return !!(name && phone);
+  }
+  return false;
+}
+
 function showStep(n) {
   document.querySelectorAll('.form-step').forEach(s => s.classList.remove('active'));
   const el = n === 'booking'
@@ -117,6 +146,11 @@ function showStep(n) {
     if (qualifyHeader) qualifyHeader.style.display = '';
     const progressContainer = document.querySelector('.progress-container');
     if (progressContainer) progressContainer.style.marginTop = '';
+
+    // Set initial button state for the step
+    if (n !== 2) {
+      setNextButtonState(n, checkStepReady(n));
+    }
   } else {
     onResultsScreen = true;
     const qualifyHeader = document.getElementById('qualifyHeader');
@@ -133,7 +167,7 @@ function showStep(n) {
 }
 
 function validateStep(step) {
-  if (step === 2) return true; // checkboxes optional
+  if (step === 2) return true;
   if (step === 3) {
     const nameInput = document.getElementById('userName');
     const phoneInput = document.getElementById('userPhone');
@@ -171,7 +205,6 @@ function showBooking() {
   launchConfetti();
   if (typeof fbq !== 'undefined') fbq('track', 'Lead');
 
-  // ─── SAVE SURVEY TO GOOGLE SHEETS ───────────────────────
   const surveyData = JSON.parse(localStorage.getItem('surveyData') || '{}');
   const channels = Array.isArray(surveyData.channels) ? surveyData.channels : (surveyData.channels ? [surveyData.channels] : []);
 
@@ -228,6 +261,25 @@ function buildSummary() {
 }
 
 // =====================
+// EVENT LISTENERS
+// =====================
+
+// Step 1 — enable Next when radio selected, then auto-advance
+document.addEventListener('change', function (e) {
+  if (e.target.name === 'homesPerYear') {
+    setNextButtonState(1, true);
+    setTimeout(() => nextStep(1), 300);
+  }
+});
+
+// Step 3 — enable "See My Results" as user types name/phone
+document.addEventListener('input', function (e) {
+  if (e.target.id === 'userName' || e.target.id === 'userPhone') {
+    setNextButtonState(3, checkStepReady(3));
+  }
+});
+
+// =====================
 // MOBILE STICKY FOOTER
 // =====================
 function updateMobileFooter() {
@@ -252,15 +304,18 @@ function updateMobileFooter() {
   }
 
   const action = document.createElement('button');
-  action.className = 'btn btn-primary';
   action.style.flex = '2';
+
+  const isReady = checkStepReady(currentStep);
+  action.className = 'btn btn-primary' + (isReady ? '' : ' btn-disabled');
+  action.disabled = !isReady;
 
   if (currentStep < TOTAL_STEPS) {
     action.textContent = 'Next Question';
-    action.onclick = () => nextStep(currentStep);
+    action.onclick = () => { if (!action.disabled) nextStep(currentStep); };
   } else {
     action.textContent = 'See My Results \u2192';
-    action.onclick = () => showBooking();
+    action.onclick = () => { if (!action.disabled) showBooking(); };
   }
 
   footer.appendChild(action);

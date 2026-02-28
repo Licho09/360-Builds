@@ -164,6 +164,14 @@ function showStep(n) {
   updateMobileFooter();
   const container = document.querySelector('.question-container');
   if (container) window.scrollTo({ top: container.offsetTop - 16, behavior: 'smooth' });
+
+  // ── GA4 STEP TRACKING ──
+  if (typeof gtag !== 'undefined') {
+    if (n === 1) gtag('event', 'quiz_step_1', { event_category: 'Quiz', event_label: 'Homes Per Year' });
+    if (n === 2) gtag('event', 'quiz_step_2', { event_category: 'Quiz', event_label: 'Marketing Channels' });
+    if (n === 3) gtag('event', 'quiz_step_3', { event_category: 'Quiz', event_label: 'Contact Details' });
+    if (n === 'booking') gtag('event', 'quiz_complete', { event_category: 'Quiz', event_label: 'Qualified' });
+  }
 }
 
 function validateStep(step) {

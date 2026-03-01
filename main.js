@@ -272,11 +272,10 @@ function buildSummary() {
 // EVENT LISTENERS
 // =====================
 
-// Step 1 — enable Next when radio selected, then auto-advance
+// Step 1 — enable Next when radio selected (no auto-advance)
 document.addEventListener('change', function (e) {
   if (e.target.name === 'homesPerYear') {
     setNextButtonState(1, true);
-    setTimeout(() => nextStep(1), 300);
   }
 });
 

@@ -334,26 +334,26 @@
 
                     <!-- Step 1 -->
                     <div class="form-step active" id="step1">
-                        <h2 class="step-title">How many homes do you build per year?</h2>
+                        <h2 class="step-title">Are you currently building or planning a spec home in Texas?</h2>
                         <div class="radio-group">
                             <label class="radio-card">
-                                <input type="radio" name="homesPerYear" value="1-5">
-                                <span class="radio-label">1–5</span>
+                                <input type="radio" name="homesPerYear" value="currently-building">
+                                <span class="radio-label">Yes, currently building</span>
                             </label>
                             <label class="radio-card">
-                                <input type="radio" name="homesPerYear" value="6-10">
-                                <span class="radio-label">6–10</span>
+                                <input type="radio" name="homesPerYear" value="starting-soon">
+                                <span class="radio-label">Starting soon</span>
                             </label>
                             <label class="radio-card">
-                                <input type="radio" name="homesPerYear" value="11-20">
-                                <span class="radio-label">11–20</span>
+                                <input type="radio" name="homesPerYear" value="planning-later">
+                                <span class="radio-label">Planning for later this year</span>
                             </label>
                             <label class="radio-card">
-                                <input type="radio" name="homesPerYear" value="21+">
-                                <span class="radio-label">21+</span>
+                                <input type="radio" name="homesPerYear" value="just-exploring">
+                                <span class="radio-label">Just exploring</span>
                             </label>
                         </div>
-                        <button type="button" class="btn btn-primary btn-block" onclick="nextStep(1)">Next
+                        <button type="button" class="btn btn-primary btn-block btn-disabled" disabled onclick="nextStep(1)">Next
                             Question</button>
                     </div>
 

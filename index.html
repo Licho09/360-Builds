@@ -132,7 +132,6 @@
             line-height: 1;
         }
 
-        /* Mobile journey — show only active label, rest show number only */
         @media (max-width: 768px) {
             .journey-steps {
                 padding: 0 8px 20px;
@@ -164,13 +163,12 @@
                 margin: 0 2px;
             }
 
-            /* Fix: make sure sticky footer doesn't cover form buttons */
             .question-container {
                 padding-bottom: calc(160px + env(safe-area-inset-bottom, 0px)) !important;
             }
         }
 
-        /* ── DEMO TEASER (above quiz) ── */
+        /* ── DEMO TEASER ── */
         .demo-teaser {
             max-width: 550px;
             margin: 0 auto 24px auto;
@@ -221,46 +219,50 @@
             }
         }
 
-        /* Panorama embed styles (results screen) */
-        .panorama-preview {
-            width: 100%;
-            border-radius: 12px;
-            overflow: hidden;
-            margin-bottom: 20px;
-            border: 1px solid var(--border-color);
-            position: relative;
-        }
-
-        .panorama-preview iframe {
-            width: 100%;
-            height: 280px;
-            border: none;
-            display: block;
-        }
-
-        .panorama-label {
-            font-size: 10px;
-            font-weight: 800;
-            letter-spacing: 0.14em;
-            text-transform: uppercase;
-            color: var(--primary-color);
-            margin-bottom: 8px;
+        /* ── RESULTS SCREEN ── */
+        .booking-bullets {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin: 20px 0 28px;
             text-align: left;
         }
 
-        .panorama-caption {
-            font-size: 12px;
-            color: var(--text-muted);
-            text-align: center;
-            padding: 8px 12px;
+        .booking-bullet-item {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-main);
+            line-height: 1.5;
+            padding: 12px 14px;
             background: var(--accent-bg);
-            border-top: 1px solid var(--border-color);
+            border-radius: 10px;
+            border: 1px solid var(--border-color);
         }
 
-        @media (max-width: 768px) {
-            .panorama-preview iframe {
-                height: 220px;
-            }
+        .btn-booking-gold {
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+            color: white;
+            font-size: 1.05rem;
+            padding: 1rem 1.75rem;
+            box-shadow: 0 4px 16px rgba(245, 158, 11, 0.35);
+            border: none;
+        }
+
+        .btn-booking-gold:hover {
+            background: linear-gradient(135deg, #d97706, #b45309);
+            box-shadow: 0 6px 20px rgba(245, 158, 11, 0.45);
+            transform: translateY(-1px);
+        }
+
+        .btn-booking-gold:active {
+            transform: scale(0.98);
+        }
+
+        .booking-trust-line {
+            font-size: 12px;
+            color: var(--text-muted);
+            margin-top: 14px;
+            text-align: center;
         }
     </style>
 </head>
@@ -279,7 +281,7 @@
         <section class="hero-text">
             <p class="hero-eyebrow">For Texas Home Builders Only</p>
             <h1 class="hero-headline">Stop Losing Money<br>on Slow Sales</h1>
-           <p class="hero-subtext">We market your spec home before it's even built</p>
+            <p class="hero-subtext">We market your spec home before it's even built</p>
         </section>
 
         <!-- Journey Step Indicator -->
@@ -300,7 +302,7 @@
             </div>
         </div>
 
-        <!-- 360° Demo Teaser (above quiz) -->
+        <!-- 360° Demo Teaser -->
         <div class="demo-teaser">
             <p class="demo-teaser-label">👇 This is what your buyers experience before your home is finished</p>
             <div class="demo-teaser-frame">
@@ -353,8 +355,7 @@
                                 <span class="radio-label">Just exploring</span>
                             </label>
                         </div>
-                        <button type="button" class="btn btn-primary btn-block btn-disabled" disabled onclick="nextStep(1)">Next
-                            Question</button>
+                        <button type="button" class="btn btn-primary btn-block btn-disabled" disabled onclick="nextStep(1)">Next Question</button>
                     </div>
 
                     <!-- Step 2 -->
@@ -402,17 +403,14 @@
                     <!-- Step 3: Contact Details -->
                     <div class="form-step" id="step3">
                         <h2 class="step-title">Almost there! Enter your details.</h2>
-
                         <div class="form-group">
                             <label for="userName" class="field-label">Full Name</label>
                             <input type="text" id="userName" name="userName" placeholder="Your Name" required class="text-input">
                         </div>
-
                         <div class="form-group">
                             <label for="userPhone" class="field-label">Phone Number</label>
                             <input type="tel" id="userPhone" name="userPhone" placeholder="(555) 000-0000" required class="text-input">
                         </div>
-
                         <div class="form-buttons">
                             <button type="button" class="btn btn-secondary" onclick="goBack(3)">Back</button>
                             <button type="button" class="btn btn-primary" onclick="showBooking()">See My Results &rarr;</button>
@@ -422,25 +420,20 @@
                     <!-- Results Step -->
                     <div class="form-step" id="stepBooking">
                         <div class="booking-result">
-                            <div class="booking-result-icon">🎯</div>
                             <h2 class="booking-result-title">You Qualify. Here&rsquo;s What Happens Next.</h2>
-                            <p class="booking-result-sub">Based on your answers, 360&deg; virtual walkthroughs could
-                                dramatically reduce your days-on-market and help you pre-sell before completion.
-                                Let&rsquo;s build your strategy.</p>
+                            <p class="booking-result-sub">Most Texas spec builders are leaving money on the table with every day a home sits unsold. On this free call we&rsquo;ll show you exactly how our system gets your homes in front of buyers before they&rsquo;re even finished.</p>
 
-                            <button type="button" class="btn btn-primary btn-block"
-                                onclick="window.location.href='booking.html'">
+                            <div class="booking-bullets">
+                                <div class="booking-bullet-item">👀 See a live demo of what your property website will look like</div>
+                                <div class="booking-bullet-item">📲 Learn how buyers will find and tour your home before it&rsquo;s finished</div>
+                                <div class="booking-bullet-item">🎯 See exactly how we capture leads on autopilot for your build</div>
+                            </div>
+
+                            <button type="button" class="btn btn-booking-gold btn-block" onclick="window.location.href='booking.html'">
                                 Book My Free Strategy Call &rarr;
                             </button>
-                            <div class="booking-trust">
-                                <span class="booking-trust-item">No sales pressure</span>
-                                <span class="booking-trust-item">30-min call</span>
-                                <span class="booking-trust-item">Texas builders only</span>
-                            </div>
 
-                            <div class="booking-summary" id="bookingSummary" style="margin-top: 20px;">
-                                <p class="booking-summary-label">Your Profile</p>
-                            </div>
+                            <p class="booking-trust-line">No sales pressure &middot; 30-min Zoom call &middot; Texas builders only</p>
                         </div>
                     </div>
 
@@ -458,30 +451,22 @@
                     <div class="value-card">
                         <span class="value-card-icon">🏗️</span>
                         <div class="value-card-title">Sell at Framing, Not at Finish</div>
-                        <p class="value-card-text">A 360&deg; walkthrough lets buyers experience the flow and scale of a
-                            home before finishes are even selected. Contracts close earlier &mdash; carrying costs
-                            shrink.</p>
+                        <p class="value-card-text">A 360&deg; walkthrough lets buyers experience the flow and scale of a home before finishes are even selected. Contracts close earlier &mdash; carrying costs shrink.</p>
                     </div>
                     <div class="value-card">
                         <span class="value-card-icon">💰</span>
                         <div class="value-card-title">Hold Your Price</div>
-                        <p class="value-card-text">Sitting on inventory invites lowball offers. Buyers who&rsquo;ve
-                            already walked the home virtually show up emotionally invested &mdash; and they negotiate
-                            less.</p>
+                        <p class="value-card-text">Sitting on inventory invites lowball offers. Buyers who&rsquo;ve already walked the home virtually show up emotionally invested &mdash; and they negotiate less.</p>
                     </div>
                     <div class="value-card">
                         <span class="value-card-icon">📍</span>
                         <div class="value-card-title">Reach Out-of-Market Buyers</div>
-                        <p class="value-card-text">Texas is attracting relocating buyers from coast to coast. They
-                            can&rsquo;t drive to every job site. A 360&deg; tour is the next best thing to being there
-                            in person.</p>
+                        <p class="value-card-text">Texas is attracting relocating buyers from coast to coast. They can&rsquo;t drive to every job site. A 360&deg; tour is the next best thing to being there in person.</p>
                     </div>
                     <div class="value-card">
                         <span class="value-card-icon">📈</span>
                         <div class="value-card-title">Stand Out From the Competition</div>
-                        <p class="value-card-text">Most builders in your market still rely on flat photos and floor plan
-                            PDFs. An immersive 360&deg; experience signals quality before a buyer ever visits the lot.
-                        </p>
+                        <p class="value-card-text">Most builders in your market still rely on flat photos and floor plan PDFs. An immersive 360&deg; experience signals quality before a buyer ever visits the lot.</p>
                     </div>
                 </div>
             </div>

@@ -292,10 +292,10 @@ function updateMobileFooter() {
   if (currentStep < TOTAL_STEPS) {
     action.textContent = 'Next Question';
     action.onclick = () => { if (!action.disabled) nextStep(currentStep); };
-  } else {
+} else if (currentStep === TOTAL_STEPS) {
     action.textContent = 'See My Results \u2192';
     action.onclick = () => { if (!action.disabled) showBooking(); };
-  }
+}
 
   footer.appendChild(action);
 }

@@ -122,7 +122,7 @@ function checkStepReady(stepNum) {
     return !!document.querySelector('input[name="homesPerYear"]:checked');
   }
   if (stepNum === 2) {
-    return true; // checkboxes always optional
+    return true;
   }
   if (stepNum === 3) {
     const name = document.getElementById('userName')?.value.trim();
@@ -147,7 +147,6 @@ function showStep(n) {
     const progressContainer = document.querySelector('.progress-container');
     if (progressContainer) progressContainer.style.marginTop = '';
 
-    // Set initial button state for the step
     if (n !== 2) {
       setNextButtonState(n, checkStepReady(n));
     }
@@ -165,7 +164,6 @@ function showStep(n) {
   const container = document.querySelector('.question-container');
   if (container) window.scrollTo({ top: container.offsetTop - 16, behavior: 'smooth' });
 
-  // ── GA4 STEP TRACKING ──
   if (typeof gtag !== 'undefined') {
     if (n === 1) gtag('event', 'quiz_step_1', { event_category: 'Quiz', event_label: 'Homes Per Year' });
     if (n === 2) gtag('event', 'quiz_step_2', { event_category: 'Quiz', event_label: 'Marketing Channels' });
@@ -208,19 +206,33 @@ function goBack(from) {
 
 function showBooking() {
   if (!validateStep(3)) return;
-  buildSummary();
+
+  // Save data to localStorage for booking page
+  const homesPerYear = document.querySelector('input[name="homesPerYear"]:checked')?.value || '';
+  const channels = [...document.querySelectorAll('input[name="marketingChannels"]:checked')].map(c => c.value);
+  const userName = document.getElementById('userName')?.value.trim() || '';
+  const userPhone = document.getElementById('userPhone')?.value.trim() || '';
+
+  try {
+    localStorage.setItem('surveyData', JSON.stringify({
+      homesPerYear, channels, userName, userPhone
+    }));
+  } catch (e) {}
+
+  // Show results screen
   showStep('booking');
+  setJourneyBooking();
   launchConfetti();
+
+  // Fire pixels
   if (typeof fbq !== 'undefined') fbq('track', 'Lead');
 
-  const surveyData = JSON.parse(localStorage.getItem('surveyData') || '{}');
-  const channels = Array.isArray(surveyData.channels) ? surveyData.channels : (surveyData.channels ? [surveyData.channels] : []);
-
+  // Send to Google Sheet
   const payload = {
-    type: "survey",
-    name: surveyData.userName || "",
-    phone: surveyData.userPhone || "",
-    homesPerYear: surveyData.homesPerYear || "",
+    type: 'survey',
+    name: userName,
+    phone: userPhone,
+    homesPerYear: homesPerYear,
     channels: channels
   };
 
@@ -231,55 +243,15 @@ function showBooking() {
     .catch(err => console.error('Survey save failed:', err));
 }
 
-function buildSummary() {
-  const homesPerYear = document.querySelector('input[name="homesPerYear"]:checked')?.value || '';
-  const channels = [...document.querySelectorAll('input[name="marketingChannels"]:checked')].map(c => c.value);
-
-  const channelMap = {
-    'mls': 'MLS',
-    'social-media': 'Social media',
-    'photos-video': 'Photos or video',
-    'referrals': 'Referrals',
-    'yard-signs': 'Yard signs',
-    'none': 'No real marketing system'
-  };
-
-  const rows = [];
-  if (homesPerYear) rows.push({ label: 'Homes per year', val: homesPerYear });
-  if (channels.length) rows.push({ label: 'Current marketing', val: channels.map(c => channelMap[c] || c).join(', ') });
-
-  const userName = document.getElementById('userName') ? document.getElementById('userName').value.trim() : '';
-  const userPhone = document.getElementById('userPhone') ? document.getElementById('userPhone').value.trim() : '';
-
-  try {
-    localStorage.setItem('surveyData', JSON.stringify({
-      homesPerYear, channels, userName, userPhone
-    }));
-  } catch (e) {}
-
-  const box = document.getElementById('bookingSummary');
-  box.innerHTML = '<p class="booking-summary-label">Your Profile</p>';
-  rows.forEach(r => {
-    box.innerHTML += `<div class="booking-summary-row">
-      <span class="booking-summary-check">✓</span>
-      <span class="booking-summary-key">${r.label}:</span>
-      <span class="booking-summary-val">${r.val}</span>
-    </div>`;
-  });
-}
-
 // =====================
 // EVENT LISTENERS
 // =====================
-
-// Step 1 — enable Next when radio selected (no auto-advance)
 document.addEventListener('change', function (e) {
   if (e.target.name === 'homesPerYear') {
     setNextButtonState(1, true);
   }
 });
 
-// Step 3 — enable "See My Results" as user types name/phone
 document.addEventListener('input', function (e) {
   if (e.target.id === 'userName' || e.target.id === 'userPhone') {
     setNextButtonState(3, checkStepReady(3));

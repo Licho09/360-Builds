@@ -225,7 +225,7 @@ function showBooking() {
     type: "survey",
     name: surveyData.userName || "",
     phone: surveyData.userPhone || "",
-    homesPerYear: surveyData.homesPerYear || "",
+    buildStatus: surveyData.buildStatus || "",
     channels: channels
   };
 
@@ -249,28 +249,14 @@ function buildSummary() {
     'none': 'No real marketing system'
   };
 
-  const rows = [];
-  if (homesPerYear) rows.push({ label: 'Homes per year', val: homesPerYear });
-  if (channels.length) rows.push({ label: 'Current marketing', val: channels.map(c => channelMap[c] || c).join(', ') });
-
   const userName = document.getElementById('userName') ? document.getElementById('userName').value.trim() : '';
   const userPhone = document.getElementById('userPhone') ? document.getElementById('userPhone').value.trim() : '';
 
   try {
     localStorage.setItem('surveyData', JSON.stringify({
-      homesPerYear, channels, userName, userPhone
+      buildStatus: homesPerYear, channels, userName, userPhone
     }));
   } catch (e) {}
-
-  const box = document.getElementById('bookingSummary');
-  box.innerHTML = '<p class="booking-summary-label">Your Profile</p>';
-  rows.forEach(r => {
-    box.innerHTML += `<div class="booking-summary-row">
-      <span class="booking-summary-check">✓</span>
-      <span class="booking-summary-key">${r.label}:</span>
-      <span class="booking-summary-val">${r.val}</span>
-    </div>`;
-  });
 }
 
 // =====================

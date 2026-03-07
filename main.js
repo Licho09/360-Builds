@@ -164,8 +164,11 @@ function showStep(n) {
   updateProgress(n);
   updateJourneyIndicator(n);
   updateMobileFooter();
-  const container = document.querySelector('.question-container');
-  if (container) window.scrollTo({ top: container.offsetTop - 16, behavior: 'smooth' });
+  // Only scroll when advancing steps (not on initial load)
+  if (n !== 1) {
+    const container = document.querySelector('.question-container');
+    if (container) window.scrollTo({ top: container.offsetTop - 16, behavior: 'smooth' });
+  }
 
   // ── GA4 STEP TRACKING ──
   if (typeof gtag !== 'undefined') {

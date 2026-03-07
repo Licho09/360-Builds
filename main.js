@@ -119,10 +119,12 @@ function setNextButtonState(stepNum, enabled) {
 
 function checkStepReady(stepNum) {
   if (stepNum === 1) {
-    return !!document.querySelector('input[name="homesPerYear"]:checked');
+    // Step 1 is now checkboxes — at least one must be checked
+    return document.querySelectorAll('input[name="marketingChannels"]:checked').length > 0;
   }
   if (stepNum === 2) {
-    return true; // checkboxes always optional
+    // Step 2 is now radio — one must be selected
+    return !!document.querySelector('input[name="homesPerYear"]:checked');
   }
   if (stepNum === 3) {
     const name = document.getElementById('userName')?.value.trim();
@@ -272,10 +274,17 @@ function buildSummary() {
 // EVENT LISTENERS
 // =====================
 
-// Step 1 — enable Next when radio selected (no auto-advance)
+// Step 1 — enable Next when any checkbox is checked (marketing channels)
 document.addEventListener('change', function (e) {
+  if (e.target.name === 'marketingChannels') {
+    const anyChecked = document.querySelectorAll('input[name="marketingChannels"]:checked').length > 0;
+    setNextButtonState(1, anyChecked);
+    updateMobileFooter();
+  }
+  // Step 2 — enable Next when radio selected (build status)
   if (e.target.name === 'homesPerYear') {
-    setNextButtonState(1, true);
+    setNextButtonState(2, true);
+    updateMobileFooter();
   }
 });
 

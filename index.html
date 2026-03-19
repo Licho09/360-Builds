@@ -227,8 +227,8 @@
 
         <section class="hero-text">
             <p class="hero-eyebrow">For Texas Home Builders Only</p>
-            <h1 class="hero-headline">Stop Losing Money<br>on Slow Sales</h1>
-            <p class="hero-subtext">We market your spec home before it's even built</p>
+            <h1 class="hero-headline">Pre-Sell Your Spec Home<br>Before It&rsquo;s Even Built</h1>
+            <p class="hero-subtext">See if you qualify for a free 360&deg; virtual tour &amp; property website</p>
         </section>
 
         <!-- Journey Step Indicator -->
@@ -272,6 +272,34 @@
 
                     <!-- Step 1 -->
                     <div class="form-step active" id="step1">
+                        <h2 class="step-title">When will your spec home be completed?</h2>
+                        <div class="radio-group">
+                            <label class="radio-card">
+                                <input type="radio" name="completionDate" value="0-30-days">
+                                <span class="radio-label">0–30 days</span>
+                            </label>
+                            <label class="radio-card">
+                                <input type="radio" name="completionDate" value="30-60-days">
+                                <span class="radio-label">30–60 days</span>
+                            </label>
+                            <label class="radio-card">
+                                <input type="radio" name="completionDate" value="60-90-days">
+                                <span class="radio-label">60–90 days</span>
+                            </label>
+                            <label class="radio-card">
+                                <input type="radio" name="completionDate" value="3-6-months">
+                                <span class="radio-label">3–6 months</span>
+                            </label>
+                            <label class="radio-card">
+                                <input type="radio" name="completionDate" value="just-starting">
+                                <span class="radio-label">Just starting / framing</span>
+                            </label>
+                        </div>
+                        <button type="button" class="btn btn-primary btn-block btn-disabled" disabled onclick="nextStep(1)">Next Question</button>
+                    </div>
+
+                    <!-- Step 2 -->
+                    <div class="form-step" id="step2">
                         <h2 class="step-title">How do you currently market your spec homes?</h2>
                         <p class="step-subtitle">Select all that apply.</p>
                         <div class="checkbox-group">
@@ -304,30 +332,6 @@
                                 <input type="checkbox" name="marketingChannels" value="none">
                                 <span class="checkbox-box"></span>
                                 <span class="checkbox-label">No real marketing system</span>
-                            </label>
-                        </div>
-                        <button type="button" class="btn btn-primary btn-block btn-disabled" disabled onclick="nextStep(1)">Next Question</button>
-                    </div>
-
-                    <!-- Step 2 -->
-                    <div class="form-step" id="step2">
-                        <h2 class="step-title">Are you currently building or planning a spec home in Texas?</h2>
-                        <div class="radio-group">
-                            <label class="radio-card">
-                                <input type="radio" name="homesPerYear" value="currently-building">
-                                <span class="radio-label">Yes, currently building</span>
-                            </label>
-                            <label class="radio-card">
-                                <input type="radio" name="homesPerYear" value="starting-soon">
-                                <span class="radio-label">Starting soon</span>
-                            </label>
-                            <label class="radio-card">
-                                <input type="radio" name="homesPerYear" value="planning-later">
-                                <span class="radio-label">Planning for later this year</span>
-                            </label>
-                            <label class="radio-card">
-                                <input type="radio" name="homesPerYear" value="just-exploring">
-                                <span class="radio-label">Just exploring</span>
                             </label>
                         </div>
                         <div class="form-buttons">

@@ -119,12 +119,12 @@ function setNextButtonState(stepNum, enabled) {
 
 function checkStepReady(stepNum) {
   if (stepNum === 1) {
-    // Step 1 is now checkboxes — at least one must be checked
-    return document.querySelectorAll('input[name="marketingChannels"]:checked').length > 0;
+    // Step 1 is now radio — completion date
+    return !!document.querySelector('input[name="completionDate"]:checked');
   }
   if (stepNum === 2) {
-    // Step 2 is now radio — one must be selected
-    return !!document.querySelector('input[name="homesPerYear"]:checked');
+    // Step 2 is now checkboxes — at least one must be checked
+    return document.querySelectorAll('input[name="marketingChannels"]:checked').length > 0;
   }
   if (stepNum === 3) {
     const name = document.getElementById('userName')?.value.trim();
@@ -172,8 +172,8 @@ function showStep(n) {
 
   // ── GA4 STEP TRACKING ──
   if (typeof gtag !== 'undefined') {
-    if (n === 1) gtag('event', 'quiz_step_1', { event_category: 'Quiz', event_label: 'Marketing Channels' });
-    if (n === 2) gtag('event', 'quiz_step_2', { event_category: 'Quiz', event_label: 'Building Status' });
+    if (n === 1) gtag('event', 'quiz_step_1', { event_category: 'Quiz', event_label: 'Completion Date' });
+    if (n === 2) gtag('event', 'quiz_step_2', { event_category: 'Quiz', event_label: 'Marketing Channels' });
     if (n === 3) gtag('event', 'quiz_step_3', { event_category: 'Quiz', event_label: 'Contact Details' });
     if (n === 'booking') gtag('event', 'quiz_complete', { event_category: 'Quiz', event_label: 'Qualified' });
   }
@@ -225,7 +225,7 @@ function showBooking() {
     type: "survey",
     name: surveyData.userName || "",
     phone: surveyData.userPhone || "",
-    buildStatus: surveyData.buildStatus || "",
+    completionDate: surveyData.completionDate || "",
     channels: channels
   };
 
@@ -237,24 +237,13 @@ function showBooking() {
 }
 
 function buildSummary() {
-  const homesPerYear = document.querySelector('input[name="homesPerYear"]:checked')?.value || '';
+  const completionDate = document.querySelector('input[name="completionDate"]:checked')?.value || '';
   const channels = [...document.querySelectorAll('input[name="marketingChannels"]:checked')].map(c => c.value);
-
-  const channelMap = {
-    'mls': 'MLS',
-    'social-media': 'Social media',
-    'photos-video': 'Photos or video',
-    'referrals': 'Referrals',
-    'yard-signs': 'Yard signs',
-    'none': 'No real marketing system'
-  };
-
   const userName = document.getElementById('userName') ? document.getElementById('userName').value.trim() : '';
   const userPhone = document.getElementById('userPhone') ? document.getElementById('userPhone').value.trim() : '';
-
   try {
     localStorage.setItem('surveyData', JSON.stringify({
-      buildStatus: homesPerYear, channels, userName, userPhone
+      completionDate, channels, userName, userPhone
     }));
   } catch (e) {}
 }
@@ -263,16 +252,16 @@ function buildSummary() {
 // EVENT LISTENERS
 // =====================
 
-// Step 1 — enable Next when any checkbox is checked (marketing channels)
+// Step 1 — enable Next when radio selected (completion date)
 document.addEventListener('change', function (e) {
-  if (e.target.name === 'marketingChannels') {
-    const anyChecked = document.querySelectorAll('input[name="marketingChannels"]:checked').length > 0;
-    setNextButtonState(1, anyChecked);
+  if (e.target.name === 'completionDate') {
+    setNextButtonState(1, true);
     updateMobileFooter();
   }
-  // Step 2 — enable Next when radio selected (build status)
-  if (e.target.name === 'homesPerYear') {
-    setNextButtonState(2, true);
+  // Step 2 — enable Next when any checkbox is checked (marketing channels)
+  if (e.target.name === 'marketingChannels') {
+    const anyChecked = document.querySelectorAll('input[name="marketingChannels"]:checked').length > 0;
+    setNextButtonState(2, anyChecked);
     updateMobileFooter();
   }
 });

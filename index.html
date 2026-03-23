@@ -226,26 +226,26 @@
         </header>
 
         <section class="hero-text">
-            <p class="hero-eyebrow">For Texas Spec Home Builders</p>
-<h1 class="hero-headline">Pre-Sell Your Home<br>Before Completion</h1>
-<p class="hero-subtext">Find qualified buyers 30-60 days before you're done building. No price reductions.</p>
+            <p class="hero-eyebrow">For Texas Home Builders Only</p>
+            <h1 class="hero-headline">Pre-Sell Your Spec Home<br>Before It&rsquo;s Even Built</h1>
+            <p class="hero-subtext">See if you qualify for a free 360&deg; virtual tour &amp; property website</p>
         </section>
 
         <!-- Journey Step Indicator -->
         <div class="journey-steps" id="journeySteps">
             <div class="journey-step active" id="jStep1">
                 <div class="journey-num"><span>1</span></div>
-                <span class="journey-label">3 Quick Questions</span>
+                <span class="journey-label">Your Info</span>
             </div>
             <div class="journey-arrow">→</div>
             <div class="journey-step" id="jStep2">
                 <div class="journey-num"><span>2</span></div>
-                <span class="journey-label">See If You Qualify</span>
+                <span class="journey-label">Quick Question</span>
             </div>
             <div class="journey-arrow">→</div>
             <div class="journey-step" id="jStep3">
                 <div class="journey-num"><span>3</span></div>
-                <span class="journey-label">Book Your Call</span>
+                <span class="journey-label">See Results</span>
             </div>
         </div>
 
@@ -270,8 +270,26 @@
 
                 <form id="applicationForm">
 
-                    <!-- Step 1 -->
+                    <!-- Step 1: Contact Info (captured immediately) -->
                     <div class="form-step active" id="step1">
+                        <h2 class="step-title">Enter your info to see if you qualify.</h2>
+                        <p class="step-subtitle">Takes 10 seconds. No spam, ever.</p>
+
+                        <div class="form-group">
+                            <label for="userName" class="field-label">Full Name</label>
+                            <input type="text" id="userName" name="userName" placeholder="Your Name" required class="text-input">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="userPhone" class="field-label">Phone Number</label>
+                            <input type="tel" id="userPhone" name="userPhone" placeholder="(555) 000-0000" required class="text-input">
+                        </div>
+
+                        <button type="button" class="btn btn-primary btn-block btn-disabled" disabled onclick="nextStep(1)">Next &rarr;</button>
+                    </div>
+
+                    <!-- Step 2: Completion Timeline -->
+                    <div class="form-step" id="step2">
                         <h2 class="step-title">When will your spec home be completed?</h2>
                         <div class="radio-group">
                             <label class="radio-card">
@@ -290,69 +308,14 @@
                                 <input type="radio" name="completionDate" value="3-6-months">
                                 <span class="radio-label">3–6 months</span>
                             </label>
-                        </div>
-                        <button type="button" class="btn btn-primary btn-block btn-disabled" disabled onclick="nextStep(1)">Next Question</button>
-                    </div>
-
-                    <!-- Step 2 -->
-                    <div class="form-step" id="step2">
-                        <h2 class="step-title">How do you currently market your spec homes?</h2>
-                        <p class="step-subtitle">Select all that apply.</p>
-                        <div class="checkbox-group">
-                            <label class="checkbox-card-item">
-                                <input type="checkbox" name="marketingChannels" value="mls">
-                                <span class="checkbox-box"></span>
-                                <span class="checkbox-label">MLS</span>
-                            </label>
-                            <label class="checkbox-card-item">
-                                <input type="checkbox" name="marketingChannels" value="social-media">
-                                <span class="checkbox-box"></span>
-                                <span class="checkbox-label">Social media</span>
-                            </label>
-                            <label class="checkbox-card-item">
-                                <input type="checkbox" name="marketingChannels" value="photos-video">
-                                <span class="checkbox-box"></span>
-                                <span class="checkbox-label">Photos or video</span>
-                            </label>
-                            <label class="checkbox-card-item">
-                                <input type="checkbox" name="marketingChannels" value="referrals">
-                                <span class="checkbox-box"></span>
-                                <span class="checkbox-label">Referrals</span>
-                            </label>
-                            <label class="checkbox-card-item">
-                                <input type="checkbox" name="marketingChannels" value="yard-signs">
-                                <span class="checkbox-box"></span>
-                                <span class="checkbox-label">Yard signs</span>
-                            </label>
-                            <label class="checkbox-card-item">
-                                <input type="checkbox" name="marketingChannels" value="none">
-                                <span class="checkbox-box"></span>
-                                <span class="checkbox-label">No real marketing system</span>
+                            <label class="radio-card">
+                                <input type="radio" name="completionDate" value="just-starting">
+                                <span class="radio-label">Just starting / framing</span>
                             </label>
                         </div>
                         <div class="form-buttons">
                             <button type="button" class="btn btn-secondary" onclick="goBack(2)">Back</button>
-                            <button type="button" class="btn btn-primary btn-disabled" disabled onclick="nextStep(2)">Next Question</button>
-                        </div>
-                    </div>
-
-                    <!-- Step 3: Contact Details -->
-                    <div class="form-step" id="step3">
-                        <h2 class="step-title">Almost there! Enter your details.</h2>
-
-                        <div class="form-group">
-                            <label for="userName" class="field-label">Full Name</label>
-                            <input type="text" id="userName" name="userName" placeholder="Your Name" required class="text-input">
-                        </div>
-
-                        <div class="form-group">
-                            <label for="userPhone" class="field-label">Phone Number</label>
-                            <input type="tel" id="userPhone" name="userPhone" placeholder="(555) 000-0000" required class="text-input">
-                        </div>
-
-                        <div class="form-buttons">
-                            <button type="button" class="btn btn-secondary" onclick="goBack(3)">Back</button>
-                            <button type="button" class="btn btn-primary" onclick="showBooking()">See My Results &rarr;</button>
+                            <button type="button" class="btn btn-primary btn-disabled" disabled onclick="showBooking()">See My Results &rarr;</button>
                         </div>
                     </div>
 
@@ -377,9 +340,9 @@
                             </div>
 
                             <button type="button" class="btn btn-booking-gold btn-block" onclick="window.location.href='booking.html'">
-                                Get My Custom Pre-Sale Plan &rarr;
+                                Book My Free Strategy Call &rarr;
                             </button>
-<p class="booking-trust-line">30-min Zoom · See exactly how to pre-sell your home · Limited availability</p>
+                            <p class="booking-trust-line">No sales pressure &middot; 30-min Zoom call &middot; Texas builders only</p>
                         </div>
                     </div>
 

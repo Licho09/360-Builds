@@ -9,6 +9,7 @@ document.addEventListener('DOMContentLoaded', function () {
     var displayPhone = document.getElementById('displayPhone');
     var timeSlotsContainer = document.getElementById('timeSlotsContainer');
     var confirmBtn = document.getElementById('confirmBtn');
+    var smsOptInChk = document.getElementById('smsOptIn');
 
     var GOOGLE_SHEET_URL = 'https://script.google.com/macros/s/AKfycbyQn65Ow5YEMMY4kNN2PNK5FzdysBV3igm5a69EAN-QeZgBgFJz2khkIhkrl3ljDYX6/exec';
 
@@ -20,6 +21,14 @@ document.addEventListener('DOMContentLoaded', function () {
     var surveyData = JSON.parse(localStorage.getItem('surveyData') || '{}');
     var userName = surveyData.userName || '';
     var userPhone = surveyData.userPhone || '';
+    var smsOptIn = surveyData.smsOptIn || false;
+
+    // Pre-fill name and phone if available
+    var nameInput = document.getElementById('userName');
+    var phoneInput = document.getElementById('userPhone');
+    if (nameInput && userName) nameInput.value = userName;
+    if (phoneInput && userPhone) phoneInput.value = userPhone;
+    if (smsOptInChk && smsOptIn) smsOptInChk.checked = smsOptIn;
 
     // Display name and phone from survey
     if (displayName) displayName.textContent = userName || '---';
@@ -236,28 +245,45 @@ document.addEventListener('DOMContentLoaded', function () {
                 displayDateTime.textContent = 'Please select a date and time';
             }
 
-            // Enable/disable confirm button on desktop
-            if (confirmBtn) {
-                if (selectedDate && selectedTime) {
-                    confirmBtn.disabled = false;
-                } else {
-                    confirmBtn.disabled = true;
-                }
-            }
+            validateForm();
         }
 
         initCalendar();
     }
+
+    function validateForm() {
+        var name = nameInput ? nameInput.value.trim() : '';
+        var phone = phoneInput ? phoneInput.value.trim() : '';
+        var optIn = smsOptInChk ? smsOptInChk.checked : false;
+        var hasDateTime = selectedDate && selectedTime;
+
+        if (confirmBtn) {
+            if (name && phone && optIn && hasDateTime) {
+                confirmBtn.disabled = false;
+                confirmBtn.classList.remove('btn-disabled');
+            } else {
+                confirmBtn.disabled = true;
+                confirmBtn.classList.add('btn-disabled');
+            }
+        }
+    }
+
+    if (nameInput) nameInput.addEventListener('input', validateForm);
+    if (phoneInput) phoneInput.addEventListener('input', validateForm);
+    if (smsOptInChk) smsOptInChk.addEventListener('change', validateForm);
 
     // ------------------ FORM SUBMIT ------------------
     if (bookingForm) {
         bookingForm.addEventListener('submit', function (e) {
             e.preventDefault();
 
+            var name = nameInput ? nameInput.value.trim() : userName;
+            var phone = phoneInput ? phoneInput.value.trim() : userPhone;
+            var optIn = smsOptInChk ? smsOptInChk.checked : smsOptIn;
             var selectedDateTimeText = displayDateTime ? displayDateTime.textContent : '';
 
-            if (!userName || !userPhone) {
-                alert('Contact info is missing. Please go back and fill in your details.');
+            if (!name || !phone || !optIn) {
+                alert('Please fill in all fields and agree to receive SMS messages.');
                 return;
             }
             if (!selectedDate || !selectedTime) {
@@ -272,8 +298,9 @@ document.addEventListener('DOMContentLoaded', function () {
             }
 
             var finalData = {
-                name: userName,
-                phone: userPhone,
+                name: name,
+                phone: phone,
+                smsOptIn: optIn ? "Yes" : "No",
                 dateTime: selectedDateTimeText,
                 homesPerYear: surveyData.homesPerYear || '',
                 currentTours: surveyData.currentTours || ''

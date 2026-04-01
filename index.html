@@ -14,8 +14,8 @@
     <script>
         window.dataLayer = window.dataLayer || [];
         function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-        gtag('config', 'G-JKLEK6QQDY');
+        gtag("js", new Date());
+        gtag("config", "G-JKLEK6QQDY");
     </script>
 
     <!-- Meta Pixel Code -->
@@ -25,14 +25,14 @@
                 n.callMethod ?
                     n.callMethod.apply(n, arguments) : n.queue.push(arguments)
             };
-            if (!f._fbq) f._fbq = n; n.push = n; n.loaded = !0; n.version = '2.0';
+            if (!f._fbq) f._fbq = n; n.push = n; n.loaded = !0; n.version = "2.0";
             n.queue = []; t = b.createElement(e); t.async = !0;
             t.src = v; s = b.getElementsByTagName(e)[0];
             s.parentNode.insertBefore(t, s)
-        }(window, document, 'script',
-            'https://connect.facebook.net/en_US/fbevents.js');
-        fbq('init', '854197977632425');
-        fbq('track', 'PageView');
+        }(window, document, "script",
+            "https://connect.facebook.net/en_US/fbevents.js");
+        fbq("init", "854197977632425");
+        fbq("track", "PageView");
     </script>
     <noscript>
         <img height="1" width="1" style="display:none"
@@ -82,7 +82,7 @@
         }
 
         .journey-step.done .journey-num::after {
-            content: '✓';
+            content: "✓";
             font-size: 10px;
             font-weight: 800;
         }
@@ -285,7 +285,38 @@
                             <input type="tel" id="userPhone" name="userPhone" placeholder="(555) 000-0000" required class="text-input">
                         </div>
 
+                        <div class="form-group checkbox-group">
+                            <input type="checkbox" id="smsOptIn" name="smsOptIn">
+                            <label for="smsOptIn" class="checkbox-label">
+                                By checking this box, you consent to receive SMS messages from 360 Builds regarding updates and follow-ups on properties you express interest in. Message frequency varies. Msg & data rates may apply. Reply <strong>STOP</strong> to unsubscribe or <strong>HELP</strong> for help. View our <a href="https://licho09.github.io/360-Builds/privacy-policy.html">Privacy Policy</a> and <a href="https://licho09.github.io/360-Builds/terms.html">Terms & Conditions</a>.
+                            </label>
+                        </div>
+
                         <button type="button" class="btn btn-primary btn-block btn-disabled" disabled onclick="nextStep(1)">Next &rarr;</button>
+
+<style>
+    .checkbox-group {
+        display: flex;
+        align-items: flex-start;
+        margin-bottom: 20px;
+    }
+
+    .checkbox-group input[type="checkbox"] {
+        margin-right: 10px;
+        margin-top: 5px; /* Align checkbox with the first line of text */
+    }
+
+    .checkbox-group .checkbox-label {
+        font-size: 14px;
+        color: var(--text-muted);
+        line-height: 1.5;
+    }
+
+    .checkbox-group .checkbox-label a {
+        color: var(--primary-color);
+        text-decoration: underline;
+    }
+</style>
                     </div>
 
                     <!-- Step 2: Completion Timeline -->
@@ -313,36 +344,41 @@
                                 <span class="radio-label">Just starting / framing</span>
                             </label>
                         </div>
-                        <div class="form-buttons">
-                            <button type="button" class="btn btn-secondary" onclick="goBack(2)">Back</button>
-                            <button type="button" class="btn btn-primary btn-disabled" disabled onclick="showBooking()">See My Results &rarr;</button>
+                        <div class="form-actions">
+                            <button type="button" class="btn btn-secondary" onclick="prevStep(2)">Back</button>
+                            <button type="button" class="btn btn-primary btn-disabled" disabled onclick="nextStep(2)">See My Results &rarr;</button>
                         </div>
                     </div>
 
-                    <!-- Results Step -->
-                    <div class="form-step" id="stepBooking">
-                        <div class="booking-result">
-                            <h2 class="booking-result-title">You Qualify. Here&rsquo;s What Happens Next.</h2>
-                            <p class="booking-result-sub">Every day your home sits unsold costs you money. On this free call we&rsquo;ll show you how to fix that.</p>
-                            <div class="booking-bullets">
-                                <div class="booking-bullet-item">👀 See a live demo of what your property website will look like</div>
-                                <div class="booking-bullet-item">📲 Learn how buyers will find and tour your home before it&rsquo;s finished</div>
-                                <div class="booking-bullet-item">🎯 See exactly how we capture leads on autopilot for your build</div>
-                            </div>
+                    <!-- Step 3: Results -->
+                    <div class="form-step" id="step3">
+                        <h2 class="step-title">You Qualify. Here's What Happens Next.</h2>
+                        <p class="step-subtitle">Every day your home sits unsold costs you money. On this free call we'll show you how to fix that.</p>
 
-                            <!-- 360° Tour Preview (reward for completing quiz) -->
-                            <div style="margin-bottom:20px;">
-                                <p style="font-size:11px;font-weight:800;letter-spacing:0.12em;text-transform:uppercase;color:var(--primary-color);margin-bottom:8px;text-align:left;">🏠 This is what your buyers will experience</p>
-                                <div style="border-radius:12px;overflow:hidden;border:1px solid var(--border-color);box-shadow:0 4px 16px rgba(0,98,254,0.08);">
-                                    <iframe src="https://panorama.homestyler.com/v2?m=p&id=ovZe3kZsZMKaK9yVzbCYyW&locale=en_US" allowfullscreen loading="lazy" style="width:100%;height:240px;border:none;display:block;"></iframe>
-                                    <div style="font-size:12px;color:var(--text-muted);text-align:center;padding:8px 12px;background:var(--accent-bg);border-top:1px solid var(--border-color);">Live 360° walkthrough — drag to explore</div>
-                                </div>
+                        <div class="results-list">
+                            <div class="result-item">
+                                <img src="assets/icons/icon-video.svg" alt="Video Icon">
+                                <p>See a live demo of what your property website will look like</p>
                             </div>
+                            <div class="result-item">
+                                <img src="assets/icons/icon-house.svg" alt="House Icon">
+                                <p>Learn how buyers will find and tour your home before it's finished</p>
+                            </div>
+                            <div class="result-item">
+                                <img src="assets/icons/icon-chart.svg" alt="Chart Icon">
+                                <p>See exactly how we capture leads on autopilot for your build</p>
+                            </div>
+                        </div>
 
-                            <button type="button" class="btn btn-booking-gold btn-block" onclick="window.location.href='booking.html'">
-                                Book My Free Strategy Call &rarr;
-                            </button>
-                            <p class="booking-trust-line">No sales pressure &middot; 30-min Zoom call &middot; Texas builders only</p>
+                        <p class="panorama-label">This is what your buyers will experience</p>
+                        <div class="panorama-preview">
+                            <iframe src="https://momento360.com/e/uc/6179313264424317a224675546200230?utm_campaign=embed&utm_source=other&heading=0&pitch=0&field-of-view=75&size=medium&display-plan=true" allowfullscreen></iframe>
+                            <p class="panorama-caption">Live 360° walkthrough — drag to explore</p>
+                        </div>
+
+                        <div class="form-actions">
+                            <button type="button" class="btn btn-primary btn-block" onclick="bookCall()">Book My Free Strategy Call &rarr;</button>
+                            <p class="form-note">No sales pressure · 30-min Zoom call · Texas builders only</p>
                         </div>
                     </div>
 
@@ -350,54 +386,187 @@
             </div>
         </main>
 
-        <!-- Confetti Canvas -->
-        <canvas id="confettiCanvas" class="confetti-canvas"></canvas>
-
-        <section class="value-section">
-            <div class="value-inner">
-                <div class="section-label">Why 360&deg; Changes the Game</div>
-                <div class="value-cards">
-                    <div class="value-card">
-                        <span class="value-card-icon">🏗️</span>
-                        <div class="value-card-title">Sell at Framing, Not at Finish</div>
-                        <p class="value-card-text">A 360&deg; walkthrough lets buyers experience the flow and scale of a
-                            home before finishes are even selected. Contracts close earlier &mdash; carrying costs
-                            shrink.</p>
-                    </div>
-                    <div class="value-card">
-                        <span class="value-card-icon">💰</span>
-                        <div class="value-card-title">Hold Your Price</div>
-                        <p class="value-card-text">Sitting on inventory invites lowball offers. Buyers who&rsquo;ve
-                            already walked the home virtually show up emotionally invested &mdash; and they negotiate
-                            less.</p>
-                    </div>
-                    <div class="value-card">
-                        <span class="value-card-icon">📍</span>
-                        <div class="value-card-title">Reach Out-of-Market Buyers</div>
-                        <p class="value-card-text">Texas is attracting relocating buyers from coast to coast. They
-                            can&rsquo;t drive to every job site. A 360&deg; tour is the next best thing to being there
-                            in person.</p>
-                    </div>
-                    <div class="value-card">
-                        <span class="value-card-icon">📈</span>
-                        <div class="value-card-title">Stand Out From the Competition</div>
-                        <p class="value-card-text">Most builders in your market still rely on flat photos and floor plan
-                            PDFs. An immersive 360&deg; experience signals quality before a buyer ever visits the lot.
-                        </p>
-                    </div>
+        <section class="why-360-section">
+            <h2 class="section-title">Why 360&deg; Changes the Game</h2>
+            <div class="why-360-grid">
+                <div class="why-360-item">
+                    <img src="assets/icons/icon-crane.svg" alt="Crane Icon">
+                    <h3>Sell at Framing, Not at Finish</h3>
+                    <p>A 360&deg; walkthrough lets buyers experience the flow and scale of a home before finishes are even selected. Contracts close earlier &mdash; carrying costs shrink.</p>
+                </div>
+                <div class="why-360-item">
+                    <img src="assets/icons/icon-money.svg" alt="Money Bag Icon">
+                    <h3>Hold Your Price</h3>
+                    <p>Sitting on inventory invites lowball offers. Buyers who&rsquo;ve already walked the home virtually show up emotionally invested &mdash; and they negotiate less.</p>
+                </div>
+                <div class="why-360-item">
+                    <img src="assets/icons/icon-pin.svg" alt="Pin Icon">
+                    <h3>Reach Out-of-Market Buyers</h3>
+                    <p>Texas is attracting relocating buyers from coast to coast. They can&rsquo;t drive to every job site. A 360&deg; tour is the next best thing to being there in person.</p>
+                </div>
+                <div class="why-360-item">
+                    <img src="assets/icons/icon-chart-alt.svg" alt="Chart Icon">
+                    <h3>Stand Out From the Competition</h3>
+                    <p>Most builders in your market still rely on flat photos and floor plan PDFs. An immersive 360&deg; experience signals quality before a buyer ever visits the lot.</p>
                 </div>
             </div>
         </section>
 
-        <footer class="simple-footer">
+        <footer>
             <p>&copy; 2026 360&deg; Builds. All rights reserved.</p>
         </footer>
+
     </div>
 
-    <!-- Mobile Sticky Footer -->
-    <div class="mobile-sticky-footer" id="mobileStickyFooter"></div>
+    <script>
+        const form = document.getElementById("applicationForm");
+        const steps = document.querySelectorAll(".form-step");
+        const progressSteps = document.querySelectorAll(".journey-step");
+        const progressBar = document.getElementById("progressBar");
+        const currentStepSpan = document.getElementById("currentStep");
+        const totalStepsSpan = document.getElementById("totalSteps");
+        const qualifyHeader = document.getElementById("qualifyHeader");
 
-    <script src="main.js"></script>
+        let currentStep = 0;
+        const totalSteps = steps.length;
+
+        totalStepsSpan.textContent = totalSteps;
+
+        function updateProgress() {
+            progressBar.style.width = `${(currentStep / (totalSteps - 1)) * 100}%`;
+            progressSteps.forEach((step, index) => {
+                if (index === currentStep) {
+                    step.classList.add("active");
+                } else {
+                    step.classList.remove("active");
+                }
+                if (index < currentStep) {
+                    step.classList.add("done");
+                } else {
+                    step.classList.remove("done");
+                }
+            });
+            currentStepSpan.textContent = currentStep + 1;
+
+            // Hide qualify header on step 3
+            if (currentStep === 2) {
+                qualifyHeader.style.display = "none";
+            } else {
+                qualifyHeader.style.display = "block";
+            }
+        }
+
+        function showStep(stepIndex) {
+            steps.forEach((step, index) => {
+                if (index === stepIndex) {
+                    step.classList.add("active");
+                } else {
+                    step.classList.remove("active");
+                }
+            });
+            currentStep = stepIndex;
+            updateProgress();
+        }
+
+        function nextStep(stepIndex) {
+            if (stepIndex === 1) {
+                const userName = document.getElementById("userName");
+                const userPhone = document.getElementById("userPhone");
+                const smsOptIn = document.getElementById("smsOptIn");
+                if (!userName.value || !userPhone.value || !smsOptIn.checked) {
+                    alert("Please fill in all fields and agree to receive SMS messages.");
+                    return;
+                }
+
+                // Track lead with Facebook Pixel
+                fbq("track", "Lead");
+
+                // Send data to Formspree
+                const formData = new FormData();
+                formData.append("Name", userName.value);
+                formData.append("Phone", userPhone.value);
+                formData.append("SMS Opt-in", smsOptIn.checked ? "Yes" : "No");
+
+                fetch("https://formspree.io/f/xeqyvvgd", {
+                    method: "POST",
+                    body: formData,
+                    headers: {
+                        "Accept": "application/json"
+                    }
+                }).then(response => {
+                    if (response.ok) {
+                        console.log("Formspree submission successful");
+                    } else {
+                        console.error("Formspree submission failed");
+                    }
+                }).catch(error => {
+                    console.error("Error submitting to Formspree:", error);
+                });
+            }
+
+            if (currentStep < totalSteps - 1) {
+                showStep(currentStep + 1);
+            }
+        }
+
+        function prevStep(stepIndex) {
+            if (currentStep > 0) {
+                showStep(currentStep - 1);
+            }
+        }
+
+        // Form validation for Step 1
+        const userNameInput = document.getElementById("userName");
+        const userPhoneInput = document.getElementById("userPhone");
+        const smsOptInCheckbox = document.getElementById("smsOptIn");
+        const nextButtonStep1 = document.querySelector("#step1 .btn-primary");
+
+        function validateStep1() {
+            if (userNameInput.value && userPhoneInput.value && smsOptInCheckbox.checked) {
+                nextButtonStep1.disabled = false;
+                nextButtonStep1.classList.remove("btn-disabled");
+            } else {
+                nextButtonStep1.disabled = true;
+                nextButtonStep1.classList.add("btn-disabled");
+            }
+        }
+
+        userNameInput.addEventListener("input", validateStep1);
+        userPhoneInput.addEventListener("input", validateStep1);
+        smsOptInCheckbox.addEventListener("change", validateStep1);
+
+        // Form validation for Step 2
+        const completionDateRadios = document.querySelectorAll("input[name='completionDate']");
+        const nextButtonStep2 = document.querySelector("#step2 .btn-primary");
+
+        function validateStep2() {
+            let isChecked = false;
+            completionDateRadios.forEach(radio => {
+                if (radio.checked) {
+                    isChecked = true;
+                }
+            });
+            if (isChecked) {
+                nextButtonStep2.disabled = false;
+                nextButtonStep2.classList.remove("btn-disabled");
+            } else {
+                nextButtonStep2.disabled = true;
+                nextButtonStep2.classList.add("btn-disabled");
+            }
+        }
+
+        completionDateRadios.forEach(radio => {
+            radio.addEventListener("change", validateStep2);
+        });
+
+        // Initial update
+        updateProgress();
+
+        function bookCall() {
+            // Placeholder for booking call functionality
+            alert("Booking call functionality would go here!");
+        }
+    </script>
 </body>
 
 </html>

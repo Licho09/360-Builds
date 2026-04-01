@@ -65,7 +65,7 @@ const GOOGLE_SHEET_URL = 'https://script.google.com/macros/s/AKfycbyQn65Ow5YEMMY
 const TOTAL_STEPS = 2;
 let currentStep = 1;
 let onResultsScreen = false;
-let step1Saved = false; // track if we already saved step 1
+let step1Saved = false; 
 
 // ── JOURNEY INDICATOR ──────────────────────────────────
 function updateJourneyIndicator(step) {
@@ -90,9 +90,14 @@ function updateJourneyIndicator(step) {
 
 function updateProgress(step) {
   const pct = step === 'booking' ? 100 : ((step - 1) / TOTAL_STEPS) * 100;
-  document.getElementById('progressBar').style.width = pct + '%';
-  document.getElementById('currentStep').textContent = step === 'booking' ? TOTAL_STEPS : step;
-  document.getElementById('totalSteps').textContent = TOTAL_STEPS;
+  const progressBar = document.getElementById('progressBar');
+  if (progressBar) progressBar.style.width = pct + '%';
+  
+  const currentStepSpan = document.getElementById('currentStep');
+  if (currentStepSpan) currentStepSpan.textContent = step === 'booking' ? TOTAL_STEPS : step;
+  
+  const totalStepsSpan = document.getElementById('totalSteps');
+  if (totalStepsSpan) totalStepsSpan.textContent = TOTAL_STEPS;
 }
 
 // ── BUTTON STATE ──────────────────────────────────────
@@ -113,7 +118,8 @@ function checkStepReady(stepNum) {
   if (stepNum === 1) {
     const name = document.getElementById('userName')?.value.trim();
     const phone = document.getElementById('userPhone')?.value.trim();
-    return !!(name && phone);
+    const optIn = document.getElementById('smsOptIn')?.checked;
+    return !!(name && phone && optIn);
   }
   if (stepNum === 2) {
     return !!document.querySelector('input[name="completionDate"]:checked');
@@ -163,21 +169,23 @@ function showStep(n) {
 
 // ── PROGRESSIVE CAPTURE: Save after Step 1 ──────────────
 function saveStep1() {
-  if (step1Saved) return; // don't double-save
+  if (step1Saved) return; 
   const userName = document.getElementById('userName')?.value.trim() || '';
   const userPhone = document.getElementById('userPhone')?.value.trim() || '';
-  if (!userName || !userPhone) return;
+  const smsOptIn = document.getElementById('smsOptIn')?.checked || false;
+  if (!userName || !userPhone || !smsOptIn) return;
 
   step1Saved = true;
 
   try {
-    localStorage.setItem('surveyData', JSON.stringify({ userName, userPhone, completionDate: '' }));
+    localStorage.setItem('surveyData', JSON.stringify({ userName, userPhone, smsOptIn, completionDate: '' }));
   } catch (e) {}
 
   const payload = {
     type: "partial",
     name: userName,
     phone: userPhone,
+    smsOptIn: smsOptIn ? "Yes" : "No",
     completionDate: "",
     status: "Step 1 Only"
   };
@@ -191,11 +199,12 @@ function saveStep1() {
 function nextStep(from) {
   const name = document.getElementById('userName')?.value.trim();
   const phone = document.getElementById('userPhone')?.value.trim();
-  if (!name || !phone) {
-    alert('Please enter your name and phone number.');
+  const optIn = document.getElementById('smsOptIn')?.checked;
+  if (!name || !phone || !optIn) {
+    alert('Please enter your name, phone number, and agree to receive SMS messages.');
     return;
   }
-  saveStep1(); // progressive capture
+  saveStep1(); 
   showStep(from + 1);
 }
 
@@ -213,21 +222,19 @@ function showBooking() {
   const surveyData = JSON.parse(localStorage.getItem('surveyData') || '{}');
   const userName = surveyData.userName || '';
   const userPhone = surveyData.userPhone || '';
+  const smsOptIn = surveyData.smsOptIn || false;
 
   // Save complete lead to localStorage
   try {
-    localStorage.setItem('surveyData', JSON.stringify({ userName, userPhone, completionDate }));
+    localStorage.setItem('surveyData', JSON.stringify({ userName, userPhone, smsOptIn, completionDate }));
   } catch (e) {}
-
-  showStep('booking');
-  launchConfetti();
-  if (typeof fbq !== 'undefined') fbq('track', 'Lead');
 
   // Send complete lead to sheet
   const payload = {
     type: "survey",
     name: userName,
     phone: userPhone,
+    smsOptIn: smsOptIn ? "Yes" : "No",
     completionDate: completionDate,
     status: "Complete"
   };
@@ -236,21 +243,28 @@ function showBooking() {
   formData.append('data', JSON.stringify(payload));
   fetch(GOOGLE_SHEET_URL, { method: 'POST', body: formData })
     .catch(err => console.error('Survey save failed:', err));
+
+  // Redirect to booking page
+  setTimeout(() => {
+    window.location.href = 'booking.html';
+  }, 500);
 }
 
 // =====================
 // EVENT LISTENERS
 // =====================
 
-// Step 1 — enable Next as user types name/phone
+// Step 1 — enable Next as user types name/phone and checks box
 document.addEventListener('input', function (e) {
   if (e.target.id === 'userName' || e.target.id === 'userPhone') {
     setNextButtonState(1, checkStepReady(1));
   }
 });
 
-// Step 2 — enable button when radio selected
 document.addEventListener('change', function (e) {
+  if (e.target.id === 'smsOptIn') {
+    setNextButtonState(1, checkStepReady(1));
+  }
   if (e.target.name === 'completionDate') {
     setNextButtonState(2, true);
     updateMobileFooter();
@@ -302,4 +316,6 @@ function updateMobileFooter() {
 window.addEventListener('resize', updateMobileFooter);
 
 // Init
-showStep(1);
+document.addEventListener('DOMContentLoaded', () => {
+    showStep(1);
+});

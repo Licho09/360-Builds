@@ -132,17 +132,46 @@
             }
         }
 
-        @media (max-width: 360px) {
-            .journey-step {
-                padding: 5px 6px;
-                gap: 4px;
-            }
+        /* SMS Compliance Styles */
+        .sms-compliance-group {
+            display: flex;
+            align-items: flex-start;
+            margin-top: 20px;
+            margin-bottom: 20px;
+            text-align: left;
+        }
 
-            .journey-num {
-                width: 18px;
-                height: 18px;
-                font-size: 9px;
-            }
+        .sms-compliance-group input[type="checkbox"] {
+            margin-right: 12px;
+            margin-top: 4px;
+            width: 18px;
+            height: 18px;
+            flex-shrink: 0;
+            cursor: pointer;
+        }
+
+        .sms-compliance-label {
+            font-size: 13px;
+            color: var(--text-muted);
+            line-height: 1.5;
+            cursor: pointer;
+        }
+
+        .sms-compliance-label a {
+            color: var(--primary-color);
+            text-decoration: underline;
+        }
+
+        .back-link {
+            display: block;
+            margin-top: 15px;
+            font-size: 14px;
+            color: var(--text-muted);
+            text-decoration: none;
+        }
+
+        .back-link:hover {
+            color: var(--primary-color);
         }
     </style>
 
@@ -200,12 +229,12 @@
         <div class="journey-steps">
             <div class="journey-step done">
                 <div class="journey-num"><span>1</span></div>
-                <span class="journey-label">3 Quick Questions</span>
+                <span class="journey-label">Your Info</span>
             </div>
             <div class="journey-arrow">→</div>
             <div class="journey-step done">
                 <div class="journey-num"><span>2</span></div>
-                <span class="journey-label">See If You Qualify</span>
+                <span class="journey-label">Quick Question</span>
             </div>
             <div class="journey-arrow">→</div>
             <div class="journey-step active">
@@ -233,11 +262,19 @@
                             <input type="tel" id="userPhone" name="userPhone" placeholder="(555) 000-0000" required
                                 class="text-input">
                         </div>
-                        <div class="selected-info" id="selectedInfo">
-                            <p><strong>Selected:</strong> <span id="displayDateTime">Please select a date and
-                                    time</span></p>
+
+                        <!-- SMS Compliance Checkbox -->
+                        <div class="sms-compliance-group">
+                            <input type="checkbox" id="smsOptIn" name="smsOptIn">
+                            <label for="smsOptIn" class="sms-compliance-label">
+                                By checking this box, you consent to receive SMS messages from 360 Builds regarding updates and follow-ups on properties you express interest in. Message frequency varies. Msg & data rates may apply. Reply <strong>STOP</strong> to unsubscribe or <strong>HELP</strong> for help. View our <a href="https://licho09.github.io/360-Builds/privacy-policy.html" target="_blank">Privacy Policy</a> and <a href="https://licho09.github.io/360-Builds/terms.html" target="_blank">Terms & Conditions</a>.
+                            </label>
                         </div>
-                        <button type="submit" class="btn btn-primary btn-block btn-disabled" disabled>Confirm My Free Call</button>
+
+                        <div class="selected-info" id="selectedInfo">
+                            <p><strong>Selected:</strong> <span id="displayDateTime">Please select a date and time</span></p>
+                        </div>
+                        <button type="submit" id="confirmBtn" class="btn btn-primary btn-block btn-disabled" disabled>Confirm My Free Call</button>
                         <a href="index.html" class="back-link">← Back to questions</a>
                     </form>
                 </div>
@@ -270,6 +307,37 @@
         </footer>
     </div>
 
+    <script>
+        // Simple validation for booking form
+        const nameInp = document.getElementById("userName");
+        const phoneInp = document.getElementById("userPhone");
+        const optInChk = document.getElementById("smsOptIn");
+        const confirmBtn = document.getElementById("confirmBtn");
+        const displayDateTime = document.getElementById("displayDateTime");
+
+        function validateBooking() {
+            const hasDateTime = displayDateTime.textContent !== "Please select a date and time";
+            const isValid = nameInp.value.trim().length > 0 && 
+                          phoneInp.value.trim().length > 0 && 
+                          optInChk.checked &&
+                          hasDateTime;
+            confirmBtn.disabled = !isValid;
+            confirmBtn.classList.toggle("btn-disabled", !isValid);
+        }
+
+        nameInp.addEventListener("input", validateBooking);
+        phoneInp.addEventListener("input", validateBooking);
+        optInChk.addEventListener("change", validateBooking);
+
+        // Mock calendar logic for demonstration (replace with your script.js logic)
+        // This is just to ensure the button can be enabled for testing
+        document.addEventListener('click', (e) => {
+            if (e.target.classList.contains('time-slot') || e.target.classList.contains('calendar-day')) {
+                // Assume a selection was made
+                setTimeout(validateBooking, 100);
+            }
+        });
+    </script>
     <script src="script.js"></script>
 </body>
 

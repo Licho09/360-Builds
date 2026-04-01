@@ -211,6 +211,64 @@
                 height: 220px;
             }
         }
+
+        /* SMS Compliance Styles */
+        .sms-compliance-group {
+            display: flex;
+            align-items: flex-start;
+            margin-top: 20px;
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        .sms-compliance-group input[type="checkbox"] {
+            margin-right: 12px;
+            margin-top: 4px;
+            width: 18px;
+            height: 18px;
+            flex-shrink: 0;
+            cursor: pointer;
+        }
+
+        .sms-compliance-label {
+            font-size: 13px;
+            color: var(--text-muted);
+            line-height: 1.5;
+            cursor: pointer;
+        }
+
+        .sms-compliance-label a {
+            color: var(--primary-color);
+            text-decoration: underline;
+        }
+
+        /* Fix for form group spacing */
+        .form-group {
+            margin-bottom: 1.5rem;
+            text-align: left;
+        }
+
+        .field-label {
+            display: block;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--text-main);
+        }
+
+        .text-input {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid var(--border-color);
+            border-radius: 10px;
+            font-size: 16px;
+            transition: border-color 0.2s;
+        }
+
+        .text-input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
     </style>
 </head>
 
@@ -249,8 +307,6 @@
             </div>
         </div>
 
-
-
         <main class="question-container">
             <div class="form-wrapper" id="formWrapper">
 
@@ -270,7 +326,7 @@
 
                 <form id="applicationForm">
 
-                    <!-- Step 1: Contact Info (captured immediately) -->
+                    <!-- Step 1: Contact Info -->
                     <div class="form-step active" id="step1">
                         <h2 class="step-title">Enter your info to see if you qualify.</h2>
                         <p class="step-subtitle">Takes 10 seconds. No spam, ever.</p>
@@ -285,38 +341,15 @@
                             <input type="tel" id="userPhone" name="userPhone" placeholder="(555) 000-0000" required class="text-input">
                         </div>
 
-                        <div class="form-group checkbox-group">
+                        <!-- SMS Compliance Checkbox -->
+                        <div class="sms-compliance-group">
                             <input type="checkbox" id="smsOptIn" name="smsOptIn">
-                            <label for="smsOptIn" class="checkbox-label">
-                                By checking this box, you consent to receive SMS messages from 360 Builds regarding updates and follow-ups on properties you express interest in. Message frequency varies. Msg & data rates may apply. Reply <strong>STOP</strong> to unsubscribe or <strong>HELP</strong> for help. View our <a href="https://licho09.github.io/360-Builds/privacy-policy.html">Privacy Policy</a> and <a href="https://licho09.github.io/360-Builds/terms.html">Terms & Conditions</a>.
+                            <label for="smsOptIn" class="sms-compliance-label">
+                                By checking this box, you consent to receive SMS messages from 360 Builds regarding updates and follow-ups on properties you express interest in. Message frequency varies. Msg & data rates may apply. Reply <strong>STOP</strong> to unsubscribe or <strong>HELP</strong> for help. View our <a href="https://licho09.github.io/360-Builds/privacy-policy.html" target="_blank">Privacy Policy</a> and <a href="https://licho09.github.io/360-Builds/terms.html" target="_blank">Terms & Conditions</a>.
                             </label>
                         </div>
 
-                        <button type="button" class="btn btn-primary btn-block btn-disabled" disabled onclick="nextStep(1)">Next &rarr;</button>
-
-<style>
-    .checkbox-group {
-        display: flex;
-        align-items: flex-start;
-        margin-bottom: 20px;
-    }
-
-    .checkbox-group input[type="checkbox"] {
-        margin-right: 10px;
-        margin-top: 5px; /* Align checkbox with the first line of text */
-    }
-
-    .checkbox-group .checkbox-label {
-        font-size: 14px;
-        color: var(--text-muted);
-        line-height: 1.5;
-    }
-
-    .checkbox-group .checkbox-label a {
-        color: var(--primary-color);
-        text-decoration: underline;
-    }
-</style>
+                        <button type="button" id="nextBtn1" class="btn btn-primary btn-block btn-disabled" disabled onclick="nextStep(1)">Next &rarr;</button>
                     </div>
 
                     <!-- Step 2: Completion Timeline -->
@@ -344,9 +377,9 @@
                                 <span class="radio-label">Just starting / framing</span>
                             </label>
                         </div>
-                        <div class="form-actions">
-                            <button type="button" class="btn btn-secondary" onclick="prevStep(2)">Back</button>
-                            <button type="button" class="btn btn-primary btn-disabled" disabled onclick="nextStep(2)">See My Results &rarr;</button>
+                        <div class="form-buttons">
+                            <button type="button" class="btn btn-secondary" onclick="prevStep()">Back</button>
+                            <button type="button" id="nextBtn2" class="btn btn-primary btn-disabled" disabled onclick="nextStep(2)">See My Results &rarr;</button>
                         </div>
                     </div>
 
@@ -354,21 +387,6 @@
                     <div class="form-step" id="step3">
                         <h2 class="step-title">You Qualify. Here's What Happens Next.</h2>
                         <p class="step-subtitle">Every day your home sits unsold costs you money. On this free call we'll show you how to fix that.</p>
-
-                        <div class="results-list">
-                            <div class="result-item">
-                                <img src="assets/icons/icon-video.svg" alt="Video Icon">
-                                <p>See a live demo of what your property website will look like</p>
-                            </div>
-                            <div class="result-item">
-                                <img src="assets/icons/icon-house.svg" alt="House Icon">
-                                <p>Learn how buyers will find and tour your home before it's finished</p>
-                            </div>
-                            <div class="result-item">
-                                <img src="assets/icons/icon-chart.svg" alt="Chart Icon">
-                                <p>See exactly how we capture leads on autopilot for your build</p>
-                            </div>
-                        </div>
 
                         <p class="panorama-label">This is what your buyers will experience</p>
                         <div class="panorama-preview">
@@ -378,39 +396,13 @@
 
                         <div class="form-actions">
                             <button type="button" class="btn btn-primary btn-block" onclick="bookCall()">Book My Free Strategy Call &rarr;</button>
-                            <p class="form-note">No sales pressure · 30-min Zoom call · Texas builders only</p>
+                            <p class="hero-subtext" style="font-size: 12px; margin-top: 15px;">No sales pressure · 30-min Zoom call · Texas builders only</p>
                         </div>
                     </div>
 
                 </form>
             </div>
         </main>
-
-        <section class="why-360-section">
-            <h2 class="section-title">Why 360&deg; Changes the Game</h2>
-            <div class="why-360-grid">
-                <div class="why-360-item">
-                    <img src="assets/icons/icon-crane.svg" alt="Crane Icon">
-                    <h3>Sell at Framing, Not at Finish</h3>
-                    <p>A 360&deg; walkthrough lets buyers experience the flow and scale of a home before finishes are even selected. Contracts close earlier &mdash; carrying costs shrink.</p>
-                </div>
-                <div class="why-360-item">
-                    <img src="assets/icons/icon-money.svg" alt="Money Bag Icon">
-                    <h3>Hold Your Price</h3>
-                    <p>Sitting on inventory invites lowball offers. Buyers who&rsquo;ve already walked the home virtually show up emotionally invested &mdash; and they negotiate less.</p>
-                </div>
-                <div class="why-360-item">
-                    <img src="assets/icons/icon-pin.svg" alt="Pin Icon">
-                    <h3>Reach Out-of-Market Buyers</h3>
-                    <p>Texas is attracting relocating buyers from coast to coast. They can&rsquo;t drive to every job site. A 360&deg; tour is the next best thing to being there in person.</p>
-                </div>
-                <div class="why-360-item">
-                    <img src="assets/icons/icon-chart-alt.svg" alt="Chart Icon">
-                    <h3>Stand Out From the Competition</h3>
-                    <p>Most builders in your market still rely on flat photos and floor plan PDFs. An immersive 360&deg; experience signals quality before a buyer ever visits the lot.</p>
-                </div>
-            </div>
-        </section>
 
         <footer>
             <p>&copy; 2026 360&deg; Builds. All rights reserved.</p>
@@ -419,36 +411,30 @@
     </div>
 
     <script>
-        const form = document.getElementById("applicationForm");
         const steps = document.querySelectorAll(".form-step");
         const progressSteps = document.querySelectorAll(".journey-step");
         const progressBar = document.getElementById("progressBar");
         const currentStepSpan = document.getElementById("currentStep");
-        const totalStepsSpan = document.getElementById("totalSteps");
         const qualifyHeader = document.getElementById("qualifyHeader");
 
         let currentStep = 0;
         const totalSteps = steps.length;
-
-        totalStepsSpan.textContent = totalSteps;
 
         function updateProgress() {
             progressBar.style.width = `${(currentStep / (totalSteps - 1)) * 100}%`;
             progressSteps.forEach((step, index) => {
                 if (index === currentStep) {
                     step.classList.add("active");
-                } else {
-                    step.classList.remove("active");
-                }
-                if (index < currentStep) {
-                    step.classList.add("done");
-                } else {
                     step.classList.remove("done");
+                } else if (index < currentStep) {
+                    step.classList.add("done");
+                    step.classList.remove("active");
+                } else {
+                    step.classList.remove("active", "done");
                 }
             });
             currentStepSpan.textContent = currentStep + 1;
 
-            // Hide qualify header on step 3
             if (currentStep === 2) {
                 qualifyHeader.style.display = "none";
             } else {
@@ -458,114 +444,75 @@
 
         function showStep(stepIndex) {
             steps.forEach((step, index) => {
-                if (index === stepIndex) {
-                    step.classList.add("active");
-                } else {
-                    step.classList.remove("active");
-                }
+                step.classList.toggle("active", index === stepIndex);
             });
             currentStep = stepIndex;
             updateProgress();
+            window.scrollTo(0, 0);
         }
 
-        function nextStep(stepIndex) {
-            if (stepIndex === 1) {
-                const userName = document.getElementById("userName");
-                const userPhone = document.getElementById("userPhone");
-                const smsOptIn = document.getElementById("smsOptIn");
-                if (!userName.value || !userPhone.value || !smsOptIn.checked) {
-                    alert("Please fill in all fields and agree to receive SMS messages.");
-                    return;
-                }
+        function nextStep(stepNum) {
+            if (stepNum === 1) {
+                const name = document.getElementById("userName").value;
+                const phone = document.getElementById("userPhone").value;
+                const optIn = document.getElementById("smsOptIn").checked;
 
-                // Track lead with Facebook Pixel
-                fbq("track", "Lead");
+                // Track Lead
+                if (typeof fbq === "function") fbq("track", "Lead");
 
-                // Send data to Formspree
+                // Submit to Formspree
                 const formData = new FormData();
-                formData.append("Name", userName.value);
-                formData.append("Phone", userPhone.value);
-                formData.append("SMS Opt-in", smsOptIn.checked ? "Yes" : "No");
+                formData.append("Name", name);
+                formData.append("Phone", phone);
+                formData.append("SMS_Consent", optIn ? "Accepted" : "Declined");
 
                 fetch("https://formspree.io/f/xeqyvvgd", {
                     method: "POST",
                     body: formData,
-                    headers: {
-                        "Accept": "application/json"
-                    }
-                }).then(response => {
-                    if (response.ok) {
-                        console.log("Formspree submission successful");
-                    } else {
-                        console.error("Formspree submission failed");
-                    }
-                }).catch(error => {
-                    console.error("Error submitting to Formspree:", error);
+                    headers: { "Accept": "application/json" }
                 });
             }
-
-            if (currentStep < totalSteps - 1) {
-                showStep(currentStep + 1);
-            }
+            showStep(currentStep + 1);
         }
 
-        function prevStep(stepIndex) {
-            if (currentStep > 0) {
-                showStep(currentStep - 1);
-            }
+        function prevStep() {
+            showStep(currentStep - 1);
         }
 
-        // Form validation for Step 1
-        const userNameInput = document.getElementById("userName");
-        const userPhoneInput = document.getElementById("userPhone");
-        const smsOptInCheckbox = document.getElementById("smsOptIn");
-        const nextButtonStep1 = document.querySelector("#step1 .btn-primary");
+        // Validation Step 1
+        const nameInp = document.getElementById("userName");
+        const phoneInp = document.getElementById("userPhone");
+        const optInChk = document.getElementById("smsOptIn");
+        const nextBtn1 = document.getElementById("nextBtn1");
 
         function validateStep1() {
-            if (userNameInput.value && userPhoneInput.value && smsOptInCheckbox.checked) {
-                nextButtonStep1.disabled = false;
-                nextButtonStep1.classList.remove("btn-disabled");
-            } else {
-                nextButtonStep1.disabled = true;
-                nextButtonStep1.classList.add("btn-disabled");
-            }
+            const isValid = nameInp.value.trim().length > 0 && 
+                          phoneInp.value.trim().length > 0 && 
+                          optInChk.checked;
+            nextBtn1.disabled = !isValid;
+            nextBtn1.classList.toggle("btn-disabled", !isValid);
         }
 
-        userNameInput.addEventListener("input", validateStep1);
-        userPhoneInput.addEventListener("input", validateStep1);
-        smsOptInCheckbox.addEventListener("change", validateStep1);
+        nameInp.addEventListener("input", validateStep1);
+        phoneInp.addEventListener("input", validateStep1);
+        optInChk.addEventListener("change", validateStep1);
 
-        // Form validation for Step 2
-        const completionDateRadios = document.querySelectorAll("input[name='completionDate']");
-        const nextButtonStep2 = document.querySelector("#step2 .btn-primary");
+        // Validation Step 2
+        const radios = document.querySelectorAll('input[name="completionDate"]');
+        const nextBtn2 = document.getElementById("nextBtn2");
 
-        function validateStep2() {
-            let isChecked = false;
-            completionDateRadios.forEach(radio => {
-                if (radio.checked) {
-                    isChecked = true;
-                }
+        radios.forEach(r => {
+            r.addEventListener("change", () => {
+                nextBtn2.disabled = false;
+                nextBtn2.classList.remove("btn-disabled");
             });
-            if (isChecked) {
-                nextButtonStep2.disabled = false;
-                nextButtonStep2.classList.remove("btn-disabled");
-            } else {
-                nextButtonStep2.disabled = true;
-                nextButtonStep2.classList.add("btn-disabled");
-            }
-        }
-
-        completionDateRadios.forEach(radio => {
-            radio.addEventListener("change", validateStep2);
         });
 
-        // Initial update
-        updateProgress();
-
         function bookCall() {
-            // Placeholder for booking call functionality
-            alert("Booking call functionality would go here!");
+            window.location.href = "https://calendly.com/360builds"; // Replace with your actual link
         }
+
+        updateProgress();
     </script>
 </body>
 

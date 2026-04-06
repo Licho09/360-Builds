@@ -118,8 +118,8 @@ function checkStepReady(stepNum) {
   if (stepNum === 1) {
     const name = document.getElementById('userName')?.value.trim();
     const phone = document.getElementById('userPhone')?.value.trim();
-    const optIn = document.getElementById('smsOptIn')?.checked;
-    return !!(name && phone && optIn);
+    // SMS Opt-in is now optional for compliance
+    return !!(name && phone);
   }
   if (stepNum === 2) {
     return !!document.querySelector('input[name="completionDate"]:checked');
@@ -199,9 +199,9 @@ function saveStep1() {
 function nextStep(from) {
   const name = document.getElementById('userName')?.value.trim();
   const phone = document.getElementById('userPhone')?.value.trim();
-  const optIn = document.getElementById('smsOptIn')?.checked;
-  if (!name || !phone || !optIn) {
-    alert('Please enter your name, phone number, and agree to receive SMS messages.');
+  // SMS Opt-in is now optional for compliance
+  if (!name || !phone) {
+    alert('Please enter your name and phone number.');
     return;
   }
   saveStep1(); 

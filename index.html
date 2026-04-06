@@ -1,519 +1,370 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>360° Builds - Get Started</title>
-    <link rel="stylesheet" href="styles.css">
-    <meta name="description"
-        content="Texas spec home builders: pre-sell homes before completion using 360° virtual walkthroughs. See if you qualify.">
-
-    <!-- Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-JKLEK6QQDY"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag("js", new Date());
-        gtag("config", "G-JKLEK6QQDY");
-    </script>
-
-    <!-- Meta Pixel Code -->
-    <script>
-        !function (f, b, e, v, n, t, s) {
-            if (f.fbq) return; n = f.fbq = function () {
-                n.callMethod ?
-                    n.callMethod.apply(n, arguments) : n.queue.push(arguments)
-            };
-            if (!f._fbq) f._fbq = n; n.push = n; n.loaded = !0; n.version = "2.0";
-            n.queue = []; t = b.createElement(e); t.async = !0;
-            t.src = v; s = b.getElementsByTagName(e)[0];
-            s.parentNode.insertBefore(t, s)
-        }(window, document, "script",
-            "https://connect.facebook.net/en_US/fbevents.js");
-        fbq("init", "854197977632425");
-        fbq("track", "PageView");
-    </script>
-    <noscript>
-        <img height="1" width="1" style="display:none"
-            src="https://www.facebook.com/tr?id=854197977632425&ev=PageView&noscript=1" />
-    </noscript>
+    <title>360° Builds - Texas Spec Home Marketing</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 
     <style>
-        /* ── JOURNEY STEPS ── */
-        .journey-steps {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 0 16px 24px;
-            max-width: 560px;
-            margin: 0 auto;
-            gap: 0;
+        /* ===========================
+           FOAM FLOW LEADS — MINIMAL CLEAN
+           =========================== */
+        :root {
+            --bg: #ffffff;
+            --text: #111111;
+            --text-muted: #666666;
+            --primary: #0062fe;
+            --highlight: #FFE566;
+            --highlight-dark: #f5d800;
+            --border: #e8e8e8;
+            --card-bg: #ffffff;
+            --accent-bg: #f5f8ff;
+            --progress-bg: #f0f0f0;
         }
 
-        .journey-step {
-            display: flex;
-            align-items: center;
-            gap: 7px;
-            padding: 7px 12px;
-            border-radius: 100px;
-            border: 1.5px solid transparent;
-            transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
-            opacity: 0.35;
-            cursor: default;
-            white-space: nowrap;
-            flex-shrink: 0;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
-        .journey-step.active {
-            opacity: 1;
-            background: var(--accent-bg);
-            border-color: rgba(0, 98, 254, 0.25);
-            box-shadow: 0 2px 10px rgba(0, 98, 254, 0.1);
-        }
-
-        .journey-step.done {
-            opacity: 0.65;
-        }
-
-        .journey-step.done .journey-num {
-            background: #22c55e;
-            color: white;
-        }
-
-        .journey-step.done .journey-num::after {
-            content: "✓";
-            font-size: 10px;
-            font-weight: 800;
-        }
-
-        .journey-step.done .journey-num span {
-            display: none;
-        }
-
-        .journey-num {
-            width: 22px;
-            height: 22px;
-            border-radius: 50%;
-            background: var(--border-color);
-            color: var(--text-muted);
-            font-size: 11px;
-            font-weight: 800;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
-            transition: all 0.3s ease;
-        }
-
-        .journey-step.active .journey-num {
-            background: var(--primary-color);
-            color: white;
-            box-shadow: 0 0 0 3px rgba(0, 98, 254, 0.18);
-        }
-
-        .journey-label {
-            font-size: 12px;
-            font-weight: 600;
-            color: var(--text-main);
-            transition: color 0.3s ease;
-            line-height: 1;
-        }
-
-        .journey-step.active .journey-label {
-            color: var(--primary-color);
-        }
-
-        .journey-arrow {
-            color: var(--border-color);
-            font-size: 13px;
-            flex-shrink: 0;
-            margin: 0 1px;
-            line-height: 1;
-        }
-
-        /* Mobile journey — show only active label, rest show number only */
-        @media (max-width: 768px) {
-            .journey-steps {
-                padding: 0 8px 20px;
-                gap: 4px;
-            }
-
-            .journey-step {
-                padding: 6px 10px;
-                gap: 6px;
-            }
-
-            .journey-label {
-                display: none;
-            }
-
-            .journey-step.active .journey-label {
-                display: block;
-                font-size: 12px;
-            }
-
-            .journey-num {
-                width: 22px;
-                height: 22px;
-                font-size: 11px;
-            }
-
-            .journey-arrow {
-                font-size: 11px;
-                margin: 0 2px;
-            }
-
-            /* Fix: make sure sticky footer doesn't cover form buttons */
-            .question-container {
-                padding-bottom: calc(160px + env(safe-area-inset-bottom, 0px)) !important;
-            }
-        }
-
-        /* Panorama embed styles (results screen) */
-        .panorama-preview {
-            width: 100%;
-            border-radius: 12px;
-            overflow: hidden;
-            margin-bottom: 20px;
-            border: 1px solid var(--border-color);
-            position: relative;
-        }
-
-        .panorama-preview iframe {
-            width: 100%;
-            height: 280px;
-            border: none;
-            display: block;
-        }
-
-        .panorama-label {
-            font-size: 10px;
-            font-weight: 800;
-            letter-spacing: 0.14em;
-            text-transform: uppercase;
-            color: var(--primary-color);
-            margin-bottom: 8px;
-            text-align: left;
-        }
-
-        .panorama-caption {
-            font-size: 12px;
-            color: var(--text-muted);
-            text-align: center;
-            padding: 8px 12px;
-            background: var(--accent-bg);
-            border-top: 1px solid var(--border-color);
-        }
-
-        @media (max-width: 768px) {
-            .panorama-preview iframe {
-                height: 220px;
-            }
-        }
-
-        /* SMS Compliance Styles */
-        .sms-compliance-group {
-            display: flex;
-            align-items: flex-start;
-            margin-top: 20px;
-            margin-bottom: 20px;
-            text-align: left;
-        }
-
-        .sms-compliance-group input[type="checkbox"] {
-            margin-right: 12px;
-            margin-top: 4px;
-            width: 18px;
-            height: 18px;
-            flex-shrink: 0;
-            cursor: pointer;
-        }
-
-        .sms-compliance-label {
-            font-size: 13px;
-            color: var(--text-muted);
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
             line-height: 1.5;
-            cursor: pointer;
+            min-height: 100vh;
+            -webkit-font-smoothing: antialiased;
         }
 
-        .sms-compliance-label a {
-            color: var(--primary-color);
-            text-decoration: underline;
+        .app-container {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
         }
 
-        /* Fix for form group spacing */
-        .form-group {
-            margin-bottom: 1.5rem;
-            text-align: left;
+        /* HEADER */
+        .simple-header {
+            padding: 2rem 1.5rem 1rem;
+            text-align: center;
+            border-bottom: 1px solid var(--border);
+        }
+        .logo-text {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.6rem;
+            letter-spacing: 0.18em;
+            color: var(--text);
+            display: inline-block;
+            text-decoration: none;
         }
 
-        .field-label {
-            display: block;
-            font-size: 14px;
-            font-weight: 600;
-            margin-bottom: 8px;
-            color: var(--text-main);
+        /* HERO */
+        .hero-text {
+            text-align: center;
+            padding: 3rem 24px 2rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .hero-headline {
+            font-size: clamp(32px, 6vw, 56px);
+            font-weight: 900;
+            line-height: 1.1;
+            letter-spacing: -0.03em;
+            margin-bottom: 1.25rem;
+        }
+        .headline-highlight {
+            background-color: var(--highlight);
+            padding: 2px 8px;
+            border-radius: 4px;
+        }
+        .hero-subtext {
+            font-size: 18px;
+            color: var(--text-muted);
+            max-width: 600px;
+            margin: 0 auto;
         }
 
-        .text-input {
+        /* FORM SECTION */
+        .form-section {
+            padding: 2rem 1rem 4rem;
+            display: flex;
+            justify-content: center;
+        }
+        .form-wrapper {
+            background-color: var(--card-bg);
             width: 100%;
-            padding: 12px 16px;
-            border: 2px solid var(--border-color);
-            border-radius: 10px;
-            font-size: 16px;
-            transition: border-color 0.2s;
+            max-width: 550px;
+            padding: 2.5rem;
+            border-radius: 12px;
+            box-shadow: 0 2px 24px rgba(0,0,0,0.08);
+            border: 1.5px solid var(--border);
         }
 
-        .text-input:focus {
-            outline: none;
-            border-color: var(--primary-color);
+        /* PROGRESS BAR */
+        .progress-container { margin-bottom: 2rem; }
+        .progress-bar-bg {
+            background-color: var(--progress-bg);
+            height: 6px;
+            border-radius: 3px;
+            overflow: hidden;
+            margin-bottom: 0.6rem;
+        }
+        .progress-bar {
+            height: 100%;
+            background-color: var(--highlight-dark);
+            width: 0%;
+            transition: width 0.4s ease;
+        }
+        .progress-text { font-size: 0.8rem; color: var(--text-muted); text-align: center; font-weight: 600; }
+
+        /* STEPS */
+        .form-step { display: none; }
+        .form-step.active { display: block; animation: fadeUp 0.35s ease-out; }
+        @keyframes fadeUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        .step-title { font-size: 1.4rem; font-weight: 800; margin-bottom: 0.5rem; }
+        .step-subtitle { font-size: 0.95rem; color: var(--text-muted); margin-bottom: 1.5rem; }
+
+        /* INPUTS */
+        .field-label { display: block; font-weight: 700; font-size: 0.9rem; margin-bottom: 0.5rem; }
+        .text-input {
+            width: 100%; padding: 0.9rem 1rem; border: 2px solid var(--border);
+            border-radius: 8px; margin-bottom: 1.25rem; font-size: 1rem;
+            font-family: inherit; transition: border-color 0.2s;
+        }
+        .text-input:focus { outline: none; border-color: var(--text); }
+
+        /* RADIO CARDS */
+        .radio-group { display: flex; flex-direction: column; gap: 10px; margin-bottom: 1.5rem; }
+        .radio-card {
+            display: flex; align-items: center; padding: 1rem;
+            border: 2px solid var(--border); border-radius: 10px; cursor: pointer;
+            transition: all 0.2s;
+        }
+        .radio-card:hover { border-color: var(--highlight-dark); background: #fffef0; }
+        .radio-card input { margin-right: 12px; width: 18px; height: 18px; accent-color: var(--text); }
+        .radio-label { font-weight: 600; font-size: 0.95rem; }
+
+        /* SMS COMPLIANCE */
+        .sms-compliance-group { display: flex; align-items: flex-start; margin: 1.5rem 0; gap: 12px; }
+        .sms-compliance-group input { width: 18px; height: 18px; margin-top: 3px; flex-shrink: 0; accent-color: var(--text); }
+        .sms-compliance-label { font-size: 12px; color: var(--text-muted); line-height: 1.5; }
+        .sms-compliance-label a { color: var(--primary); text-decoration: underline; }
+
+        /* BUTTONS */
+        .btn {
+            padding: 1rem 2rem; border-radius: 8px; font-weight: 800; font-size: 1rem;
+            cursor: pointer; transition: all 0.2s; border: none; font-family: inherit;
+            text-align: center; width: 100%; display: block;
+        }
+        .btn-primary {
+            background: var(--highlight); color: var(--text); border: 2px solid var(--text);
+            box-shadow: 4px 4px 0 var(--text);
+        }
+        .btn-primary:hover { transform: translate(-2px, -2px); box-shadow: 6px 6px 0 var(--text); }
+        .btn-primary:active { transform: translate(1px, 1px); box-shadow: 2px 2px 0 var(--text); }
+        .btn-primary:disabled { background: #eee; color: #aaa; border-color: #ddd; box-shadow: none; cursor: not-allowed; transform: none; }
+
+        .btn-secondary { background: white; color: var(--text-muted); border: 2px solid var(--border); margin-top: 10px; }
+
+        /* RESULTS SCREEN */
+        .booking-result { text-align: center; }
+        .booking-result-badge {
+            display: inline-block; background: #dcfce7; color: #15803d;
+            font-size: 12px; font-weight: 800; padding: 4px 12px; border-radius: 100px; margin-bottom: 1rem;
+        }
+        .booking-bullets { text-align: left; margin: 1.5rem 0; display: flex; flex-direction: column; gap: 8px; }
+        .booking-bullet-item { padding: 12px; background: #fafafa; border: 1.5px solid var(--border); border-radius: 8px; font-size: 14px; font-weight: 600; }
+
+        /* FOOTER */
+        .simple-footer { padding: 3rem 1rem; text-align: center; border-top: 1px solid var(--border); color: var(--text-muted); font-size: 12px; }
+
+        @media (max-width: 768px) {
+            .hero-headline { font-size: 32px; }
+            .form-wrapper { padding: 1.5rem; }
         }
     </style>
 </head>
-
 <body>
-    <div class="app-container">
 
-        <header class="simple-header">
-            <div class="logo-text">
-                <span class="logo-number">360</span><span class="logo-degree">&deg;</span>
-                <span class="logo-divider"></span>
-                <span class="logo-word">Builds</span>
-            </div>
-        </header>
+<div class="app-container">
+    <header class="simple-header">
+        <a href="index.html" class="logo-text">360° BUILDS</a>
+    </header>
 
+    <main>
         <section class="hero-text">
-            <p class="hero-eyebrow">For Texas Home Builders Only</p>
-            <h1 class="hero-headline">Pre-Sell Your Spec Home<br>Before It&rsquo;s Even Built</h1>
-            <p class="hero-subtext">See if you qualify for a free 360&deg; virtual tour &amp; property website</p>
+            <h1 class="hero-headline">Sell Your Spec Homes <span class="headline-highlight">Before</span> They're Finished</h1>
+            <p class="hero-subtext">Our 360° marketing system helps Texas builders secure buyers during the framing stage.</p>
         </section>
 
-        <!-- Journey Step Indicator -->
-        <div class="journey-steps" id="journeySteps">
-            <div class="journey-step active" id="jStep1">
-                <div class="journey-num"><span>1</span></div>
-                <span class="journey-label">Your Info</span>
-            </div>
-            <div class="journey-arrow">→</div>
-            <div class="journey-step" id="jStep2">
-                <div class="journey-num"><span>2</span></div>
-                <span class="journey-label">Quick Question</span>
-            </div>
-            <div class="journey-arrow">→</div>
-            <div class="journey-step" id="jStep3">
-                <div class="journey-num"><span>3</span></div>
-                <span class="journey-label">See Results</span>
-            </div>
-        </div>
-
-        <main class="question-container">
-            <div class="form-wrapper" id="formWrapper">
-
-                <div class="form-qualify-header" id="qualifyHeader">
-                    <p class="form-qualify-title">See If You Qualify</p>
-                    <p class="form-qualify-sub">We only work with builders who are a strong fit. Takes 60 seconds.</p>
-                </div>
-
+        <section class="form-section">
+            <div class="form-wrapper">
                 <div class="progress-container">
-                    <div class="progress-bar-bg">
-                        <div class="progress-bar" id="progressBar"></div>
-                    </div>
-                    <p class="progress-text">
-                        Step <span id="currentStep">1</span> of <span id="totalSteps">3</span>
-                    </p>
+                    <div class="progress-bar-bg"><div class="progress-bar" id="progressBar"></div></div>
+                    <p class="progress-text">Step <span id="currentStep">1</span> of 2</p>
                 </div>
 
-                <form id="applicationForm">
-
-                    <!-- Step 1: Contact Info -->
-                    <div class="form-step active" id="step1">
-                        <h2 class="step-title">Enter your info to see if you qualify.</h2>
-                        <p class="step-subtitle">Takes 10 seconds. No spam, ever.</p>
-
-                        <div class="form-group">
-                            <label for="userName" class="field-label">Full Name</label>
-                            <input type="text" id="userName" name="userName" placeholder="Your Name" required class="text-input">
-                        </div>
-
-                        <div class="form-group">
-                            <label for="userPhone" class="field-label">Phone Number</label>
-                            <input type="tel" id="userPhone" name="userPhone" placeholder="(555) 000-0000" required class="text-input">
-                        </div>
-
-                        <!-- SMS Compliance Checkbox (Optional) -->
-                        <div class="sms-compliance-group">
-                            <input type="checkbox" id="smsOptIn" name="smsOptIn">
-                            <label for="smsOptIn" class="sms-compliance-label">
-                                (Optional) By checking this box, you consent to receive SMS messages from 360 Builds regarding updates and follow-ups on properties you express interest in. Message frequency varies. Msg & data rates may apply. Reply <strong>STOP</strong> to unsubscribe or <strong>HELP</strong> for help. View our <a href="https://licho09.github.io/360-Builds/privacy-policy.html" target="_blank">Privacy Policy</a> and <a href="https://licho09.github.io/360-Builds/terms.html" target="_blank">Terms & Conditions</a>.
-                            </label>
-                        </div>
-
-                        <button type="button" id="nextBtn1" class="btn btn-primary btn-block btn-disabled" disabled onclick="nextStep(1)">Next &rarr;</button>
+                <!-- STEP 1: CONTACT -->
+                <div class="form-step active" id="step1">
+                    <h2 class="step-title">Let's Get Started</h2>
+                    <p class="step-subtitle">Enter your details to see if your project qualifies.</p>
+                    
+                    <div class="form-group">
+                        <label class="field-label">Full Name</label>
+                        <input type="text" id="userName" class="text-input" placeholder="Your Name">
+                    </div>
+                    <div class="form-group">
+                        <label class="field-label">Phone Number</label>
+                        <input type="tel" id="userPhone" class="text-input" placeholder="(555) 000-0000">
                     </div>
 
-                    <!-- Step 2: Completion Timeline -->
-                    <div class="form-step" id="step2">
-                        <h2 class="step-title">When will your spec home be completed?</h2>
-                        <div class="radio-group">
-                            <label class="radio-card">
-                                <input type="radio" name="completionDate" value="0-30-days">
-                                <span class="radio-label">0–30 days</span>
-                            </label>
-                            <label class="radio-card">
-                                <input type="radio" name="completionDate" value="30-60-days">
-                                <span class="radio-label">30–60 days</span>
-                            </label>
-                            <label class="radio-card">
-                                <input type="radio" name="completionDate" value="60-90-days">
-                                <span class="radio-label">60–90 days</span>
-                            </label>
-                            <label class="radio-card">
-                                <input type="radio" name="completionDate" value="3-6-months">
-                                <span class="radio-label">3–6 months</span>
-                            </label>
-                            <label class="radio-card">
-                                <input type="radio" name="completionDate" value="just-starting">
-                                <span class="radio-label">Just starting / framing</span>
-                            </label>
-                        </div>
-                        <div class="form-buttons">
-                            <button type="button" class="btn btn-secondary" onclick="prevStep()">Back</button>
-                            <button type="button" id="nextBtn2" class="btn btn-primary btn-disabled" disabled onclick="nextStep(2)">See My Results &rarr;</button>
-                        </div>
+                    <!-- SMS COMPLIANCE (OPTIONAL) -->
+                    <div class="sms-compliance-group">
+                        <input type="checkbox" id="smsOptIn">
+                        <label for="smsOptIn" class="sms-compliance-label">
+                            (Optional) By checking this box, you consent to receive SMS messages from 360 Builds regarding updates and follow-ups on properties you express interest in. Msg & data rates may apply. Reply STOP to unsubscribe. View our <a href="privacy-policy.html" target="_blank">Privacy Policy</a> and <a href="terms.html" target="_blank">Terms</a>.
+                        </label>
                     </div>
 
-                    <!-- Step 3: Results -->
-                    <div class="form-step" id="step3">
-                        <h2 class="step-title">You Qualify. Here's What Happens Next.</h2>
-                        <p class="step-subtitle">Every day your home sits unsold costs you money. On this free call we'll show you how to fix that.</p>
+                    <button class="btn btn-primary" id="nextBtn1" disabled onclick="nextStep(1)">Next Step &rarr;</button>
+                </div>
 
-                        <p class="panorama-label">This is what your buyers will experience</p>
-                        <div class="panorama-preview">
-                            <iframe src="https://momento360.com/e/uc/6179313264424317a224675546200230?utm_campaign=embed&utm_source=other&heading=0&pitch=0&field-of-view=75&size=medium&display-plan=true" allowfullscreen></iframe>
-                            <p class="panorama-caption">Live 360° walkthrough — drag to explore</p>
-                        </div>
-
-                        <div class="form-actions">
-                            <button type="button" class="btn btn-primary btn-block" onclick="goToBooking()">Book My Free Strategy Call &rarr;</button>
-                            <p class="hero-subtext" style="font-size: 12px; margin-top: 15px;">No sales pressure · 30-min Zoom call · Texas builders only</p>
-                        </div>
+                <!-- STEP 2: QUALIFY -->
+                <div class="form-step" id="step2">
+                    <h2 class="step-title">Project Status</h2>
+                    <p class="step-subtitle">When will your current project be ready for walkthroughs?</p>
+                    
+                    <div class="radio-group">
+                        <label class="radio-card">
+                            <input type="radio" name="completionDate" value="Immediately">
+                            <span class="radio-label">Already Finished</span>
+                        </label>
+                        <label class="radio-card">
+                            <input type="radio" name="completionDate" value="1-3 Months">
+                            <span class="radio-label">1-3 Months (Framing)</span>
+                        </label>
+                        <label class="radio-card">
+                            <input type="radio" name="completionDate" value="3-6 Months">
+                            <span class="radio-label">3-6 Months (Foundation)</span>
+                        </label>
                     </div>
 
-                </form>
+                    <button class="btn btn-primary" id="nextBtn2" disabled onclick="showResults()">See My Results &rarr;</button>
+                    <button class="btn btn-secondary" onclick="prevStep()">Back</button>
+                </div>
+
+                <!-- STEP 3: RESULTS -->
+                <div class="form-step" id="stepResults">
+                    <div class="booking-result">
+                        <span class="booking-result-badge">You Qualify!</span>
+                        <h2 class="step-title">Texas Builder Strategy</h2>
+                        <p class="step-subtitle">Based on your project timeline, we can help you secure a buyer before completion.</p>
+                        
+                        <div class="booking-bullets">
+                            <div class="booking-bullet-item">✓ 360° Virtual Walkthrough Strategy</div>
+                            <div class="booking-bullet-item">✓ Pre-Completion Lead Generation</div>
+                            <div class="booking-bullet-item">✓ Texas-Specific Buyer Targeting</div>
+                        </div>
+
+                        <button class="btn btn-primary" onclick="goToBooking()">Book My Free Strategy Call &rarr;</button>
+                    </div>
+                </div>
             </div>
-        </main>
+        </section>
+    </main>
 
-        <footer>
-            <p>&copy; 2026 360&deg; Builds. All rights reserved.</p>
-        </footer>
+    <footer class="simple-footer">
+        <p>&copy; 2026 360° Builds. All rights reserved.</p>
+    </footer>
+</div>
 
-    </div>
+<script>
+    let currentStep = 1;
+    const totalSteps = 2;
 
-    <script>
-        const steps = document.querySelectorAll(".form-step");
-        const progressSteps = document.querySelectorAll(".journey-step");
-        const progressBar = document.getElementById("progressBar");
-        const currentStepSpan = document.getElementById("currentStep");
-        const qualifyHeader = document.getElementById("qualifyHeader");
+    // Elements
+    const nameInp = document.getElementById('userName');
+    const phoneInp = document.getElementById('userPhone');
+    const optInChk = document.getElementById('smsOptIn');
+    const nextBtn1 = document.getElementById('nextBtn1');
+    const nextBtn2 = document.getElementById('nextBtn2');
+    const progressBar = document.getElementById('progressBar');
+    const currentStepText = document.getElementById('currentStep');
 
-        let currentStep = 0;
-        const totalSteps = steps.length;
+    // Validation Step 1
+    function validateStep1() {
+        const isValid = nameInp.value.trim().length > 0 && phoneInp.value.trim().length > 0;
+        nextBtn1.disabled = !isValid;
+    }
+    nameInp.addEventListener('input', validateStep1);
+    phoneInp.addEventListener('input', validateStep1);
 
-        function updateProgress() {
-            progressBar.style.width = `${(currentStep / (totalSteps - 1)) * 100}%`;
-            progressSteps.forEach((step, index) => {
-                if (index === currentStep) {
-                    step.classList.add("active");
-                    step.classList.remove("done");
-                } else if (index < currentStep) {
-                    step.classList.add("done");
-                    step.classList.remove("active");
-                } else {
-                    step.classList.remove("active", "done");
-                }
-            });
-            currentStepSpan.textContent = currentStep + 1;
-
-            if (currentStep === 2) {
-                qualifyHeader.style.display = "none";
-            } else {
-                qualifyHeader.style.display = "block";
-            }
-        }
-
-        function showStep(stepIndex) {
-            steps.forEach((step, index) => {
-                step.classList.toggle("active", index === stepIndex);
-            });
-            currentStep = stepIndex;
-            updateProgress();
-            window.scrollTo(0, 0);
-        }
-
-        function nextStep(stepNum) {
-            if (stepNum === 1) {
-                const name = document.getElementById("userName").value;
-                const phone = document.getElementById("userPhone").value;
-                const optIn = document.getElementById("smsOptIn").checked;
-
-                // Track Lead
-                if (typeof fbq === "function") fbq("track", "Lead");
-
-                // Submit to Formspree
-                const formData = new FormData();
-                formData.append("Name", name);
-                formData.append("Phone", phone);
-                formData.append("SMS_Consent", optIn ? "Accepted" : "Declined");
-
-                fetch("https://formspree.io/f/xeqyvvgd", {
-                    method: "POST",
-                    body: formData,
-                    headers: { "Accept": "application/json" }
-                });
-            }
-            showStep(currentStep + 1);
-        }
-
-        function prevStep() {
-            showStep(currentStep - 1);
-        }
-
-        // Validation Step 1
-        const nameInp = document.getElementById("userName");
-        const phoneInp = document.getElementById("userPhone");
-        const optInChk = document.getElementById("smsOptIn");
-        const nextBtn1 = document.getElementById("nextBtn1");
-
-        function validateStep1() {
-            // SMS Opt-in is now optional for compliance
-            const isValid = nameInp.value.trim().length > 0 && 
-                          phoneInp.value.trim().length > 0;
-            nextBtn1.disabled = !isValid;
-            nextBtn1.classList.toggle("btn-disabled", !isValid);
-        }
-
-        nameInp.addEventListener("input", validateStep1);
-        phoneInp.addEventListener("input", validateStep1);
-        optInChk.addEventListener("change", validateStep1);
-
-        // Validation Step 2
-        const radios = document.querySelectorAll('input[name="completionDate"]');
-        const nextBtn2 = document.getElementById("nextBtn2");
-
-        radios.forEach(r => {
-            r.addEventListener("change", () => {
-                nextBtn2.disabled = false;
-                nextBtn2.classList.remove("btn-disabled");
-            });
+    // Validation Step 2
+    document.querySelectorAll('input[name="completionDate"]').forEach(radio => {
+        radio.addEventListener('change', () => {
+            nextBtn2.disabled = false;
         });
+    });
 
-        function goToBooking() {
-            window.location.href = "booking.html";
+    function updateProgress() {
+        const pct = ((currentStep - 1) / totalSteps) * 100;
+        progressBar.style.width = pct + '%';
+        currentStepText.textContent = currentStep > totalSteps ? totalSteps : currentStep;
+    }
+
+    function nextStep(n) {
+        if (n === 1) {
+            // Save data
+            const data = {
+                userName: nameInp.value,
+                userPhone: phoneInp.value,
+                smsOptIn: optInChk.checked
+            };
+            localStorage.setItem('surveyData', JSON.stringify(data));
+            
+            // Submit to Formspree (Optional)
+            const formData = new FormData();
+            formData.append('Name', data.userName);
+            formData.append('Phone', data.userPhone);
+            formData.append('SMS_Consent', data.smsOptIn ? 'Yes' : 'No');
+            fetch('https://formspree.io/f/xeqyvvgd', { method: 'POST', body: formData });
         }
-
+        
+        document.getElementById('step' + currentStep).classList.remove('active');
+        currentStep++;
+        document.getElementById('step' + currentStep).classList.add('active');
         updateProgress();
-    </script>
-</body>
+    }
 
+    function prevStep() {
+        document.getElementById('step' + currentStep).classList.remove('active');
+        currentStep--;
+        document.getElementById('step' + currentStep).classList.add('active');
+        updateProgress();
+    }
+
+    function showResults() {
+        const completionDate = document.querySelector('input[name="completionDate"]:checked').value;
+        const surveyData = JSON.parse(localStorage.getItem('surveyData'));
+        surveyData.completionDate = completionDate;
+        localStorage.setItem('surveyData', JSON.stringify(surveyData));
+
+        document.getElementById('step2').classList.remove('active');
+        document.getElementById('stepResults').classList.add('active');
+        
+        // Final Progress
+        progressBar.style.width = '100%';
+        currentStepText.textContent = '2';
+    }
+
+    function goToBooking() {
+        window.location.href = 'booking.html';
+    }
+
+    updateProgress();
+</script>
+
+</body>
 </html>
